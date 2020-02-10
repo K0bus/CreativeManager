@@ -1,0 +1,34 @@
+##Plugin configuration
+tag: '&r[&cCreativeManager&r] '
+
+## Protection module
+container-protection: true #Bypass : creativemanager.container
+spawn-protection: true #Bypass : creativemanager.spawner
+drop-protection: true #Bypass : creativemanager.drop
+build-protection: true #Bypass : creativemanager.build
+entity-protection: true #Bypass : creativemanager.entity
+
+blacklist:
+  place: #Bypass : creativemanager.bypass.blacklist.place
+    - 'tnt'
+  use: #Bypass : creativemanager.bypass.blacklist.use
+    - 'lava_bucket'
+    - 'flint_and_steel'
+    - 'fire_charge'
+  get: #Bypass : creativemanager.bypass.blacklist.get
+    - 'diamond'
+
+creative-inventory: true #Bypass : cm.bypass.inventory
+
+lang:
+  permission:
+    container: '&4You don''t have permission to open this container in Creative'
+    ignite: '&4You don''t have permission to ignite block in Creative'
+    spawn: '&4You don''t have permission use Spawn Egg in Creative'
+    drop: '&4You don''t have permission to drop item in Creative'
+    build: '&4You don''t have permission to build in Creative'
+    entity: '&4You don''t have permission to interact with entity in Creative'
+  blacklist:
+    place: '&4You don''t have permission to place {BLOCK} in Creative'
+    use: '&4You don''t have permission to use {ITEM} in Creative'
+    get: '&4You don''t have permission to get {ITEM} into your inventory in Creative'

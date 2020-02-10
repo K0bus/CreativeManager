@@ -1,0 +1,42 @@
+name: ${project.artifactId}
+main: fr.k0bus.creativemanager.Main
+version: ${project.version}
+api-version: 1.15
+commands:
+   cm:
+      description: Commande principale !
+      usage: /cm
+permissions:
+   creativemanager.container:
+      description: "Allow using container in Creative Mode"
+      default: op
+   creativemanager.ignite:
+      description: "Allow ignite block in Creative Mode"
+      default: op
+   creativemanager.spawner:
+      description: "Allow using spawn-egg and place spawner in Creative Mode"
+      default: op
+   creativemanager.drop:
+      description: "Allow drop item in Creative Mode"
+      default: op
+   creativemanager.build:
+      description: "Allow build/break in Creative Mode"
+      default: op
+   creativemanager.entity:
+      description: "Allow interact with entity in Creative Mode"
+      default: op
+   creativemanager.inventory:
+      description: "Bypass Creative Inventory Mode"
+      default: op
+   creativemanager.bypass.blacklist.place:
+      description: "Bypass Creative Inventory Mode"
+      default: op
+   creativemanager.bypass.blacklist.use:
+      description: "Bypass Creative Inventory Mode"
+      default: op
+   creativemanager.bypass.blacklist.get:
+      description: "Bypass Creative Inventory Mode"
+      default: op
+   creativemanager.reload:
+      description: "Allow reloading CreativeManager"
+      default: op
