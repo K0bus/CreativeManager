@@ -63,7 +63,7 @@ public class MainCommand implements CommandExecutor {
         }
         else
         {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &aRunning CreativeManager v1.0"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &aRunning CreativeManager v" + plugin.getDescription().getVersion()));
         }
         
         return true;
