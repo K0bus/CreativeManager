@@ -30,7 +30,18 @@ public class ConfigManager {
         if(!this.file.exists())
         {
             this.file.getParentFile().mkdirs();
-            plugin.saveResource("config.yml", false);
+            if(this.name.equals("config.yml"))
+            {
+                plugin.saveResource("config.yml", false);
+            }
+            else
+            {
+                try {
+                    this.file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         this.conf = new YamlConfiguration();
         try{

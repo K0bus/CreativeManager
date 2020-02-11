@@ -40,3 +40,6 @@ permissions:
    creativemanager.reload:
       description: "Allow reloading CreativeManager"
       default: op
+   creativemanager.dev:
+      description: "Allow using some dev command"
+      default: op

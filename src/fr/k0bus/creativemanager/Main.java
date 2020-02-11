@@ -47,6 +47,7 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerInteractAtEntity(this), this);
         pm.registerEvents(new PlayerDrop(this), this);
         pm.registerEvents(new InventoryMove(this), this);
+        pm.registerEvents(new PlayerGamemodeChange(this), this);
         this.getLogger().log(Level.INFO, "Event loaded successfully !");
     }
     private void registerCommand()

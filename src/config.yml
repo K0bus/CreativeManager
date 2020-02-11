@@ -32,3 +32,5 @@ lang:
     place: '&4You don''t have permission to place {BLOCK} in Creative'
     use: '&4You don''t have permission to use {ITEM} in Creative'
     get: '&4You don''t have permission to get {ITEM} into your inventory in Creative'
+  inventory:
+    change: '&dYour inventory switch to {GAMEMODE} inventory !'
