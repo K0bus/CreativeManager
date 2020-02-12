@@ -20,6 +20,12 @@ blacklist:
 
 creative-inventory: true #Bypass : cm.bypass.inventory
 
+add-lore: true
+creative-lore:
+  - '&5Creative {ITEM}'
+  - '&7Generate by {PLAYER}'
+  - '&7{UUID}'
+
 lang:
   permission:
     container: '&4You don''t have permission to open this container in Creative'
