@@ -68,13 +68,10 @@ public class InventoryMove implements Listener {
 					}
 				}
 				if (this.plugin.getConfig().getBoolean("add-lore")) {
-					p.sendMessage("EVENT");
 					if (!e.getCurrentItem().equals(null)) {
-						p.sendMessage("ITEM");
 						e.setCurrentItem(this.addLore(e.getCurrentItem(), p));
 					}
 					if (!e.getCursor().equals(null)) {
-						p.sendMessage("CURSOR");
 						e.setCursor(this.addLore(e.getCursor(), p));
 					}
 				}
