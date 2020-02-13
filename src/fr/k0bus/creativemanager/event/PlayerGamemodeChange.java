@@ -20,7 +20,7 @@ public class PlayerGamemodeChange implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onGMChange(PlayerGameModeChangeEvent  e) {
 		Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("creative-inventory"))
+		if(plugin.getConfig().getBoolean("creative-inventory") && !p.hasPermission("creativemanager.inventory"))
 		{
 			InventoryManager im = new InventoryManager(p, plugin);
 			im.saveInventory(p.getGameMode());
