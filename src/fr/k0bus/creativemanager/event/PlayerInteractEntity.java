@@ -25,7 +25,7 @@ public class PlayerInteractEntity implements Listener {
 		{
 			if (e.getRightClicked() instanceof ItemFrame && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.entity")) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.permission.entity")));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.entity")));
 					e.setCancelled(true);
 				}
 			}

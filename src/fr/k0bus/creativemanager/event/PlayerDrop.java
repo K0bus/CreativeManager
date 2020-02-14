@@ -23,7 +23,7 @@ public class PlayerDrop implements Listener {
 		if(plugin.getConfig().getBoolean("drop-protection") && p.getGameMode().equals(GameMode.CREATIVE))
 		{
 			if (!p.hasPermission("creativemanager.drop")) {
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.permission.drop")));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.drop")));
 				e.setCancelled(true);
 			}
 		}

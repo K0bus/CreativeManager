@@ -16,6 +16,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.type.ConfigType;
 
 public class InventoryManager {
 
@@ -26,7 +27,7 @@ public class InventoryManager {
     public InventoryManager(Player p, Main instance){
         this.p = p;
         this.plugin = instance;
-        this.cm = new ConfigManager(p.getUniqueId()+".yml", new File(instance.getDataFolder(), "data"), instance);
+        this.cm = new ConfigManager(p.getUniqueId()+".yml", new File(instance.getDataFolder(), "data"), instance, ConfigType.SAVE);
     }
     public Player getPlayer()
     {
@@ -62,7 +63,6 @@ public class InventoryManager {
         cm.getConfig().set(gm_name+".armor", encoded[1]);
         if(cm.getConfig().contains(gm_name+".content") && cm.getConfig().isString(gm_name+".content") && cm.getConfig().contains(gm_name+".armor") && cm.getConfig().isString(gm_name+".armor"))
         {
-            p.sendMessage("Saved in " + gm_name);
             cm.saveConfig();
             this.plugin.getLogger().log(Level.INFO, "Save inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
         }

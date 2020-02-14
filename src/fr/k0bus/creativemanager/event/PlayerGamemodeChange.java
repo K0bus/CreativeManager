@@ -25,7 +25,7 @@ public class PlayerGamemodeChange implements Listener {
 			InventoryManager im = new InventoryManager(p, plugin);
 			im.saveInventory(p.getGameMode());
 			im.loadInventory(e.getNewGameMode());
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
 		}
 	}
 }

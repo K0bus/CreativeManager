@@ -41,7 +41,7 @@ public class PlayerInteract implements Listener{
 				{
 					if(!p.hasPermission("creativemanager.spawn"))
 					{
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.permission.spawn")));
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.spawn")));
 						e.setCancelled(true);
 					}
 				}
@@ -49,7 +49,7 @@ public class PlayerInteract implements Listener{
 				{
 					if(!p.hasPermission("creativemanager.bypass.blacklist.use"))
 					{
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.blacklist.use").replace("{ITEM}", e.getItem().getType().getKey().getKey())));
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("blacklist.use").replace("{ITEM}", e.getItem().getType().getKey().getKey())));
 						e.setCancelled(true);
 					}
 				}

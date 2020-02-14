@@ -25,12 +25,12 @@ public class PlayerBuild  implements Listener{
 		{
 			if(plugin.getConfig().getBoolean("build-protection") && !p.hasPermission("creativemanager.build"))
 			{
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.permission.build")));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.build")));
 				e.setCancelled(true);
 			}
 			else if(plugin.getConfig().getList("blacklist.place").contains(e.getBlock().getType().getKey().getKey()) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
 			{
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.blacklist.place").replace("{BLOCK}", e.getBlock().getType().getKey().getKey())));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("blacklist.place").replace("{BLOCK}", e.getBlock().getType().getKey().getKey())));
 				e.setCancelled(true);
 			}
 		}

@@ -1,0 +1,13 @@
+permission:
+  container: '&cVous n''avez pas la permissions d''ouvrir les coffres en créative'
+  ignite: '&cVous n''avez pas la permissions d''allumer le feu en créative'
+  spawn: '&cVous n''avez pas la permissions d''utiliser les oeufs spawner en créative'
+  drop: '&cVous n''avez pas la permissions de lancer d''objets en créative'
+  build: '&cVous n''avez pas la permissions de construire en créative'
+  entity: '&cVous n''avez pas la permissions d''intéragir avec cette entité en créative'
+blacklist:
+  place: '&cVous n''avez pas la permissions de placer &4{BLOCK}&c en créative'
+  use: '&cVous n''avez pas la permissions d''utiliser &4{ITEM}&c en créative'
+  get: '&cVous n''avez pas la permissions de prendre &4{ITEM} dans votre inventaire en créative'
+inventory:
+  change: '&dVotre inventaire viens de changer pour l''inventaire {GAMEMODE} !'

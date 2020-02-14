@@ -1,6 +1,6 @@
 ##Plugin configuration
 tag: '&r[&cCreativeManager&r] '
-
+lang: en_EN
 ## Protection module
 container-protection: true #Bypass : creativemanager.container
 spawn-protection: true #Bypass : creativemanager.spawner
@@ -25,18 +25,3 @@ creative-lore:
   - '&5Creative {ITEM}'
   - '&7Generate by {PLAYER}'
   - '&7{UUID}'
-
-lang:
-  permission:
-    container: '&4You don''t have permission to open this container in Creative'
-    ignite: '&4You don''t have permission to ignite block in Creative'
-    spawn: '&4You don''t have permission use Spawn Egg in Creative'
-    drop: '&4You don''t have permission to drop item in Creative'
-    build: '&4You don''t have permission to build in Creative'
-    entity: '&4You don''t have permission to interact with entity in Creative'
-  blacklist:
-    place: '&4You don''t have permission to place {BLOCK} in Creative'
-    use: '&4You don''t have permission to use {ITEM} in Creative'
-    get: '&4You don''t have permission to get {ITEM} into your inventory in Creative'
-  inventory:
-    change: '&dYour inventory switch to {GAMEMODE} inventory !'

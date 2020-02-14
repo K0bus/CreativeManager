@@ -42,7 +42,7 @@ public class InventoryMove implements Listener {
 							}
 							p.sendMessage(ChatColor.translateAlternateColorCodes('&',
 									plugin.getConfig().getString("tag")
-											+ plugin.getConfig().getString("lang.blacklist.get").replace("{ITEM}",
+											+ plugin.getLang().getString("blacklist.get").replace("{ITEM}",
 													e.getCurrentItem().getType().getKey().getKey())));
 							cdtime.put(p.getUniqueId(), (long) (System.currentTimeMillis()));
 						}
@@ -59,7 +59,7 @@ public class InventoryMove implements Listener {
 							}
 							p.sendMessage(ChatColor.translateAlternateColorCodes('&',
 									plugin.getConfig().getString("tag")
-											+ plugin.getConfig().getString("lang.blacklist.get").replace("{ITEM}",
+											+ plugin.getLang().getString("blacklist.get").replace("{ITEM}",
 													e.getCursor().getType().getKey().getKey())));
 							cdtime.put(p.getUniqueId(), (long) (System.currentTimeMillis()));
 						}

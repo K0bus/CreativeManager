@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager;
 
+import java.io.File;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -9,10 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.k0bus.creativemanager.commands.*;
 import fr.k0bus.creativemanager.event.*;
 import fr.k0bus.creativemanager.manager.ConfigManager;
+import fr.k0bus.creativemanager.type.ConfigType;
 
 public class Main extends JavaPlugin {
 
     public ConfigManager mainConf;
+    public ConfigManager lang;
 
     @Override
     public void onEnable() {
@@ -34,7 +37,8 @@ public class Main extends JavaPlugin {
 
     public void loadConfigManager() {
         this.getLogger().log(Level.INFO, "Loading configuration ...");
-        this.mainConf = new ConfigManager("config.yml", this.getDataFolder(), this);
+        this.mainConf = new ConfigManager("config.yml", this.getDataFolder(), this, ConfigType.CONFIG);
+        this.lang = new ConfigManager(this.getConfig().getString("lang") + ".yml", new File(this.getDataFolder(), "lang"), this, ConfigType.LANG);
         this.getLogger().log(Level.INFO, "Configuration loaded successfully !");
     }
 	private void registerEvent(PluginManager pm)
@@ -57,6 +61,10 @@ public class Main extends JavaPlugin {
     public FileConfiguration getConfig()
     {
         return this.mainConf.getConfig();
+    }
+    public FileConfiguration getLang()
+    {
+        return this.lang.getConfig();
     }
     @Override
     public void onDisable()

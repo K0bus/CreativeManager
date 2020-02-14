@@ -31,10 +31,10 @@ public class MainCommand implements CommandExecutor {
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.permission.general")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.general")));
                 }
             }
-            if(args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin"))
+            else if(args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin"))
             {
                 if(args.length>=2)
                 {
