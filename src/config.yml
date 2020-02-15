@@ -7,6 +7,8 @@ spawn-protection: true #Bypass : creativemanager.spawner
 drop-protection: true #Bypass : creativemanager.drop
 build-protection: true #Bypass : creativemanager.build
 entity-protection: true #Bypass : creativemanager.entity
+pvp-protection: true #Bypass : creativemanager.hit.player
+hitmonster-protection: true #Bypass : creativemanager.hit.monster
 
 blacklist:
   place: #Bypass : creativemanager.bypass.blacklist.place

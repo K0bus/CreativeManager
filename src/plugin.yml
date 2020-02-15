@@ -43,3 +43,9 @@ permissions:
    creativemanager.dev:
       description: "Allow using some dev command"
       default: op
+   creativemanager.hit.player:
+      description: "Allow hit player"
+      default: op
+   creativemanager.hit.monster:
+      description: "Allow hit monster"
+      default: op
