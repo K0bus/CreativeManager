@@ -21,7 +21,7 @@ public class PlayerInteractAtEntity implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onUse(PlayerInteractAtEntityEvent  e) {
 		Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("entity-protection"))
+		if(plugin.getConfig().getBoolean("entity-protection") && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.entity"))
 		{
 			if (e.getRightClicked() instanceof ArmorStand || p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.entity")) {

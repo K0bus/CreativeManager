@@ -21,7 +21,7 @@ public class PlayerInteractEntity implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onUse(PlayerInteractEntityEvent e) {
 		Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("entity-protection"))
+		if(plugin.getConfig().getBoolean("entity-protection") && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.entity"))
 		{
 			if (e.getRightClicked() instanceof ItemFrame && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.entity")) {
