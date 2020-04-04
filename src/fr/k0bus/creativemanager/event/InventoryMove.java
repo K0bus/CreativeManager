@@ -48,8 +48,6 @@ public class InventoryMove implements Listener {
 						}
 						return;
 					}
-					Bukkit.getLogger().info("Action : " + e.getClick());
-					Bukkit.getLogger().info(e.getClick().name());
 					ItemStack itemStack = null;
 					if (e.getCurrentItem() != null) {
 						itemStack = e.getCurrentItem();
