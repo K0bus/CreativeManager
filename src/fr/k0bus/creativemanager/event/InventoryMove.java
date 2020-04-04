@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -23,71 +22,58 @@ public class InventoryMove implements Listener {
 
 	Main plugin;
 
-	HashMap<UUID, Long> cdtime = new HashMap<UUID, Long>();
+	HashMap<UUID, Long> cdtime = new HashMap<>();
 
 	public InventoryMove(Main instance) {
 		plugin = instance;
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInventoryClick(InventoryCreativeEvent e) {
-		if (e != null) {
-			try {
-
-				if(e.getWhoClicked() instanceof Player)
-				{
-					Player p = (Player) e.getWhoClicked();
-					if(e.getClick().equals(ClickType.DROP) || e.getClick().equals(ClickType.CONTROL_DROP) ||
-					e.getClick().equals(ClickType.WINDOW_BORDER_LEFT) || e.getClick().equals(ClickType.WINDOW_BORDER_RIGHT) ||
-					e.getClick().equals(ClickType.UNKNOWN))
-					{
-						if(plugin.getConfig().getBoolean("drop-protection") && !p.hasPermission("creativemanager.drop"))
-						{
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.drop")));
-							e.setCancelled(true);
-						}
-						return;
-					}
-					ItemStack itemStack = null;
-					if (e.getCurrentItem() != null) {
-						itemStack = e.getCurrentItem();
-					}
-					if (e.getCursor() != null) {
-						itemStack = e.getCursor();
-					}
-					if (plugin.getConfig().getList("blacklist.get")
-							.contains(itemStack.getType().getKey().getKey())) {
-						if (!p.hasPermission("creativemanager.bypass.blacklist.get")) {
-							if (cdtime.get(p.getUniqueId()) == null
-									|| (cdtime.get(p.getUniqueId()) + 1 * 1000) <= System.currentTimeMillis()) {
-								if (cdtime.get(p.getUniqueId()) != null) {
-									cdtime.remove(p.getUniqueId());
-								}
-								p.sendMessage(ChatColor.translateAlternateColorCodes('&',
-										plugin.getConfig().getString("tag")
-												+ plugin.getLang().getString("blacklist.get").replace("{ITEM}",
-												itemStack.getType().getKey().getKey())));
-								cdtime.put(p.getUniqueId(), (long) (System.currentTimeMillis()));
-							}
-							e.setCancelled(true);
-							e.setCurrentItem(new ItemStack(Material.AIR));
-						}
-					}
-					if (this.plugin.getConfig().getBoolean("add-lore") && !p.hasPermission("creativemanager.bypass.lore")) {
-						if (e.getCurrentItem() != null) {
-							e.setCurrentItem(this.addLore(itemStack, p));
-						}
-						e.getCursor();
-						e.setCursor(this.addLore(itemStack, p));
-					}
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
+		Player player = (Player) e.getWhoClicked();
+		ItemStack itemStack = e.getCurrentItem();
+		if(itemStack == null)
+			itemStack = e.getCursor();
+		else
+			if(itemStack.getType().equals(Material.AIR))
+				itemStack = e.getCursor();
+		if(e.getClick().equals(ClickType.DROP) || e.getClick().equals(ClickType.CONTROL_DROP) ||
+				e.getClick().equals(ClickType.WINDOW_BORDER_LEFT) || e.getClick().equals(ClickType.WINDOW_BORDER_RIGHT) ||
+				e.getClick().equals(ClickType.UNKNOWN))
+		{
+			if(plugin.getConfig().getBoolean("drop-protection") && !player.hasPermission("creativemanager.drop"))
+			{
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.drop")));
+				e.setCancelled(true);
 			}
+			return;
+		}
+		List<String> blacklist = plugin.getConfig().getStringList("blacklist.get");
+		if(blacklist.size() > 0)
+			if (blacklist.contains(itemStack.getType().getKey().getKey())) {
+				if (!player.hasPermission("creativemanager.bypass.blacklist.get")) {
+					if (cdtime.get(player.getUniqueId()) == null || (cdtime.get(player.getUniqueId()) + 1000) <= System.currentTimeMillis()) {
+						if (cdtime.get(player.getUniqueId()) != null) {
+							cdtime.remove(player.getUniqueId());
+						}
+						player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("blacklist.get").replace("{ITEM}", itemStack.getType().getKey().getKey())));
+						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
+					}
+					e.setCancelled(true);
+				}
+			}
+		if(!player.hasPermission("creativemanager.bypass.lore"))
+		{
+			e.setCurrentItem(addLore(e.getCurrentItem(), player));
+			e.setCursor(addLore(e.getCursor(), player));
 		}
 	}
 
 	private ItemStack addLore(ItemStack item, Player p) {
+		if(item == null)
+			return null;
+		if(p == null)
+			return null;
 		ItemMeta meta = item.getItemMeta();
 		if(meta == null)
 		{
