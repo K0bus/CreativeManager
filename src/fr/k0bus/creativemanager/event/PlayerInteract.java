@@ -33,7 +33,7 @@ public class PlayerInteract implements Listener{
 				{
 					if(!p.hasPermission("creativemanager.container"))
 					{
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getConfig().getString("lang.permission.container")));
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.container")));
 						e.setCancelled(true);
 					}
 				}
