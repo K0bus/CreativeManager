@@ -66,7 +66,6 @@ public class ConfigManager {
     {
         File file = new File(this.plugin.getDataFolder(), cfg);
         file.getParentFile().mkdirs();
-        this.file = file;
         if(!file.exists())
             plugin.saveResource(cfg, false);
         FileConfiguration default_conf = YamlConfiguration.loadConfiguration(new InputStreamReader(plugin.getResource(cfg)));
