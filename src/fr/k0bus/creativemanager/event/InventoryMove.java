@@ -82,14 +82,16 @@ public class InventoryMove implements Listener {
 		List<?> lore = this.plugin.getConfig().getList("creative-lore");
 		List<String> lore_t = new ArrayList<>();
 
-		for (Object obj : lore) {
-			if(obj instanceof String)
-			{
-				String string = (String) obj;
-				string = string.replace("{PLAYER}", p.getName())
-					.replace("{UUID}", p.getUniqueId().toString())
-					.replace("{ITEM}", item.getType().getKey().getKey());
-				lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
+		if (lore != null) {
+			for (Object obj : lore) {
+				if(obj instanceof String)
+				{
+					String string = (String) obj;
+					string = string.replace("{PLAYER}", p.getName())
+						.replace("{UUID}", p.getUniqueId().toString())
+						.replace("{ITEM}", item.getType().getKey().getKey());
+					lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
+				}
 			}
 		}
 		meta.setLore(lore_t);

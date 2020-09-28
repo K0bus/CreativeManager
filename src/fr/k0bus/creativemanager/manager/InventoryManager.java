@@ -33,7 +33,7 @@ public class InventoryManager {
     {
         return this.p;
     }
-    public Inventory loadInventory(GameMode gm)
+    public void loadInventory(GameMode gm)
     {
         String gm_name = gm.name();
         if(cm.getConfig().contains(gm_name+".content") && cm.getConfig().isString(gm_name+".content") && cm.getConfig().contains(gm_name+".armor") && cm.getConfig().isString(gm_name+".armor"))
@@ -42,8 +42,7 @@ public class InventoryManager {
                 p.getInventory().setContents(this.itemStackArrayFromBase64(cm.getConfig().getString(gm_name+".content")));
                 p.getInventory().setArmorContents(this.itemStackArrayFromBase64(cm.getConfig().getString(gm_name+".armor")));
             } catch (IOException e) {
-                //TODO: handle exception
-                e.printStackTrace();
+                plugin.getLogger().log(Level.SEVERE, e.getMessage());
             }
             this.plugin.getLogger().log(Level.INFO, "Load inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
         }
@@ -53,7 +52,6 @@ public class InventoryManager {
             this.plugin.getLogger().log(Level.INFO, "Clear inventory for " + p.getName() + " (" + p.getUniqueId() + ") because no saved inventory found for gamemode " + gm_name);
         }
 
-        return null;
     }
     public void saveInventory(GameMode gm)
     {
@@ -85,8 +83,8 @@ public class InventoryManager {
             dataOutput.writeInt(items.length);
             
             // Save every element in the list
-            for (int i = 0; i < items.length; i++) {
-                dataOutput.writeObject(items[i]);
+            for (ItemStack item : items) {
+                dataOutput.writeObject(item);
             }
             
             // Serialize that array

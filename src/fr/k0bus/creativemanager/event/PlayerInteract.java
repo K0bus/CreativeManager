@@ -13,6 +13,8 @@ import org.bukkit.inventory.meta.SpawnEggMeta;
 
 import fr.k0bus.creativemanager.Main;
 
+import java.util.logging.Level;
+
 public class PlayerInteract implements Listener{
 
 	Main plugin;
@@ -54,7 +56,7 @@ public class PlayerInteract implements Listener{
 					}
 				}
 			} catch (Exception ex) {
-				//TODO: handle exception
+				plugin.getLogger().log(Level.SEVERE, ex.getMessage());
 			}
 		}
     }

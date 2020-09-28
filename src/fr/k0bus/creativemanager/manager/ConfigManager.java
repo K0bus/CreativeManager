@@ -33,11 +33,11 @@ public class ConfigManager {
 	private void loadConfig()
     {
         this.file = new File(path, this.name);
-        if(this.type == ConfigType.CONFIG)
+        if(this.type.equals(ConfigType.CONFIG))
         {
             updateConfig("config.yml");
         }
-        if(this.type == ConfigType.LANG)
+        if(this.type.equals(ConfigType.LANG))
         {
             updateConfig("lang/en_EN.yml");
             updateConfig("lang/fr_FR.yml");
@@ -71,7 +71,7 @@ public class ConfigManager {
         FileConfiguration default_conf = YamlConfiguration.loadConfiguration(new InputStreamReader(plugin.getResource(cfg)));
         FileConfiguration conf = YamlConfiguration.loadConfiguration(this.file);
         for (String path : default_conf.getKeys(true)) {
-            if(!conf.contains(path) || conf.get(path).getClass().getName() != default_conf.get(path).getClass().getName())
+            if(!conf.contains(path) || !conf.get(path).getClass().getName().equals(default_conf.get(path).getClass().getName()))
             {
                 plugin.getLogger().log(Level.WARNING, path + " added to " + cfg);
                 conf.set(path, default_conf.get(path));

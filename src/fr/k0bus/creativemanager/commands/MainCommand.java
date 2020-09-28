@@ -24,7 +24,7 @@ public class MainCommand implements CommandExecutor {
         {
             if(args[0].equals("reload"))
             {
-                if(sender instanceof Player == false || sender.hasPermission("creativemanager.reload"))
+                if(!(sender instanceof Player) || sender.hasPermission("creativemanager.reload"))
                 {
                     plugin.loadConfigManager();
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &5Configuration reloaded !"));
