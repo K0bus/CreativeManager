@@ -9,7 +9,10 @@ build-protection: true #Bypass : creativemanager.build
 entity-protection: true #Bypass : creativemanager.entity
 pvp-protection: true #Bypass : creativemanager.hit.player
 hitmonster-protection: true #Bypass : creativemanager.hit.monster
-
+## Multi inventory
+adventure-inventory: true
+creative-inventory: true #Bypass : cm.bypass.inventory
+## Black List
 blacklist:
   place: #Bypass : creativemanager.bypass.blacklist.place
     - 'tnt'
@@ -19,9 +22,7 @@ blacklist:
     - 'fire_charge'
   get: #Bypass : creativemanager.bypass.blacklist.get
     - 'diamond'
-
-creative-inventory: true #Bypass : cm.bypass.inventory
-
+## Lore settings
 add-lore: true
 creative-lore:
   - '&5Creative {ITEM}'
