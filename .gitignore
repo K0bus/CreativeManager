@@ -1,0 +1,8 @@
+/.idea/
+/.settings/
+/.vscode/
+/lib/
+/target/
+CreativeManager.iml
+.classpath
+.project
