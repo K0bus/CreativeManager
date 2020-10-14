@@ -3,6 +3,8 @@ package fr.k0bus.creativemanager;
 import java.io.File;
 import java.util.logging.Level;
 
+import fr.k0bus.UpdateChecker;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,6 +34,7 @@ public class Main extends JavaPlugin {
         this.loadConfigManager();
         this.registerEvent(this.getServer().getPluginManager());
         this.registerCommand();
+        new UpdateChecker(this, 75097).checkUpdate();
         this.getLogger().log(Level.INFO, "=============================================================");
     }
 
@@ -57,7 +60,12 @@ public class Main extends JavaPlugin {
     }
     private void registerCommand()
     {
-        this.getCommand("cm").setExecutor(new MainCommand(this));
+        PluginCommand mainCommand = this.getCommand("cm");
+        if(mainCommand != null)
+        {
+            mainCommand.setExecutor(new MainCommand(this));
+            mainCommand.setTabCompleter(new MainCommandTab());
+        }
     }
     public FileConfiguration getConfig()
     {
