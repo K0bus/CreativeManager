@@ -3,7 +3,7 @@
 
   <groupId>CreativeManager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.4.2</version>
+  <version>1.4.4</version>
 
   <name>CreativeManager</name>
 
@@ -70,7 +70,7 @@
     <dependency>
       <groupId>fr.k0bus</groupId>
       <artifactId>kUpdateChecker</artifactId>
-      <version>1.0</version>
+      <version>1.0.2</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

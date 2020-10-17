@@ -24,6 +24,8 @@ public class PlayerGamemodeChange implements Listener {
 		if(!p.hasPermission("creativemanager.inventory"))
 		{
 			InventoryManager im = new InventoryManager(p, plugin);
+			if(e.getNewGameMode().equals(GameMode.SPECTATOR)) return;
+			if(p.getGameMode().equals(GameMode.SPECTATOR)) return;
 			if(e.getNewGameMode() == GameMode.ADVENTURE && !plugin.getConfig().getBoolean("adventure-inventory"))
 			{
 				if(p.getGameMode() == GameMode.CREATIVE && plugin.getConfig().getBoolean("creative-inventory"))
