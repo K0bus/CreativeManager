@@ -22,12 +22,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getLogger().log(Level.INFO, "=============================================================");
-        this.getLogger().log(Level.INFO, " _____                _   _          ___  ___");
-        this.getLogger().log(Level.INFO, "/  __ \\              | | (_)         |  \\/  |");
-        this.getLogger().log(Level.INFO, "| /  \\/_ __ ___  __ _| |_ ___   _____| .  . |");
-        this.getLogger().log(Level.INFO, "| |   | '__/ _ \\/ _` | __| \\ \\ / / _ \\ |\\/| |");
-        this.getLogger().log(Level.INFO, "| \\__/\\ | |  __/ (_| | |_| |\\ V /  __/ |  | |");
-        this.getLogger().log(Level.INFO, " \\____/_|  \\___|\\__,_|\\__|_| \\_/ \\___\\_|  |_/");
+        this.getLogger().log(Level.INFO, "CreativeManager v" + this.getDescription().getVersion());
         this.getLogger().log(Level.INFO, "=============================================================");
         this.getLogger().log(Level.INFO, "Created by K0bus for AkuraGaming");
         this.getLogger().log(Level.INFO, "=============================================================");
