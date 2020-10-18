@@ -24,43 +24,31 @@ public class PlayerGamemodeChange implements Listener {
 		if(!p.hasPermission("creativemanager.inventory"))
 		{
 			InventoryManager im = new InventoryManager(p, plugin);
-			if(e.getNewGameMode().equals(GameMode.SPECTATOR)) return;
-			if(p.getGameMode().equals(GameMode.SPECTATOR)) return;
-			if(e.getNewGameMode() == GameMode.ADVENTURE && !plugin.getConfig().getBoolean("adventure-inventory"))
+			if(!plugin.getConfig().getBoolean("adventure-inventory"))
 			{
-				if(p.getGameMode() == GameMode.CREATIVE && plugin.getConfig().getBoolean("creative-inventory"))
+				if(e.getNewGameMode().equals(GameMode.ADVENTURE))
 				{
 					im.saveInventory(p.getGameMode());
-					im.loadInventory(GameMode.SURVIVAL);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
+					return;
 				}
-				return;
+				else if(p.getGameMode().equals(GameMode.ADVENTURE))
+				{
+					im.saveInventory(GameMode.SURVIVAL);
+					return;
+				}
 			}
-			if(e.getNewGameMode() == GameMode.CREATIVE && !plugin.getConfig().getBoolean("creative-inventory"))
+			if(!plugin.getConfig().getBoolean("creative-inventory"))
 			{
-				if(p.getGameMode() == GameMode.ADVENTURE && plugin.getConfig().getBoolean("adventure-inventory"))
+				if(e.getNewGameMode().equals(GameMode.CREATIVE))
 				{
 					im.saveInventory(p.getGameMode());
-					im.loadInventory(GameMode.ADVENTURE);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
+					return;
 				}
-				return;
-			}
-			if(e.getNewGameMode() == GameMode.SURVIVAL)
-			{
-				if(p.getGameMode() == GameMode.ADVENTURE && plugin.getConfig().getBoolean("adventure-inventory"))
+				else if(p.getGameMode().equals(GameMode.CREATIVE))
 				{
-					im.saveInventory(p.getGameMode());
-					im.loadInventory(GameMode.SURVIVAL);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
+					im.saveInventory(GameMode.SURVIVAL);
+					return;
 				}
-				if(p.getGameMode() == GameMode.CREATIVE && plugin.getConfig().getBoolean("creative-inventory"))
-				{
-					im.saveInventory(p.getGameMode());
-					im.loadInventory(GameMode.SURVIVAL);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
-				}
-				return;
 			}
 			im.saveInventory(p.getGameMode());
 			im.loadInventory(e.getNewGameMode());
