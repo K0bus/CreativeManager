@@ -78,7 +78,7 @@ public class ConfigManager {
             }
         }
         for (String path : conf.getKeys(true)) {
-            if(!default_conf.contains(path) || conf.get(path).getClass().getName() != default_conf.get(path).getClass().getName())
+            if(!default_conf.contains(path) || !conf.get(path).getClass().getName().equals(default_conf.get(path).getClass().getName()))
             {
                 plugin.getLogger().log(Level.WARNING, path + " removed to " + cfg);
                 conf.set(path, null);

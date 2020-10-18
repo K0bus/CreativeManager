@@ -13,8 +13,6 @@ import org.bukkit.inventory.meta.SpawnEggMeta;
 
 import fr.k0bus.creativemanager.Main;
 
-import java.util.logging.Level;
-
 public class PlayerInteract implements Listener {
 
     Main plugin;
