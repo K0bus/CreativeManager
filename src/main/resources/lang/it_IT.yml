@@ -1,0 +1,16 @@
+permission:
+  container: '&4Non hai il permesso di aprire questo container in Creativa'
+  ignite: '&4Non hai il permesso di dare fuoco in Creativa'
+  spawn: '&4Non hai il permesso di usare Uovo di Generazione in Creativa'
+  drop: '&4Non hai il permesso di gettare oggetti in Creativa'
+  build: '&4Non hai il permesso di costruire in creativa'
+  entity: '&4Non hai il permesso di interagire con questa entità in creativa'
+  hit:
+    player: '&cNon hai il permesso di attaccare i giocatori'
+    monster: '&cNon hai il permesso di attaccare i mostri'
+blacklist:
+  place: '&4Non hai il permesso di piazzare {BLOCK} in Creativa'
+  use: '&4Non hai il permesso di usare {ITEM} in Creativa'
+  get: '&4Non hai il permesso di ottenere {ITEM} nel tuo inventario in Creativa'
+inventory:
+  change: '&dSei passato all''inventario della modalità {GAMEMODE} !'
