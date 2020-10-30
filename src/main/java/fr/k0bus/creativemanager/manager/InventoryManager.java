@@ -29,6 +29,7 @@ public class InventoryManager {
         this.plugin = instance;
         this.cm = new ConfigManager(p.getUniqueId()+".yml", new File(instance.getDataFolder(), "data"), instance, ConfigType.SAVE);
     }
+
     public Player getPlayer()
     {
         return this.p;
