@@ -45,12 +45,14 @@ public class InventoryManager {
             } catch (IOException e) {
                 plugin.getLogger().log(Level.SEVERE, e.getMessage());
             }
-            this.plugin.getLogger().log(Level.INFO, "Load inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
+            if(plugin.getConfig().getBoolean("log"))
+                this.plugin.getLogger().log(Level.INFO, "Load inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
         }
         else
         {
             p.getInventory().clear();
-            this.plugin.getLogger().log(Level.INFO, "Clear inventory for " + p.getName() + " (" + p.getUniqueId() + ") because no saved inventory found for gamemode " + gm_name);
+            if(plugin.getConfig().getBoolean("log"))
+                this.plugin.getLogger().log(Level.INFO, "Clear inventory for " + p.getName() + " (" + p.getUniqueId() + ") because no saved inventory found for gamemode " + gm_name);
         }
 
     }
@@ -63,7 +65,8 @@ public class InventoryManager {
         if(cm.getConfig().contains(gm_name+".content") && cm.getConfig().isString(gm_name+".content") && cm.getConfig().contains(gm_name+".armor") && cm.getConfig().isString(gm_name+".armor"))
         {
             cm.saveConfig();
-            this.plugin.getLogger().log(Level.INFO, "Save inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
+            if(plugin.getConfig().getBoolean("log"))
+                this.plugin.getLogger().log(Level.INFO, "Save inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
         }
     }
 
