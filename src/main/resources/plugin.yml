@@ -19,6 +19,9 @@ permissions:
    creativemanager.drop:
       description: "Allow drop item in Creative Mode"
       default: op
+   creativemanager.pickup:
+      description: "Allow pickup item in Creative Mode"
+      default: op
    creativemanager.build:
       description: "Allow build/break in Creative Mode"
       default: op

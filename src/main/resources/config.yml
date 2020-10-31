@@ -1,10 +1,12 @@
 ##Plugin configuration
 tag: '&r[&cCreativeManager&r] '
 lang: en_EN
+log: true
 ## Protection module
 container-protection: true #Bypass : creativemanager.container
 spawn-protection: true #Bypass : creativemanager.spawner
 drop-protection: true #Bypass : creativemanager.drop
+pickup-protection: true #Bypass : creativemanager.pickup
 build-protection: true #Bypass : creativemanager.build
 entity-protection: true #Bypass : creativemanager.entity
 pvp-protection: true #Bypass : creativemanager.hit.player
