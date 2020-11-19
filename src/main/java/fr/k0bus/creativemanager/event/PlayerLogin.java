@@ -36,8 +36,10 @@ public class PlayerLogin implements Listener {
         System.out.println("Force GM : " + forceGamemode);
         if (forceGamemode)
         {
-            InventoryManager im = new InventoryManager(e.getPlayer(), plugin);
-            im.loadInventory(plugin.getServer().getDefaultGameMode());
+            if(!e.getPlayer().hasPermission("creativemanager.bypass.inventory")) {
+                InventoryManager im = new InventoryManager(e.getPlayer(), plugin);
+                im.loadInventory(plugin.getServer().getDefaultGameMode());
+            }
         }
     }
 }

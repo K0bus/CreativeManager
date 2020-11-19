@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
+import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,17 +27,17 @@ public class PlayerHitEvent implements Listener {
 			{
 				if(e.getEntity() instanceof Player)
 				{
-					if(!attacker.hasPermission("creativemanager.hit.player") && plugin.getConfig().getBoolean("pvp-protection"))
+					if(!attacker.hasPermission("creativemanager.bypass.pvp") && plugin.getSettings().getProtection(Protections.PVP))
 					{
-						attacker.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.hit.player")));
+						attacker.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.hit.player")));
 						e.setCancelled(true);
 					}
 				}
 				else
 				{
-					if(!attacker.hasPermission("creativemanager.hit.monster") && plugin.getConfig().getBoolean("hitmonster-protection"))
+					if(!attacker.hasPermission("creativemanager.bypass.pve") && plugin.getSettings().getProtection(Protections.PVE))
 					{
-						attacker.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.hit.monster")));
+						attacker.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.hit.monster")));
 						e.setCancelled(true);
 					}
 				}

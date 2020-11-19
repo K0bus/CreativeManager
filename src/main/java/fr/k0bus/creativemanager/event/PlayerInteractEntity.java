@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
+import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.ItemFrame;
@@ -21,11 +22,11 @@ public class PlayerInteractEntity implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onUse(PlayerInteractEntityEvent e) {
 		Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("entity-protection") && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.entity"))
+		if(plugin.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity"))
 		{
 			if (e.getRightClicked() instanceof ItemFrame && p.getGameMode().equals(GameMode.CREATIVE)) {
-				if (!p.hasPermission("creativemanager.entity")) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.entity")));
+				if (!p.hasPermission("creativemanager.bypass.entity")) {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.entity")));
 					e.setCancelled(true);
 				}
 			}

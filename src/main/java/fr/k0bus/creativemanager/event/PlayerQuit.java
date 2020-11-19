@@ -20,19 +20,13 @@ public class PlayerQuit implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onQuit(PlayerQuitEvent e) {
 		Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("creative-inventory"))
-		{
-			InventoryManager im = new InventoryManager(p, plugin);
-			im.saveInventory(p.getGameMode());
-		}
+		InventoryManager im = new InventoryManager(p, plugin);
+		im.saveInventory(p.getGameMode());
 	}
 	@EventHandler(ignoreCancelled = true)
 	public void onKicked(PlayerKickEvent e) {
 		Player p = e.getPlayer();
-		if(plugin.getConfig().getBoolean("creative-inventory"))
-		{
-			InventoryManager im = new InventoryManager(p, plugin);
-			im.saveInventory(p.getGameMode());
-		}
+		InventoryManager im = new InventoryManager(p, plugin);
+		im.saveInventory(p.getGameMode());
 	}
 }

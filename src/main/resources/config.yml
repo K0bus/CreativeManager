@@ -3,17 +3,20 @@ tag: '&r[&cCreativeManager&r] '
 lang: en_EN
 log: true
 ## Protection module
-container-protection: true #Bypass : creativemanager.container
-spawn-protection: true #Bypass : creativemanager.spawner
-drop-protection: true #Bypass : creativemanager.drop
-pickup-protection: true #Bypass : creativemanager.pickup
-build-protection: true #Bypass : creativemanager.build
-entity-protection: true #Bypass : creativemanager.entity
-pvp-protection: true #Bypass : creativemanager.hit.player
-hitmonster-protection: true #Bypass : creativemanager.hit.monster
+protections:
+  container: true #Bypass : creativemanager.container
+  spawn_egg: false #Bypass : creativemanager.spawner
+  drop: true #Bypass : creativemanager.drop
+  pickup: true #Bypass : creativemanager.pickup
+  build: false #Bypass : creativemanager.build
+  entity: true #Bypass : creativemanager.entity
+  pvp: false #Bypass : creativemanager.hit.player
+  pve: false #Bypass : creativemanager.hit.monster
+  lore: true # Bypass : creativemanager.bypass.lore
 ## Multi inventory
-adventure-inventory: true
-creative-inventory: true #Bypass : cm.bypass.inventory
+inventory:
+  adventure: true #Bypass : cm.bypass.inventory
+  creative: true #Bypass : cm.bypass.inventory
 ## Black List
 blacklist:
   place: #Bypass : creativemanager.bypass.blacklist.place
@@ -25,7 +28,6 @@ blacklist:
   get: #Bypass : creativemanager.bypass.blacklist.get
     - 'diamond'
 ## Lore settings
-add-lore: true
 creative-lore:
   - '&5Creative {ITEM}'
   - '&7Generate by {PLAYER}'

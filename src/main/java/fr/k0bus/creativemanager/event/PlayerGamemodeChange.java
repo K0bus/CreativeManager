@@ -21,10 +21,10 @@ public class PlayerGamemodeChange implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onGMChange(PlayerGameModeChangeEvent  e) {
 		Player p = e.getPlayer();
-		if(!p.hasPermission("creativemanager.inventory"))
+		if(!p.hasPermission("creativemanager.bypass.inventory"))
 		{
 			InventoryManager im = new InventoryManager(p, plugin);
-			if(!plugin.getConfig().getBoolean("adventure-inventory"))
+			if(!plugin.getSettings().adventureInvEnable())
 			{
 				if(e.getNewGameMode().equals(GameMode.ADVENTURE))
 				{
@@ -37,7 +37,7 @@ public class PlayerGamemodeChange implements Listener {
 					return;
 				}
 			}
-			if(!plugin.getConfig().getBoolean("creative-inventory"))
+			if(!plugin.getSettings().creativeInvEnable())
 			{
 				if(e.getNewGameMode().equals(GameMode.CREATIVE))
 				{
@@ -52,7 +52,7 @@ public class PlayerGamemodeChange implements Listener {
 			}
 			im.saveInventory(p.getGameMode());
 			im.loadInventory(e.getNewGameMode());
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
+			p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
 		}
 	}
 }

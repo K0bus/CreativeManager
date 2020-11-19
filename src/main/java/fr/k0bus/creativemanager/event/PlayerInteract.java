@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
+import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -26,19 +27,19 @@ public class PlayerInteract implements Listener {
         Player p = e.getPlayer();
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && p.getGameMode().equals(GameMode.CREATIVE)) {
             if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
-                if (!p.hasPermission("creativemanager.container")) {
+                if (!p.hasPermission("creativemanager.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.container")));
                     e.setCancelled(true);
                 }
             } else if (e.getItem() instanceof SpawnEggMeta) {
                 if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
-                    if (!p.hasPermission("creativemanager.spawn")) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.spawn")));
+                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.spawn")));
                         e.setCancelled(true);
                     }
-                } else if (plugin.getConfig().getList("blacklist.use").contains(e.getItem().getType().getKey().getKey())) {
+                } else if (plugin.getSettings().getUseBL().contains(e.getItem().getType().getKey().getKey())) {
                     if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("blacklist.use").replace("{ITEM}", e.getItem().getType().getKey().getKey())));
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("blacklist.use").replace("{ITEM}", e.getItem().getType().getKey().getKey())));
                         e.setCancelled(true);
                     }
                 }

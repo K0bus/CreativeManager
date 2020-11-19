@@ -2,10 +2,10 @@ package fr.k0bus.creativemanager.manager;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
+import fr.k0bus.creativemanager.settings.UserData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,18 +16,17 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.creativemanager.type.ConfigType;
 
 public class InventoryManager {
 
     Player p;
-    ConfigManager cm;
+    UserData cm;
     CreativeManager plugin;
 
     public InventoryManager(Player p, CreativeManager instance){
         this.p = p;
         this.plugin = instance;
-        this.cm = new ConfigManager(p.getUniqueId()+".yml", new File(instance.getDataFolder(), "data"), instance, ConfigType.SAVE);
+        this.cm = new UserData(p, plugin);
     }
 
     public Player getPlayer()
@@ -37,11 +36,11 @@ public class InventoryManager {
     public void loadInventory(GameMode gm)
     {
         String gm_name = gm.name();
-        if(cm.getConfig().contains(gm_name+".content") && cm.getConfig().isString(gm_name+".content") && cm.getConfig().contains(gm_name+".armor") && cm.getConfig().isString(gm_name+".armor"))
+        if(cm.contains(gm_name+".content") && cm.isString(gm_name+".content") && cm.contains(gm_name+".armor") && cm.isString(gm_name+".armor"))
         {
             try {
-                p.getInventory().setContents(this.itemStackArrayFromBase64(cm.getConfig().getString(gm_name+".content")));
-                p.getInventory().setArmorContents(this.itemStackArrayFromBase64(cm.getConfig().getString(gm_name+".armor")));
+                p.getInventory().setContents(this.itemStackArrayFromBase64(cm.getString(gm_name+".content")));
+                p.getInventory().setArmorContents(this.itemStackArrayFromBase64(cm.getString(gm_name+".armor")));
             } catch (IOException e) {
                 plugin.getLogger().log(Level.SEVERE, e.getMessage());
             }
@@ -60,11 +59,11 @@ public class InventoryManager {
     {
         String gm_name = gm.name();
         String[] encoded = this.playerInventoryToBase64(p.getInventory());
-        cm.getConfig().set(gm_name+".content", encoded[0]);
-        cm.getConfig().set(gm_name+".armor", encoded[1]);
-        if(cm.getConfig().contains(gm_name+".content") && cm.getConfig().isString(gm_name+".content") && cm.getConfig().contains(gm_name+".armor") && cm.getConfig().isString(gm_name+".armor"))
+        cm.set(gm_name+".content", encoded[0]);
+        cm.set(gm_name+".armor", encoded[1]);
+        if(cm.contains(gm_name+".content") && cm.isString(gm_name+".content") && cm.contains(gm_name+".armor") && cm.isString(gm_name+".armor"))
         {
-            cm.saveConfig();
+            cm.save();
             if(plugin.getConfig().getBoolean("log"))
                 this.plugin.getLogger().log(Level.INFO, "Save inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);
         }

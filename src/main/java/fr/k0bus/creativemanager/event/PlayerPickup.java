@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
+import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,9 +20,9 @@ public class PlayerPickup implements Listener {
     {
         if(!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
-        if(plugin.getConfig().getBoolean("pickup-protection") && p.getGameMode().equals(GameMode.CREATIVE))
+        if(plugin.getSettings().getProtection(Protections.PICKUP) && p.getGameMode().equals(GameMode.CREATIVE))
         {
-            if (!p.hasPermission("creativemanager.pickup")) {
+            if (!p.hasPermission("creativemanager.bypass.pickup")) {
                 e.setCancelled(true);
             }
         }

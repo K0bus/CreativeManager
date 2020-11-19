@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
+import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -24,9 +25,9 @@ public class PlayerBreak implements Listener{
 		Player p = e.getPlayer();
 		if(p.getGameMode() == GameMode.CREATIVE)
 		{
-			if(plugin.getConfig().getBoolean("build-protection") && !p.hasPermission("creativemanager.build"))
+			if(plugin.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build"))
 			{
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.build")));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.build")));
 				e.setCancelled(true);
 			}
 		}

@@ -18,7 +18,10 @@ public class MainCommandTab implements TabCompleter {
                 if(sender.hasPermission("creativemanager.reload"))
                     list.add("reload");
                 if(sender.hasPermission("creativemanager.admin"))
+                {
                     list.add("inventory");
+                    list.add("settings");
+                }
                 break;
             case 2:
                 if(sender.hasPermission("creativemanager.admin"))

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,14 +42,14 @@ public class InventoryMove implements Listener {
 				e.getClick().equals(ClickType.WINDOW_BORDER_LEFT) || e.getClick().equals(ClickType.WINDOW_BORDER_RIGHT) ||
 				e.getClick().equals(ClickType.UNKNOWN))
 		{
-			if(plugin.getConfig().getBoolean("drop-protection") && !player.hasPermission("creativemanager.drop"))
+			if(plugin.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop"))
 			{
-				player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.drop")));
+				player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.drop")));
 				e.setCancelled(true);
 			}
 			return;
 		}
-		List<String> blacklist = plugin.getConfig().getStringList("blacklist.get");
+		List<String> blacklist = plugin.getSettings().getGetBL();
 		if(blacklist.size() > 0)
 			if (blacklist.contains(itemStack.getType().getKey().getKey())) {
 				if (!player.hasPermission("creativemanager.bypass.blacklist.get")) {
@@ -58,13 +59,13 @@ public class InventoryMove implements Listener {
 						}
 						String blget = plugin.getLang().getString("blacklist.get");
 						if(blget != null)
-							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + blget.replace("{ITEM}", itemStack.getType().getKey().getKey())));
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + blget.replace("{ITEM}", itemStack.getType().getKey().getKey())));
 						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
 					}
 					e.setCancelled(true);
 				}
 			}
-		if(!player.hasPermission("creativemanager.bypass.lore"))
+		if(!player.hasPermission("creativemanager.bypass.lore") && plugin.getSettings().getProtection(Protections.LORE))
 		{
 			e.setCurrentItem(addLore(e.getCurrentItem(), player));
 			e.setCursor(addLore(e.getCursor(), player));
@@ -81,7 +82,7 @@ public class InventoryMove implements Listener {
 		{
 			return item;
 		}
-		List<?> lore = this.plugin.getConfig().getList("creative-lore");
+		List<?> lore = this.plugin.getSettings().getLore();
 		List<String> lore_t = new ArrayList<>();
 
 		if (lore != null) {

@@ -1,23 +1,27 @@
 package fr.k0bus.creativemanager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 
+import com.google.common.io.Files;
+import fr.k0bus.creativemanager.settings.Configuration;
+import fr.k0bus.creativemanager.settings.Language;
+import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.kupdatechecker.UpdateChecker;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.k0bus.creativemanager.commands.*;
 import fr.k0bus.creativemanager.event.*;
-import fr.k0bus.creativemanager.manager.ConfigManager;
-import fr.k0bus.creativemanager.type.ConfigType;
 
 public class CreativeManager extends JavaPlugin {
 
-    public ConfigManager mainConf;
-    public ConfigManager lang;
+    public Settings settings;
+    public Language lang;
+    public final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
 
     @Override
     public void onEnable() {
@@ -26,6 +30,7 @@ public class CreativeManager extends JavaPlugin {
         this.getLogger().log(Level.INFO, "=============================================================");
         this.getLogger().log(Level.INFO, "Created by K0bus for AkuraGaming");
         this.getLogger().log(Level.INFO, "=============================================================");
+        this.updateConfig();
         this.loadConfigManager();
         this.registerEvent(this.getServer().getPluginManager());
         this.registerCommand();
@@ -35,9 +40,38 @@ public class CreativeManager extends JavaPlugin {
 
     public void loadConfigManager() {
         this.getLogger().log(Level.INFO, "Loading configuration ...");
-        this.mainConf = new ConfigManager("config.yml", this.getDataFolder(), this, ConfigType.CONFIG);
-        this.lang = new ConfigManager(this.getConfig().getString("lang") + ".yml", new File(this.getDataFolder(), "lang"), this, ConfigType.LANG);
+        this.settings = new Settings(this);
+        this.lang = new Language(settings.getLang(), this);
         this.getLogger().log(Level.INFO, "Configuration loaded successfully !");
+    }
+    public void updateConfig()
+    {
+        Configuration oldConfig = new Configuration("config.yml", this);
+        if(oldConfig.contains("build-protection"))
+        {
+            try {
+                Files.move(oldConfig.getFile(),new File(oldConfig.getFile().getParentFile(), "old_config.yml"));
+                oldConfig = new Configuration("old_config.yml", this);
+                this.settings = new Settings(this);
+                this.settings.set("protections.entity", oldConfig.getBoolean("entity-protection"));
+                this.settings.set("protections.pvp", oldConfig.getBoolean("pvp-protection"));
+                this.settings.set("protections.container", oldConfig.getBoolean("container-protection"));
+                this.settings.set("protections.spawn", oldConfig.getBoolean("spawn-protection"));
+                this.settings.set("protections.drop", oldConfig.getBoolean("drop-protection"));
+                this.settings.set("protections.pve", oldConfig.getBoolean("hitmonster-protection"));
+                this.settings.set("protections.lore", oldConfig.getBoolean("add-lore"));
+                this.settings.set("inventory.adventure", oldConfig.getBoolean("adventure-inventory"));
+                this.settings.set("inventory.creative", oldConfig.getBoolean("creative-inventory"));
+                this.settings.set("tag", oldConfig.getString("tag"));
+                this.settings.set("lang", oldConfig.getString("lang"));
+                this.settings.set("log", oldConfig.getBoolean("log"));
+                this.settings.set("blacklist", oldConfig.getConfigurationSection("blacklist"));
+                this.settings.set("blacklist", oldConfig.getConfigurationSection("blacklist"));
+                this.settings.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 	private void registerEvent(PluginManager pm)
 	{
@@ -64,14 +98,19 @@ public class CreativeManager extends JavaPlugin {
             mainCommand.setTabCompleter(new MainCommandTab());
         }
     }
-    public FileConfiguration getConfig()
+    public Settings getSettings()
     {
-        return this.mainConf.getConfig();
+        return this.settings;
     }
-    public FileConfiguration getLang()
+    public Language getLang()
     {
-        return this.lang.getConfig();
+        return this.lang;
     }
+
+    public String getInvTag() {
+        return invTag;
+    }
+
     @Override
     public void onDisable()
     {

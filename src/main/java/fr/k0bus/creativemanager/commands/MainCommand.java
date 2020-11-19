@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.commands;
 
+import fr.k0bus.creativemanager.gui.settings.ProtectionSettingGui;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,17 +28,23 @@ public class MainCommand implements CommandExecutor {
                 if(!(sender instanceof Player) || sender.hasPermission("creativemanager.reload"))
                 {
                     plugin.loadConfigManager();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &5Configuration reloaded !"));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &5Configuration reloaded !"));
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.general")));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.general")));
                 }
-            }
-            else if(args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin"))
-            {
-                if(args.length>=2)
+            } else if (args[0].equals("settings")) {
+                if(sender instanceof Player && sender.hasPermission("creativemanager.admin"))
                 {
+                    new ProtectionSettingGui((Player) sender, plugin).show();
+                }
+                else
+                {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.general")));
+                }
+            } else if (args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
+                if (args.length >= 2) {
                     Player p = (Player) sender;
                     InventoryManager im = new InventoryManager(p, plugin);
                     switch (args[1]) {
@@ -50,20 +57,16 @@ public class MainCommand implements CommandExecutor {
                         default:
                             break;
                     }
+                } else {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &4Missing argument !"));
                 }
-                else
-                {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &4Missing argument !"));
-                }
-            }
-            else
-            {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &4Unknown command " + args[0] + " !"));
+            } else {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &4Unknown command " + args[0] + " !"));
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion()));
         }
         
         return true;
