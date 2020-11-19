@@ -3,7 +3,7 @@ package fr.k0bus.creativemanager;
 import java.io.File;
 import java.util.logging.Level;
 
-import fr.k0bus.UpdateChecker;
+import fr.k0bus.kupdatechecker.UpdateChecker;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
