@@ -7,14 +7,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
 
 public class PlayerGamemodeChange implements Listener {
 
-	Main plugin;
+	CreativeManager plugin;
 
-	public PlayerGamemodeChange(Main instance) {
+	public PlayerGamemodeChange(CreativeManager instance) {
 		plugin = instance;
 	}
 

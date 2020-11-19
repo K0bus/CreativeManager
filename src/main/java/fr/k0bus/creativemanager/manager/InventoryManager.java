@@ -15,16 +15,16 @@ import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.type.ConfigType;
 
 public class InventoryManager {
 
     Player p;
     ConfigManager cm;
-    Main plugin;
+    CreativeManager plugin;
 
-    public InventoryManager(Player p, Main instance){
+    public InventoryManager(Player p, CreativeManager instance){
         this.p = p;
         this.plugin = instance;
         this.cm = new ConfigManager(p.getUniqueId()+".yml", new File(instance.getDataFolder(), "data"), instance, ConfigType.SAVE);

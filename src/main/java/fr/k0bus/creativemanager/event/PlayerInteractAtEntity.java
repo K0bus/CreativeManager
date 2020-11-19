@@ -8,13 +8,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 
 public class PlayerInteractAtEntity implements Listener {
 
-	Main plugin;
+	CreativeManager plugin;
 
-	public PlayerInteractAtEntity(Main instance) {
+	public PlayerInteractAtEntity(CreativeManager instance) {
 		plugin = instance;
 	}
 

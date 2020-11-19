@@ -6,14 +6,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
 
 public class PlayerQuit implements Listener {
 
-	Main plugin;
+	CreativeManager plugin;
 
-	public PlayerQuit(Main instance) {
+	public PlayerQuit(CreativeManager instance) {
 		plugin = instance;
 	}
 

@@ -11,13 +11,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.meta.SpawnEggMeta;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 
 public class PlayerInteract implements Listener {
 
-    Main plugin;
+    CreativeManager plugin;
 
-    public PlayerInteract(Main instance) {
+    public PlayerInteract(CreativeManager instance) {
         plugin = instance;
     }
 

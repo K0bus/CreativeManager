@@ -7,12 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 
 public class PlayerBuild  implements Listener{
-	Main plugin;
+	CreativeManager plugin;
 
-	public PlayerBuild(Main instance)
+	public PlayerBuild(CreativeManager instance)
 	{
 		plugin = instance;
 	}

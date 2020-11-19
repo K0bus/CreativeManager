@@ -7,13 +7,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 
 public class PlayerBreak implements Listener{
 
-	Main plugin;
+	CreativeManager plugin;
 
-	public PlayerBreak(Main instance)
+	public PlayerBreak(CreativeManager instance)
 	{
 		plugin = instance;
 	}

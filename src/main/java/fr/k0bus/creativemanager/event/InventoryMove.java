@@ -16,15 +16,15 @@ import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 
 public class InventoryMove implements Listener {
 
-	Main plugin;
+	CreativeManager plugin;
 
 	HashMap<UUID, Long> cdtime = new HashMap<>();
 
-	public InventoryMove(Main instance) {
+	public InventoryMove(CreativeManager instance) {
 		plugin = instance;
 	}
 

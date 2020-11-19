@@ -1,17 +1,15 @@
 package fr.k0bus.creativemanager.event;
 
-import fr.k0bus.creativemanager.Main;
-import org.bukkit.ChatColor;
+import fr.k0bus.creativemanager.CreativeManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class PlayerPickup implements Listener {
-    Main plugin;
-    public PlayerPickup(Main plugin)
+    CreativeManager plugin;
+    public PlayerPickup(CreativeManager plugin)
     {
         this.plugin = plugin;
     }

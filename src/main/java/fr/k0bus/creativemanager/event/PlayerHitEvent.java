@@ -6,14 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class PlayerHitEvent implements Listener {
 
-	Main plugin;
+	CreativeManager plugin;
 
-	public PlayerHitEvent(Main instance) {
+	public PlayerHitEvent(CreativeManager instance) {
 		plugin = instance;
 	}
 

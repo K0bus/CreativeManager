@@ -14,7 +14,7 @@ import fr.k0bus.creativemanager.event.*;
 import fr.k0bus.creativemanager.manager.ConfigManager;
 import fr.k0bus.creativemanager.type.ConfigType;
 
-public class Main extends JavaPlugin {
+public class CreativeManager extends JavaPlugin {
 
     public ConfigManager mainConf;
     public ConfigManager lang;

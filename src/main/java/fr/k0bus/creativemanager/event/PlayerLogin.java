@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,9 +13,9 @@ import java.util.Properties;
 
 public class PlayerLogin implements Listener {
 
-    private Main plugin;
+    private CreativeManager plugin;
 
-    public PlayerLogin(Main plugin)
+    public PlayerLogin(CreativeManager plugin)
     {
         this.plugin = plugin;
     }

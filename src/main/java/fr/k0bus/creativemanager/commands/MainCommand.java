@@ -6,14 +6,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.k0bus.creativemanager.Main;
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
 
 public class MainCommand implements CommandExecutor {
 
-    Main plugin;
+    CreativeManager plugin;
 
-    public MainCommand(Main instance)
+    public MainCommand(CreativeManager instance)
     {
         plugin = instance;
     }
