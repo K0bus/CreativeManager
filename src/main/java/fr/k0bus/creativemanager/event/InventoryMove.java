@@ -56,7 +56,9 @@ public class InventoryMove implements Listener {
 						if (cdtime.get(player.getUniqueId()) != null) {
 							cdtime.remove(player.getUniqueId());
 						}
-						player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("blacklist.get").replace("{ITEM}", itemStack.getType().getKey().getKey())));
+						String blget = plugin.getLang().getString("blacklist.get");
+						if(blget != null)
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + blget.replace("{ITEM}", itemStack.getType().getKey().getKey())));
 						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
 					}
 					e.setCancelled(true);
