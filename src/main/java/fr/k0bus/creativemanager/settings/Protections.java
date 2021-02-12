@@ -20,7 +20,8 @@ public enum Protections {
     ENTITY("entity", Material.ITEM_FRAME, "Protect entity usage (ItemFrame / ArmorStand ...)"),
     PVP("pvp", Material.PLAYER_HEAD, "Disable PVP for Creative"),
     PVE("pve", Material.SKELETON_SKULL, "Disable PVE for Creative"),
-    LORE("lore", Material.NAME_TAG, "Add lore to Creative Items");
+    LORE("lore", Material.NAME_TAG, "Add lore to Creative Items"),
+    LOOT("loot", Material.NAME_TAG, "Deny looting from Creative placed block");
 
     private final String name;
     private final Material icon;

@@ -55,3 +55,6 @@ permissions:
    creativemanager.bypass.pve:
       description: "Allow hit monster"
       default: op
+   creativemanager.bypass.loot:
+      description: "Allow loot creative placed block"
+      default: op
