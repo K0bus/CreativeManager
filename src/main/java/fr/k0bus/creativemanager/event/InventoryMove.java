@@ -51,7 +51,7 @@ public class InventoryMove implements Listener {
 		}
 		List<String> blacklist = plugin.getSettings().getGetBL();
 		if(blacklist.size() > 0)
-			if (blacklist.contains(itemStack.getType().getKey().getKey())) {
+			if (blacklist.contains(itemStack.getType().name())) {
 				if (!player.hasPermission("creativemanager.bypass.blacklist.get")) {
 					if (cdtime.get(player.getUniqueId()) == null || (cdtime.get(player.getUniqueId()) + 1000) <= System.currentTimeMillis()) {
 						if (cdtime.get(player.getUniqueId()) != null) {
@@ -59,7 +59,7 @@ public class InventoryMove implements Listener {
 						}
 						String blget = plugin.getLang().getString("blacklist.get");
 						if(blget != null)
-							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + blget.replace("{ITEM}", itemStack.getType().getKey().getKey())));
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + blget.replace("{ITEM}", itemStack.getType().name())));
 						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
 					}
 					e.setCancelled(true);

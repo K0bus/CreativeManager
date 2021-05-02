@@ -47,6 +47,11 @@ public class CreativeManager extends JavaPlugin {
     public void updateConfig()
     {
         Configuration oldConfig = new Configuration("config.yml", this);
+        new Language("en_EN", this);
+        new Language("es_ES", this);
+        new Language("fr_FR", this);
+        new Language("it_IT", this);
+        new Language("ru_RU", this);
         if(oldConfig.contains("build-protection"))
         {
             try {
@@ -87,6 +92,7 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerHitEvent(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerLogin(this), this);
+        pm.registerEvents(new PistonEvent(this), this);
         this.getLogger().log(Level.INFO, "Event loaded successfully !");
     }
     private void registerCommand()

@@ -37,12 +37,13 @@ public class PlayerInteract implements Listener {
                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.spawn")));
                         e.setCancelled(true);
                     }
-                } else if (plugin.getSettings().getUseBL().contains(e.getItem().getType().getKey().getKey())) {
+                }
+            } else if (e.getItem() != null) {
+                if(plugin.getSettings().getUseBL().contains(e.getItem().getType().name()))
                     if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("blacklist.use").replace("{ITEM}", e.getItem().getType().getKey().getKey())));
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("blacklist.use").replace("{ITEM}", e.getItem().getType().name())));
                         e.setCancelled(true);
                     }
-                }
             }
         }
     }

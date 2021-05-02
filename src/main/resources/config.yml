@@ -13,6 +13,7 @@ protections:
   pvp: false #Bypass : creativemanager.hit.player
   pve: false #Bypass : creativemanager.hit.monster
   lore: true # Bypass : creativemanager.bypass.lore
+  loot: true
 ## Multi inventory
 inventory:
   adventure: true #Bypass : cm.bypass.inventory

@@ -30,9 +30,9 @@ public class PlayerBuild  implements Listener{
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.build")));
 				e.setCancelled(true);
 			}
-			else if(plugin.getSettings().getPlaceBL().contains(e.getBlock().getType().getKey().getKey()) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
+			else if(plugin.getSettings().getPlaceBL().contains(e.getBlock().getType().name()) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
 			{
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("blacklist.place").replace("{BLOCK}", e.getBlock().getType().getKey().getKey())));
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("blacklist.place").replace("{BLOCK}", e.getBlock().getType().name())));
 				e.setCancelled(true);
 			}
 			if(plugin.getSettings().getProtection(Protections.LOOT))

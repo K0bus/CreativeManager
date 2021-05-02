@@ -36,6 +36,10 @@ public class BlockLog {
         load();
     }
 
+    public void setBlock(Block block) {
+        this.block = block;
+    }
+
     public boolean isCreative()
     {
         return this.player != null;
@@ -98,5 +102,17 @@ public class BlockLog {
         } catch (SQLException ex) {
             Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
         }
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public OfflinePlayer getPlayer() {
+        return player;
     }
 }

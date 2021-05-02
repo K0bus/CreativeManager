@@ -1,27 +1,61 @@
 package fr.k0bus.creativemanager.settings;
 
+import fr.k0bus.creativemanager.CreativeManager;
+import org.apache.commons.lang.Validate;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.error.YAMLException;
+import org.yaml.snakeyaml.parser.ParserException;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class Configuration {
 
     JavaPlugin plugin;
     File file;
     FileConfiguration configuration;
+    String filename;
+    String defaultRessource;
 
     public Configuration(String filename, JavaPlugin instance)
     {
         this.plugin = instance;
+        this.filename = filename;
+        this.defaultRessource = filename;
         this.file = new File(instance.getDataFolder(), filename);
-        if(plugin.getResource(filename) != null)
-            plugin.saveResource(filename, false);
+        loadConfig();
+    }
+
+    public Configuration(String filename, JavaPlugin instance, String dirName)
+    {
+        this.plugin = instance;
+        this.filename = filename;
+        this.defaultRessource = dirName + "/" + filename;
+        File dir = new File(plugin.getDataFolder(), dirName);
+        if(!dir.exists())
+            dir.mkdirs();
+        if(dir.isDirectory())
+            this.file = new File(dir, filename);
+        else
+            this.file = new File(dir.getParentFile(), filename);
+        loadConfig();
+    }
+
+    public void loadConfig()
+    {
+        if(plugin.getResource(defaultRessource) != null)
+            if(!file.exists())
+                plugin.saveResource(defaultRessource, false);
         else
         {
             this.file.mkdirs();
@@ -32,38 +66,46 @@ public class Configuration {
             }
         }
         if(this.file.exists())
-            this.configuration = YamlConfiguration.loadConfiguration(this.file);
-    }
-    public Configuration(String filename, JavaPlugin instance, String dirName)
-    {
-        this.plugin = instance;
-        File dir = new File(plugin.getDataFolder(), dirName);
-        if(!dir.exists())
-            dir.mkdirs();
-        if(dir.isDirectory())
-            this.file = new File(dir, filename);
-        else
-            this.file = new File(dir.getParentFile(), filename);
-        if(plugin.getResource(filename) != null)
-            plugin.saveResource(filename, false);
-        else
         {
             try {
-                this.file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+                this.configuration = loadConfiguration(this.file);
+            } catch (InvalidConfigurationException e)
+            {
+                plugin.getLogger().log(Level.SEVERE, filename + " can't be loaded ! Check file syntax first !");
+                plugin.getLogger().log(Level.SEVERE, e.getMessage());
+                file.renameTo(new File(file.getParentFile(), filename + ".old"));
+                loadConfig();
+            }
+            catch (IOException ex)
+            {
+                plugin.getLogger().log(Level.SEVERE, "Can't read file " + filename);
+                this.configuration = new YamlConfiguration();
             }
         }
-        if(this.file.exists())
-            this.configuration = YamlConfiguration.loadConfiguration(this.file);
+        else
+        {
+            this.configuration = new YamlConfiguration();
+        }
     }
-    public Configuration(File file, JavaPlugin instance)
-    {
-        this.plugin = instance;
-        this.file = file;
-        if(this.file.exists())
-            this.configuration = YamlConfiguration.loadConfiguration(this.file);
+
+    private static YamlConfiguration loadConfiguration(File file) throws IOException, InvalidConfigurationException {
+        Validate.notNull(file, "File cannot be null");
+
+        YamlConfiguration config = new YamlConfiguration();
+
+        try {
+            config.load(file);
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            throw ex;
+        } catch (InvalidConfigurationException ex) {
+            throw ex;
+        }
+
+        return config;
     }
+
     public void save()
     {
         try {

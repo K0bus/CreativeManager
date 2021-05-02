@@ -1,6 +1,5 @@
 package fr.k0bus.creativemanager.log;
 
-import fr.k0bus.creativemanager.CreativeManager;
 import org.bukkit.Bukkit;
 
 import java.io.File;
