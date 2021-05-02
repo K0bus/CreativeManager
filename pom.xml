@@ -3,7 +3,7 @@
 
   <groupId>CreativeManager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.8</version>
+  <version>1.8.6</version>
 
   <name>CreativeManager</name>
 
@@ -66,14 +66,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.xerial</groupId>
-      <artifactId>sqlite-jdbc</artifactId>
-      <version>3.34.0</version>
-    </dependency>
-    <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.16.4-R0.1-SNAPSHOT</version>
+      <version>1.16.5-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
