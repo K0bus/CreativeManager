@@ -3,7 +3,7 @@
 
   <groupId>CreativeManager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.8.6</version>
+  <version>1.8.7</version>
 
   <name>CreativeManager</name>
 
@@ -70,12 +70,6 @@
       <artifactId>spigot-api</artifactId>
       <version>1.16.5-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.K0bus</groupId>
-      <artifactId>kUpdateChecker</artifactId>
-      <version>1.2.1</version>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>dev.dbassett</groupId>
