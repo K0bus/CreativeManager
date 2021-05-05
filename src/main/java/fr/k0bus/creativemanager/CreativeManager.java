@@ -8,7 +8,7 @@ import com.google.common.io.Files;
 import fr.k0bus.creativemanager.settings.Configuration;
 import fr.k0bus.creativemanager.settings.Language;
 import fr.k0bus.creativemanager.settings.Settings;
-import fr.k0bus.kupdatechecker.UpdateChecker;
+import fr.k0bus.creativemanager.updater.UpdateChecker;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
