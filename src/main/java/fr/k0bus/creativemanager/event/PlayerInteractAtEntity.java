@@ -13,23 +13,26 @@ import fr.k0bus.creativemanager.CreativeManager;
 
 public class PlayerInteractAtEntity implements Listener {
 
-	CreativeManager plugin;
+    CreativeManager plugin;
 
-	public PlayerInteractAtEntity(CreativeManager instance) {
-		plugin = instance;
-	}
+    public PlayerInteractAtEntity(CreativeManager instance) {
+        plugin = instance;
+    }
 
-	@EventHandler(ignoreCancelled = true)
-	public void onUse(PlayerInteractAtEntityEvent  e) {
-		Player p = e.getPlayer();
-		if(plugin.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity"))
-		{
-			if (e.getRightClicked() instanceof ArmorStand || p.getGameMode().equals(GameMode.CREATIVE)) {
-				if (!p.hasPermission("creativemanager.bypass.entity")) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.entity")));
-					e.setCancelled(true);
-				}
-			}
-		}
-	}
+    @EventHandler(ignoreCancelled = true)
+    public void onUse(PlayerInteractAtEntityEvent e) {
+        Player p = e.getPlayer();
+        if (plugin.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity")) {
+            if (!p.hasPermission("creativemanager.bypass.entity")) {
+                if(plugin.getAntiSpam().containsKey(p.getUniqueId()))
+                    if(plugin.getAntiSpam().get(p.getUniqueId()) < System.currentTimeMillis())
+                    {
+                        plugin.getAntiSpam().remove(p.getUniqueId());
+                        plugin.getAntiSpam().put(p.getUniqueId(), System.currentTimeMillis() + 100);
+                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.entity")));
+                    }
+                e.setCancelled(true);
+            }
+        }
+    }
 }

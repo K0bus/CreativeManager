@@ -2,6 +2,8 @@ package fr.k0bus.creativemanager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import com.google.common.io.Files;
@@ -22,6 +24,7 @@ public class CreativeManager extends JavaPlugin {
     public Settings settings;
     public Language lang;
     public final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
+    HashMap<UUID, Long> antiSpam = new HashMap<UUID, Long>();
 
     @Override
     public void onEnable() {
@@ -115,6 +118,10 @@ public class CreativeManager extends JavaPlugin {
 
     public String getInvTag() {
         return invTag;
+    }
+
+    public HashMap<UUID, Long> getAntiSpam() {
+        return antiSpam;
     }
 
     @Override
