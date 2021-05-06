@@ -1,0 +1,16 @@
+permission:
+  container: '&4您没有权限在创造模式下打开容器'
+  ignite: '&4您没有权限在创造模式下点燃方块'
+  spawn: '&4您没有权限在创造模式下刷怪蛋'
+  drop: '&4您没有权限在创造模式下丢弃物品'
+  build: '&4您没有权限在创造模式下建筑'
+  entity: '&4您没有权限在创造模式下交互实体'
+  hit:
+    player: '&c您没有权限来对玩家进行打击'
+    monster: '&c您没有权限来对怪物进行打击'
+blacklist:
+  place: '&4您没有权限在创造模式下放置方块 {BLOCK} '
+  use: '&4您没有权限在创造模式下使用 {ITEM} '
+  get: '&4您没有权限在创造模式下来往背包放 {ITEM} '
+inventory:
+  change: '&d您切换至模式 {GAMEMODE} 的隔离背包 !'
