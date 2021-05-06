@@ -26,7 +26,7 @@ public class PlayerInteractEntity implements Listener {
     public void onUse(PlayerInteractEntityEvent e) {
         Player p = e.getPlayer();
         if (plugin.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity")) {
-            if (!p.hasPermission("creativemanager.bypass.entity")) {
+            if (!p.hasPermission("creativemanager.bypass.entity") && !p.hasPermission("creativemanager.bypass.entity." + e.getRightClicked().getType().name().toLowerCase())) {
                 if(plugin.getAntiSpam().containsKey(p.getUniqueId())) {
                     if (plugin.getAntiSpam().get(p.getUniqueId()) < System.currentTimeMillis()) {
                         plugin.getAntiSpam().remove(p.getUniqueId());

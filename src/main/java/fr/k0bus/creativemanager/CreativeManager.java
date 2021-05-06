@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -13,6 +14,9 @@ import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.creativemanager.updater.UpdateChecker;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,6 +41,7 @@ public class CreativeManager extends JavaPlugin {
         this.loadConfigManager();
         this.registerEvent(this.getServer().getPluginManager());
         this.registerCommand();
+        this.registerPermissions();
         new UpdateChecker(this, 75097).checkUpdate();
         this.getLogger().log(Level.INFO, "=============================================================");
     }
@@ -106,6 +111,21 @@ public class CreativeManager extends JavaPlugin {
             mainCommand.setExecutor(new MainCommand(this));
             mainCommand.setTabCompleter(new MainCommandTab());
         }
+    }
+    private void registerPermissions()
+    {
+        PluginManager pm = getServer().getPluginManager();
+        Set<Permission> permissions = pm.getPermissions();
+        int n = 0;
+        for (EntityType entityType: EntityType.values()) {
+            Permission perm = new Permission("creativemanager.bypass.entity." + entityType.name());
+            if(!permissions.contains(perm))
+            {
+                pm.addPermission(perm);
+                n++;
+            }
+        }
+        getLogger().info("" + n + " entities permissions registered !");
     }
     public Settings getSettings()
     {
