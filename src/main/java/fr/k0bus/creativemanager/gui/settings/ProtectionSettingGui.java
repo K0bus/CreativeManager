@@ -32,6 +32,7 @@ public class ProtectionSettingGui extends Gui {
     public void initItem() {
         int i = 0;
         MenuUtils.addSeparator(getInv(), 2);
+        MenuUtils.addSeparator(getInv(), 3);
         for (Protections prot: Protections.values()) {
             ItemStack itemStack = prot.getIconItem(this.plugin.getSettings().getProtection(prot));
             getInv().setItem(i, itemStack);

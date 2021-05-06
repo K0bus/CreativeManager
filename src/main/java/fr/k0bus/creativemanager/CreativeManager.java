@@ -5,16 +5,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
-import java.util.logging.Level;
 
 import com.google.common.io.Files;
 import fr.k0bus.creativemanager.settings.Configuration;
 import fr.k0bus.creativemanager.settings.Language;
 import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.creativemanager.updater.UpdateChecker;
+import fr.k0bus.creativemanager.utils.Messages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
@@ -28,29 +27,39 @@ public class CreativeManager extends JavaPlugin {
     public Settings settings;
     public Language lang;
     public final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
-    HashMap<UUID, Long> antiSpam = new HashMap<UUID, Long>();
+    HashMap<UUID, Long> antiSpam = new HashMap<>();
 
     @Override
     public void onEnable() {
-        this.getLogger().log(Level.INFO, "=============================================================");
-        this.getLogger().log(Level.INFO, "CreativeManager v" + this.getDescription().getVersion());
-        this.getLogger().log(Level.INFO, "=============================================================");
-        this.getLogger().log(Level.INFO, "Created by K0bus for AkuraGaming");
-        this.getLogger().log(Level.INFO, "=============================================================");
+        Messages.log(this, "&9=============================================================");
+        UpdateChecker updateChecker = new UpdateChecker(this, 75097);
+        if(updateChecker.isUpToDate())
+        {
+            Messages.log(this, "&2CreativeManager &av" + this.getDescription().getVersion());
+        }
+        else
+        {
+            Messages.log(this, "&2CreativeManager &cv" + this.getDescription().getVersion() +
+                    " (Update " + updateChecker.getVersion() + " available on SpigotMC)");
+        }
+        Messages.log(this, "&9=============================================================");
+        Messages.log(this, "&2Created by K0bus for AkuraGaming");
+        Messages.log(this, "&9=============================================================");
         this.updateConfig();
         this.loadConfigManager();
         this.registerEvent(this.getServer().getPluginManager());
+        Messages.log(this, "&2Listener registered !");
         this.registerCommand();
+        Messages.log(this, "&2Commands registered !");
         this.registerPermissions();
-        new UpdateChecker(this, 75097).checkUpdate();
-        this.getLogger().log(Level.INFO, "=============================================================");
+        Messages.log(this, "&9=============================================================");
     }
 
     public void loadConfigManager() {
-        this.getLogger().log(Level.INFO, "Loading configuration ...");
         this.settings = new Settings(this);
+        Messages.log(this, "&2Configuration loaded !");
         this.lang = new Language(settings.getLang(), this);
-        this.getLogger().log(Level.INFO, "Configuration loaded successfully !");
+        Messages.log(this, "&2Language loaded ! &7[" + settings.getLang() + "]");
     }
     public void updateConfig()
     {
@@ -88,7 +97,6 @@ public class CreativeManager extends JavaPlugin {
     }
 	private void registerEvent(PluginManager pm)
 	{
-        this.getLogger().log(Level.INFO, "Loading event ...");
 		pm.registerEvents(new PlayerBuild(this), this);
 		pm.registerEvents(new PlayerBreak(this), this);
         pm.registerEvents(new PlayerInteract(this), this);
@@ -101,7 +109,6 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerLogin(this), this);
         pm.registerEvents(new PistonEvent(this), this);
-        this.getLogger().log(Level.INFO, "Event loaded successfully !");
     }
     private void registerCommand()
     {
@@ -125,7 +132,7 @@ public class CreativeManager extends JavaPlugin {
                 n++;
             }
         }
-        getLogger().info("" + n + " entities permissions registered !");
+        Messages.log(this, "&2Entities permissions registered ! &7[" + n + "]");
     }
     public Settings getSettings()
     {

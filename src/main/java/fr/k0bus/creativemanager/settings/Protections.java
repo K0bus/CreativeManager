@@ -12,34 +12,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Protections {
-    CONTAINER("container", Material.CHEST, "Protect container usage"),
-    SPAWN("spawn", Material.SKELETON_SPAWN_EGG, "Protect spawn egg usage"),
-    DROP("drop", Material.DROPPER, "Protect player drop usage"),
-    PICKUP("pickup", Material.TRIPWIRE_HOOK, "Protect pickup item on ground"),
-    BUILD("build", Material.OAK_PLANKS, "Protect build in creative"),
-    ENTITY("entity", Material.ITEM_FRAME, "Protect entity usage (ItemFrame / ArmorStand ...)"),
-    PVP("pvp", Material.PLAYER_HEAD, "Disable PVP for Creative"),
-    PVE("pve", Material.SKELETON_SKULL, "Disable PVE for Creative"),
-    LORE("lore", Material.NAME_TAG, "Add lore to Creative Items"),
-    LOOT("loot", Material.NAME_TAG, "Deny looting from Creative placed block");
+    CONTAINER("container", Material.CHEST, "Protect container usage", "Container"),
+    SPAWN("spawn", Material.SKELETON_SPAWN_EGG, "Protect spawn egg usage", "Spawn Egg"),
+    DROP("drop", Material.DROPPER, "Protect player drop usage", "Drop"),
+    PICKUP("pickup", Material.TRIPWIRE_HOOK, "Protect pickup item on ground", "PickUp"),
+    BUILD("build", Material.OAK_PLANKS, "Protect build in creative", "Build"),
+    ENTITY("entity", Material.ITEM_FRAME, "Protect entity usage (ItemFrame / ArmorStand ...)", "Entity"),
+    PVP("pvp", Material.PLAYER_HEAD, "Disable PVP for Creative", "PVP"),
+    PVE("pve", Material.SKELETON_SKULL, "Disable PVE for Creative", "PVE"),
+    LORE("lore", Material.NAME_TAG, "Add lore to Creative Items", "Lore"),
+    LOOT("loot", Material.NAME_TAG, "Deny looting from Creative placed block", "Lootable");
 
     private final String name;
     private final Material icon;
     private final String desc;
+    private final String displayName;
 
-    Protections(String name, Material icon, String desc) {
+    Protections(String name, Material icon, String desc, String displayName) {
         this.name = name;
         this.icon = icon;
         this.desc = desc;
+        this.displayName = displayName;
     }
 
     public String getName() {
         return name;
     }
 
-    public Material getIcon() {
-        return icon;
-    }
     public ItemStack getIconItem(boolean value) {
         ItemStack item = new ItemStack(this.icon);
         ItemMeta itemMeta = item.getItemMeta();
@@ -47,11 +46,11 @@ public enum Protections {
         {
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.DARK_GRAY + "------");
-            lore.addAll(LoreUtils.formatLoreString(this.desc));
+            lore.addAll(LoreUtils.formatLoreString(ChatColor.RESET + this.desc));
             lore.add(ChatColor.DARK_GRAY + "------");
             lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : " + LoreUtils.getStatusString(value));
             itemMeta.setLore(lore);
-            itemMeta.setDisplayName(this.name.substring(0, 1).toUpperCase() + this.name.substring(1));
+            itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.BOLD + ChatColor.GOLD + this.displayName);
             if(value)
                 itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

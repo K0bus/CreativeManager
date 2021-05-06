@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.utils;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -48,6 +49,7 @@ public enum AkuraItems {
             meta.addItemFlags(ItemFlag.HIDE_PLACED_ON);
             meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
             meta.setCustomModelData(customModel);
+            meta.setDisplayName(ChatColor.RESET + "");
             this.itemStack.setItemMeta(meta);
         }
     }

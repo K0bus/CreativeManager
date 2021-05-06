@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.commands;
 
 import fr.k0bus.creativemanager.gui.settings.ProtectionSettingGui;
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,11 +29,11 @@ public class MainCommand implements CommandExecutor {
                 if(!(sender instanceof Player) || sender.hasPermission("creativemanager.reload"))
                 {
                     plugin.loadConfigManager();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &5Configuration reloaded !"));
+                    Messages.sendMessageText(plugin, sender, " &5Configuration reloaded !");
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.general")));
+                    Messages.sendMessage(plugin, sender, "permission.general");
                 }
             } else if (args[0].equals("settings")) {
                 if(sender instanceof Player && sender.hasPermission("creativemanager.admin"))
@@ -41,7 +42,7 @@ public class MainCommand implements CommandExecutor {
                 }
                 else
                 {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.general")));
+                    Messages.sendMessage(plugin, sender, "permission.general");
                 }
             } else if (args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
                 if (args.length >= 2) {
@@ -58,15 +59,15 @@ public class MainCommand implements CommandExecutor {
                             break;
                     }
                 } else {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &4Missing argument !"));
+                    Messages.sendMessageText(plugin, sender, " &4Missing argument !");
                 }
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &4Unknown command " + args[0] + " !"));
+                Messages.sendMessageText(plugin, sender, " &4Unknown command " + args[0] + " !");
             }
         }
         else
         {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion()));
+            Messages.sendMessageText(plugin, sender, " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion());
         }
         
         return true;
