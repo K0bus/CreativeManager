@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.ArmorStand;
@@ -24,13 +25,7 @@ public class PlayerInteractAtEntity implements Listener {
         Player p = e.getPlayer();
         if (plugin.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity")) {
             if (!p.hasPermission("creativemanager.bypass.entity") && !p.hasPermission("creativemanager.bypass.entity." + e.getRightClicked().getType().name().toLowerCase())) {
-                if(plugin.getAntiSpam().containsKey(p.getUniqueId()))
-                    if(plugin.getAntiSpam().get(p.getUniqueId()) < System.currentTimeMillis())
-                    {
-                        plugin.getAntiSpam().remove(p.getUniqueId());
-                        plugin.getAntiSpam().put(p.getUniqueId(), System.currentTimeMillis() + 100);
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.entity")));
-                    }
+                Messages.sendMessage(plugin, p, "permission.entity");
                 e.setCancelled(true);
             }
         }

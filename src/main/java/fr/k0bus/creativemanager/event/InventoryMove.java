@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,7 +45,7 @@ public class InventoryMove implements Listener {
 		{
 			if(plugin.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop"))
 			{
-				player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.drop")));
+				Messages.sendMessage(plugin, player, "permission.drop");
 				e.setCancelled(true);
 			}
 			return;
@@ -58,8 +59,10 @@ public class InventoryMove implements Listener {
 							cdtime.remove(player.getUniqueId());
 						}
 						String blget = plugin.getLang().getString("blacklist.get");
+						HashMap<String, String> replaceMap = new HashMap<>();
+						replaceMap.put("{ITEM}", itemStack.getType().name());
 						if(blget != null)
-							player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + blget.replace("{ITEM}", itemStack.getType().name())));
+							Messages.sendMessage(plugin, player, "blacklist.get", replaceMap);
 						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
 					}
 					e.setCancelled(true);

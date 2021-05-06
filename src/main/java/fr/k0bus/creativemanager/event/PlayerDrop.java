@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class PlayerDrop implements Listener {
 		if(plugin.getSettings().getProtection(Protections.DROP) && p.getGameMode().equals(GameMode.CREATIVE))
 		{
 			if (!p.hasPermission("creativemanager.bypass.drop")) {
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.drop")));
+				Messages.sendMessage(plugin, p, "permission.drop");
 				e.setCancelled(true);
 			}
 		}

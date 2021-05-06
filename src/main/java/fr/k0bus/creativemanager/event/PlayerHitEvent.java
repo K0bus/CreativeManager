@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +30,7 @@ public class PlayerHitEvent implements Listener {
 				{
 					if(!attacker.hasPermission("creativemanager.bypass.pvp") && plugin.getSettings().getProtection(Protections.PVP))
 					{
-						attacker.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.hit.player")));
+						Messages.sendMessage(plugin, attacker, "permission.hit.player");
 						e.setCancelled(true);
 					}
 				}
@@ -37,7 +38,7 @@ public class PlayerHitEvent implements Listener {
 				{
 					if(!attacker.hasPermission("creativemanager.bypass.pve") && plugin.getSettings().getProtection(Protections.PVE))
 					{
-						attacker.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.hit.monster")));
+						Messages.sendMessage(plugin, attacker, "permission.hit.monster");
 						e.setCancelled(true);
 					}
 				}

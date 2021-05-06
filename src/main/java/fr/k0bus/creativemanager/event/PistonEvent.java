@@ -50,14 +50,12 @@ public class PistonEvent implements Listener{
 				BlockLog blockLog = new BlockLog(toMoveBlock);
 				if(blockLog.isCreative())
 				{
-					plugin.getLogger().info("Move " + blockLog.getBlock().getType().name() + " at " + blockLog.getBlock().getLocation().toString());
 					blockLog.delete();
 					Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
 							pistonDirection.getModY(),
 							pistonDirection.getModZ()).getBlock();
 					blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
 					blockLog.save();
-					plugin.getLogger().info("Moved " + blockLog.getBlock().getType().name() + " to " + blockLog.getBlock().getLocation().toString());
 				}
 			}
 		}

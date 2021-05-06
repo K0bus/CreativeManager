@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -13,6 +14,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.meta.SpawnEggMeta;
 
 import fr.k0bus.creativemanager.CreativeManager;
+
+import java.util.HashMap;
 
 public class PlayerInteract implements Listener {
 
@@ -28,20 +31,22 @@ public class PlayerInteract implements Listener {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && p.getGameMode().equals(GameMode.CREATIVE)) {
             if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
                 if (!p.hasPermission("creativemanager.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
-                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("tag") + plugin.getLang().getString("permission.container")));
+                    Messages.sendMessage(plugin, p, "permission.container");
                     e.setCancelled(true);
                 }
             } else if (e.getItem() instanceof SpawnEggMeta) {
                 if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
                     if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("permission.spawn")));
+                        Messages.sendMessage(plugin, p, "permission.spawn");
                         e.setCancelled(true);
                     }
                 }
             } else if (e.getItem() != null) {
                 if(plugin.getSettings().getUseBL().contains(e.getItem().getType().name()))
                     if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
-                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("blacklist.use").replace("{ITEM}", e.getItem().getType().name())));
+                        HashMap<String, String> replaceMap = new HashMap<>();
+                        replaceMap.put("{ITEM}", e.getItem().getType().name());
+                        Messages.sendMessage(plugin, p, "blacklist.use", replaceMap);
                         e.setCancelled(true);
                     }
             }

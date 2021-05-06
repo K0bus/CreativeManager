@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
+import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -9,6 +10,8 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
+
+import java.util.HashMap;
 
 public class PlayerGamemodeChange implements Listener {
 
@@ -52,7 +55,9 @@ public class PlayerGamemodeChange implements Listener {
 			}
 			im.saveInventory(p.getGameMode());
 			im.loadInventory(e.getNewGameMode());
-			p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getSettings().getTag() + plugin.getLang().getString("inventory.change").replace("{GAMEMODE}", e.getNewGameMode().name())));
+			HashMap<String, String> replaceMap = new HashMap<>();
+			replaceMap.put("{GAMEMODE}", e.getNewGameMode().name());
+			Messages.sendMessage(plugin, p, "inventory.change", replaceMap);
 		}
 	}
 }
