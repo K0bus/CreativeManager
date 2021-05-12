@@ -1,19 +1,25 @@
 package fr.k0bus.creativemanager.log;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class DataManager {
 
     Connection conn;
     String dbname;
+    HashMap<Location, BlockLog> blockBlockLogMap = new HashMap<>();
+    List<UUID> toDelete = new ArrayList<>();
     public DataManager(String dbname)
     {
         this.dbname = dbname;
@@ -53,6 +59,53 @@ public class DataManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void loadLog()
+    {
+        Connection conn = new DataManager("data").getConn();
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM block_log");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Block block = Bukkit.getWorld(rs.getString("world")).getBlockAt(
+                        rs.getInt("x"),
+                        rs.getInt("y"),
+                        rs.getInt("z")
+                );
+                OfflinePlayer player = Bukkit.getPlayer(UUID.fromString(rs.getString("player")));
+                BlockLog blockLog = new BlockLog(block, player);
+                blockLog.uuid = UUID.fromString(rs.getString("uuid"));
+                blockBlockLogMap.put(block.getLocation(), blockLog);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
+        }
+    }
+
+    public HashMap<Location, BlockLog> getBlockBlockLogMap() {
+        return blockBlockLogMap;
+    }
+    public void addLog(BlockLog log)
+    {
+        blockBlockLogMap.put(log.getBlock().getLocation(), log);
+    }
+    public void removeLog(Location loc)
+    {
+        blockBlockLogMap.remove(loc);
+    }
+    public void addToDelete(UUID id)
+    {
+        toDelete.add(id);
+    }
+    public List<UUID> getToDelete() {
+        return toDelete;
+    }
+    public void resetToDelete()
+    {
+        toDelete = new ArrayList<>();
     }
 
     public Connection getConn() {

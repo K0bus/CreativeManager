@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -41,7 +42,15 @@ public class PlayerBuild  implements Listener{
 				e.setCancelled(true);
 			}
 			if(plugin.getSettings().getProtection(Protections.LOOT))
-				new BlockLog(e.getBlock(), e.getPlayer()).save();
+			{
+				Location location = e.getBlock().getLocation();
+				if(plugin.getDataManager().getBlockBlockLogMap().containsKey(e.getBlock().getLocation()))
+				{
+					plugin.getDataManager().addToDelete(plugin.getDataManager().getBlockBlockLogMap().get(location).getUuid());
+					plugin.getDataManager().removeLog(e.getBlock().getLocation());
+				}
+				plugin.getDataManager().addLog(new BlockLog(e.getBlock(), e.getPlayer()));
+			}
 		}
 		else
 		{

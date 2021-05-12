@@ -27,15 +27,20 @@ public class PistonEvent implements Listener{
 		{
 			BlockFace pistonDirection = e.getDirection();
 			for (Block toMoveBlock:e.getBlocks()) {
-				BlockLog blockLog = new BlockLog(toMoveBlock);
-				if(blockLog.isCreative())
+				if(plugin.getDataManager().getBlockBlockLogMap().containsKey(toMoveBlock.getLocation()))
 				{
-					blockLog.delete();
-					Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-							pistonDirection.getModY(),
-							pistonDirection.getModZ()).getBlock();
-					blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
-					blockLog.save();
+					BlockLog blockLog = plugin.getDataManager().getBlockBlockLogMap().get(toMoveBlock.getLocation());
+					if(blockLog.isCreative())
+					{
+						blockLog.delete();
+						plugin.getDataManager().addToDelete(blockLog.getUuid());
+						plugin.getDataManager().getBlockBlockLogMap().remove(toMoveBlock.getLocation());
+						Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
+								pistonDirection.getModY(),
+								pistonDirection.getModZ()).getBlock();
+						blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
+						plugin.getDataManager().getBlockBlockLogMap().put(movedBlock.getLocation(), blockLog);
+					}
 				}
 			}
 		}
@@ -47,15 +52,20 @@ public class PistonEvent implements Listener{
 		{
 			BlockFace pistonDirection = e.getDirection();
 			for (Block toMoveBlock:e.getBlocks()) {
-				BlockLog blockLog = new BlockLog(toMoveBlock);
-				if(blockLog.isCreative())
+				if(plugin.getDataManager().getBlockBlockLogMap().containsKey(toMoveBlock.getLocation()))
 				{
-					blockLog.delete();
-					Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-							pistonDirection.getModY(),
-							pistonDirection.getModZ()).getBlock();
-					blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
-					blockLog.save();
+					BlockLog blockLog = plugin.getDataManager().getBlockBlockLogMap().get(toMoveBlock.getLocation());
+					if(blockLog.isCreative())
+					{
+						blockLog.delete();
+						plugin.getDataManager().addToDelete(blockLog.getUuid());
+						plugin.getDataManager().removeLog(toMoveBlock.getLocation());
+						Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
+								pistonDirection.getModY(),
+								pistonDirection.getModZ()).getBlock();
+						blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
+						plugin.getDataManager().addLog(blockLog);
+					}
 				}
 			}
 		}
