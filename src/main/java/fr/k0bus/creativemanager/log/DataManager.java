@@ -1,30 +1,123 @@
 package fr.k0bus.creativemanager.log;
 
+import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public class DataManager {
 
     Connection conn;
     String dbname;
-    public DataManager(String dbname)
+    HashMap<Location, BlockLog> blockLogHashMap;
+    JavaPlugin plugin;
+
+    public DataManager(String dbname, JavaPlugin plugin)
     {
+        this.blockLogHashMap = new HashMap<>();
         this.dbname = dbname;
+        this.plugin = plugin;
         this.conn = startConnection();
         init();
+        load();
+    }
+
+    public BlockLog getBlockFrom(Location location)
+    {
+        return blockLogHashMap.get(location);
+    }
+    public void moveBlock(Location from, Location to)
+    {
+        if(blockLogHashMap.containsKey(from))
+        {
+            BlockLog blockLog = blockLogHashMap.get(from);
+            blockLog.setLocation(to);
+            blockLogHashMap.put(to, blockLog);
+            blockLogHashMap.remove(from);
+        }
+    }
+    public void removeBlock(Location location)
+    {
+        BlockLog blockLog = blockLogHashMap.get(location);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> delete(blockLog));
+        blockLogHashMap.remove(location);
+    }
+
+    public void addBlock(BlockLog log)
+    {
+        blockLogHashMap.put(log.getLocation(), log);
+    }
+
+    public void save()
+    {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            int n = 0;
+            for (BlockLog log: blockLogHashMap.values()) {
+                save(log);
+                n++;
+            }
+            Messages.log(plugin,
+                    "&2Log saved to database ! &7[" + n + "]");
+        });
+    }
+    public void saveSync()
+    {
+        int n = 0;
+        for (BlockLog log: blockLogHashMap.values()) {
+            save(log);
+            n++;
+        }
+        Messages.log(plugin,
+                "&2Log saved to database ! &7[" + n + "]");
+    }
+
+    public void delete(BlockLog log)
+    {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM block_log WHERE uuid=?");
+            ps.setString(1, log.getUuid().toString());
+            ps.executeUpdate();
+            ps.close();
+        } catch (SQLException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
+        }
+    }
+    public void save(BlockLog log)
+    {
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement("REPLACE INTO block_log (uuid,world,x,y, z, player) VALUES(?,?,?,?,?,?)");
+            ps.setString(1, log.getUuid().toString());
+            ps.setString(2, log.getLocation().getWorld().getName());
+            ps.setInt(3, log.getLocation().getBlockX());
+            ps.setInt(4, log.getLocation().getBlockY());
+            ps.setInt(5, log.getLocation().getBlockZ());
+            ps.setString(6, log.getPlayer().getUniqueId().toString());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, ex.toString());
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (SQLException ex) {
+                Bukkit.getLogger().log(Level.SEVERE, ex.toString());
+            }
+        }
     }
 
     public Connection startConnection() {
         if (this.conn != null)
             return this.conn;
-        File dataFolder = new File(Bukkit.getPluginManager().getPlugin("CreativeManager").getDataFolder(), this.dbname + ".db");
+        File dataFolder = new File(plugin.getDataFolder(), this.dbname + ".db");
         if (!dataFolder.exists())
             try {
                 dataFolder.createNewFile();
@@ -55,7 +148,28 @@ public class DataManager {
         }
     }
 
-    public Connection getConn() {
-        return conn;
+    private void load()
+    {
+        try {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM block_log");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("player")));
+                Location location = new Location(Bukkit.getWorld(rs.getString("world")),
+                        rs.getInt("x"),
+                        rs.getInt("y"),
+                        rs.getInt("z"));
+                UUID uuid = UUID.fromString(rs.getString("uuid"));
+                blockLogHashMap.put(location, new BlockLog(location, player, uuid));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
+        }
+    }
+
+    public HashMap<Location, BlockLog> getBlockLogHashMap() {
+        return blockLogHashMap;
     }
 }

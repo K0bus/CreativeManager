@@ -40,17 +40,20 @@ public class PlayerBuild  implements Listener{
 				e.setCancelled(true);
 			}
 			if(plugin.getSettings().getProtection(Protections.LOOT))
-				new BlockLog(e.getBlock(), e.getPlayer()).save();
+			{
+				plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
+			}
 		}
 		else
 		{
 			if(plugin.getSettings().getProtection(Protections.LOOT))
 			{
-				BlockLog blockLog = new BlockLog(e.getBlock());
-				if(blockLog.isCreative())
-				{
-					blockLog.delete();
-				}
+				BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
+				if(blockLog != null)
+					if(blockLog.isCreative())
+					{
+						plugin.getDataManager().removeBlock(blockLog.getLocation());
+					}
 			}
 		}
 
