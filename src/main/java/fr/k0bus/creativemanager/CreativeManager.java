@@ -6,6 +6,7 @@ import java.util.*;
 
 import com.google.common.io.Files;
 import fr.k0bus.creativemanager.log.DataManager;
+import fr.k0bus.creativemanager.task.SaveTask;
 import fr.k0bus.k0buslib.settings.Configuration;
 import fr.k0bus.k0buslib.settings.Lang;
 import fr.k0bus.creativemanager.settings.Settings;
@@ -13,6 +14,7 @@ import fr.k0bus.k0buslib.updater.UpdateChecker;
 import fr.k0bus.k0buslib.utils.Messages;
 import fr.k0bus.k0buslib.utils.MessagesManager;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.permissions.Permission;
@@ -29,6 +31,7 @@ public class CreativeManager extends JavaPlugin {
     public final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
     private MessagesManager messagesManager;
     public DataManager dataManager;
+    private int saveTask;
 
     @Override
     public void onEnable() {
@@ -54,6 +57,7 @@ public class CreativeManager extends JavaPlugin {
         Messages.log(this, "&2Commands registered !");
         this.registerPermissions();
         this.loadLog();
+        this.saveTask = SaveTask.run(this);
         Messages.log(this, "&9=============================================================");
     }
 
@@ -72,12 +76,12 @@ public class CreativeManager extends JavaPlugin {
     }
     public void updateConfig()
     {
+        Configuration.updateConfig("lang/en_EN.yml", this);
+        Configuration.updateConfig("lang/es_ES.yml", this);
+        Configuration.updateConfig("lang/fr_FR.yml", this);
+        Configuration.updateConfig("lang/it_IT.yml", this);
+        Configuration.updateConfig("lang/ru_RU.yml", this);
         Configuration oldConfig = new Configuration("config.yml", this);
-        new Lang("en_EN", this);
-        new Lang("es_ES", this);
-        new Lang("fr_FR", this);
-        new Lang("it_IT", this);
-        new Lang("ru_RU", this);
         if(oldConfig.contains("build-protection"))
         {
             try {
@@ -98,11 +102,13 @@ public class CreativeManager extends JavaPlugin {
                 this.settings.set("log", oldConfig.getBoolean("log"));
                 this.settings.set("blacklist", oldConfig.getConfigurationSection("blacklist"));
                 this.settings.set("blacklist", oldConfig.getConfigurationSection("blacklist"));
+                this.settings.set("save-interval", 300);
                 this.settings.save();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        Configuration.updateConfig("config.yml", this);
     }
 	private void registerEvent(PluginManager pm)
 	{
@@ -145,8 +151,9 @@ public class CreativeManager extends JavaPlugin {
     }
     private void loadLog()
     {
-        dataManager = new DataManager("data");
-        Messages.log(this, "&2Log loaded from database ! &7[0]");
+        dataManager = new DataManager("data", this);
+        Messages.log(this,
+                "&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
     }
     public Settings getSettings()
     {
@@ -172,6 +179,8 @@ public class CreativeManager extends JavaPlugin {
     @Override
     public void onDisable()
     {
-        
+        if(Bukkit.getScheduler().isCurrentlyRunning(saveTask) || Bukkit.getScheduler().isQueued(saveTask))
+            Bukkit.getScheduler().cancelTask(saveTask);
+        dataManager.saveSync();
     }
 }
