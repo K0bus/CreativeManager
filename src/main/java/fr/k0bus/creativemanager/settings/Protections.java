@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager.settings;
 
-import fr.k0bus.creativemanager.utils.LoreUtils;
+import fr.k0bus.k0buslib.utils.LoreUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -48,7 +48,10 @@ public enum Protections {
             lore.add(ChatColor.DARK_GRAY + "------");
             lore.addAll(LoreUtils.formatLoreString(ChatColor.RESET + this.desc));
             lore.add(ChatColor.DARK_GRAY + "------");
-            lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : " + LoreUtils.getStatusString(value));
+            if(value)
+                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : Enabled");
+            else
+                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : Disabled");
             itemMeta.setLore(lore);
             itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.BOLD + ChatColor.GOLD + this.displayName);
             if(value)

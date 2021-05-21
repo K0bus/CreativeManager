@@ -1,23 +1,12 @@
 package fr.k0bus.creativemanager.settings;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import net.md_5.bungee.api.ChatColor;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-public class Settings extends Configuration{
+public class Settings extends fr.k0bus.k0buslib.settings.Settings {
     public Settings(CreativeManager instance) {
-        super("config.yml", instance);
-    }
-    public String getTag()
-    {
-        return ChatColor.translateAlternateColorCodes('&', getString("tag"));
-    }
-    public String getLang()
-    {
-        return getString("lang");
+        super(instance);
     }
     public boolean isLogged()
     {

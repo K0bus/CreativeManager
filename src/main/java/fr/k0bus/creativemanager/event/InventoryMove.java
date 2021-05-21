@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.creativemanager.utils.Messages;
+import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class InventoryMove implements Listener {
 		{
 			if(plugin.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop"))
 			{
-				Messages.sendMessage(plugin, player, "permission.drop");
+				Messages.sendMessage(plugin.getMessageManager(), player, "permission.drop");
 				e.setCancelled(true);
 			}
 			return;
@@ -62,7 +62,7 @@ public class InventoryMove implements Listener {
 						HashMap<String, String> replaceMap = new HashMap<>();
 						replaceMap.put("{ITEM}", itemStack.getType().name());
 						if(blget != null)
-							Messages.sendMessage(plugin, player, "blacklist.get", replaceMap);
+							Messages.sendMessage(plugin.getMessageManager(), player, "blacklist.get", replaceMap);
 						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
 					}
 					e.setCancelled(true);

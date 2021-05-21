@@ -72,10 +72,9 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>dev.dbassett</groupId>
-      <artifactId>skullcreator</artifactId>
-      <version>3.0.0</version>
-      <scope>compile</scope>
+      <groupId>com.github.K0bus</groupId>
+      <artifactId>K0busLib</artifactId>
+      <version>1.1</version>
     </dependency>
   </dependencies>
   

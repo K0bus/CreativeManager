@@ -1,8 +1,7 @@
 package fr.k0bus.creativemanager.commands;
 
 import fr.k0bus.creativemanager.gui.settings.ProtectionSettingGui;
-import fr.k0bus.creativemanager.utils.Messages;
-import org.bukkit.ChatColor;
+import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,11 +28,11 @@ public class MainCommand implements CommandExecutor {
                 if(!(sender instanceof Player) || sender.hasPermission("creativemanager.reload"))
                 {
                     plugin.loadConfigManager();
-                    Messages.sendMessageText(plugin, sender, " &5Configuration reloaded !");
+                    Messages.sendMessageText(plugin.getMessageManager(), sender, " &5Configuration reloaded !");
                 }
                 else
                 {
-                    Messages.sendMessage(plugin, sender, "permission.general");
+                    Messages.sendMessage(plugin.getMessageManager(), sender, "permission.general");
                 }
             } else if (args[0].equals("settings")) {
                 if(sender instanceof Player && sender.hasPermission("creativemanager.admin"))
@@ -42,7 +41,7 @@ public class MainCommand implements CommandExecutor {
                 }
                 else
                 {
-                    Messages.sendMessage(plugin, sender, "permission.general");
+                    Messages.sendMessage(plugin.getMessageManager(), sender, "permission.general");
                 }
             } else if (args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
                 if (args.length >= 2) {
@@ -59,15 +58,15 @@ public class MainCommand implements CommandExecutor {
                             break;
                     }
                 } else {
-                    Messages.sendMessageText(plugin, sender, " &4Missing argument !");
+                    Messages.sendMessageText(plugin.getMessageManager(), sender, " &4Missing argument !");
                 }
             } else {
-                Messages.sendMessageText(plugin, sender, " &4Unknown command " + args[0] + " !");
+                Messages.sendMessageText(plugin.getMessageManager(), sender, " &4Unknown command " + args[0] + " !");
             }
         }
         else
         {
-            Messages.sendMessageText(plugin, sender, " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+            Messages.sendMessageText(plugin.getMessageManager(), sender, " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion());
         }
         
         return true;

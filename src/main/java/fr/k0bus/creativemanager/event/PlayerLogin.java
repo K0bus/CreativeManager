@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class PlayerLogin implements Listener {
 
-    private CreativeManager plugin;
+    private final CreativeManager plugin;
 
     public PlayerLogin(CreativeManager plugin)
     {

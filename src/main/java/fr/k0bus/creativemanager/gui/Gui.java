@@ -27,12 +27,6 @@ public abstract class Gui implements Listener {
     {
         getPlayer().openInventory(getInv());
     }
-    public void show(boolean reload)
-    {
-        getPlayer().openInventory(getInv());
-        if(reload)
-            initItem();
-    }
     // Cancel dragging event
     @EventHandler
     public void onInventoryClick(final InventoryDragEvent e) {

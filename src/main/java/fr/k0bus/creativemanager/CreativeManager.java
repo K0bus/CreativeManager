@@ -12,15 +12,15 @@ import java.util.logging.Level;
 import com.google.common.io.Files;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.log.DataManager;
-import fr.k0bus.creativemanager.settings.Configuration;
-import fr.k0bus.creativemanager.settings.Language;
+import fr.k0bus.k0buslib.settings.Configuration;
+import fr.k0bus.k0buslib.settings.Lang;
 import fr.k0bus.creativemanager.settings.Settings;
-import fr.k0bus.creativemanager.updater.UpdateChecker;
-import fr.k0bus.creativemanager.utils.Messages;
+import fr.k0bus.k0buslib.updater.UpdateChecker;
+import fr.k0bus.k0buslib.utils.Messages;
+import fr.k0bus.k0buslib.utils.MessagesManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Server;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.permissions.Permission;
@@ -32,12 +32,12 @@ import fr.k0bus.creativemanager.event.*;
 
 public class CreativeManager extends JavaPlugin {
 
-    public Settings settings;
-    public Language lang;
-    public final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
-    HashMap<UUID, Long> antiSpam = new HashMap<>();
-    public DataManager dataManager;
-    public int task;
+    private Settings settings;
+    private Lang lang;
+    private final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
+    private MessagesManager messagesManager;
+    private DataManager dataManager;
+    private int task;
 
     @Override
     public void onEnable() {
@@ -64,23 +64,24 @@ public class CreativeManager extends JavaPlugin {
         this.registerPermissions();
         this.loadLog();
         this.startAutoSave();
+        this.messagesManager = new MessagesManager(getSettings(), getLang());
         Messages.log(this, "&9=============================================================");
     }
 
     public void loadConfigManager() {
         this.settings = new Settings(this);
         Messages.log(this, "&2Configuration loaded !");
-        this.lang = new Language(settings.getLang(), this);
+        this.lang = new Lang(settings.getLang(), this);
         Messages.log(this, "&2Language loaded ! &7[" + settings.getLang() + "]");
     }
     public void updateConfig()
     {
         Configuration oldConfig = new Configuration("config.yml", this);
-        new Language("en_EN", this);
-        new Language("es_ES", this);
-        new Language("fr_FR", this);
-        new Language("it_IT", this);
-        new Language("ru_RU", this);
+        new Lang("en_EN", this);
+        new Lang("es_ES", this);
+        new Lang("fr_FR", this);
+        new Lang("it_IT", this);
+        new Lang("ru_RU", this);
         if(oldConfig.contains("build-protection"))
         {
             try {
@@ -156,17 +157,13 @@ public class CreativeManager extends JavaPlugin {
     {
         return this.settings;
     }
-    public Language getLang()
+    public Lang getLang()
     {
         return this.lang;
     }
 
     public String getInvTag() {
         return invTag;
-    }
-
-    public HashMap<UUID, Long> getAntiSpam() {
-        return antiSpam;
     }
 
     public DataManager getDataManager() {
@@ -177,47 +174,44 @@ public class CreativeManager extends JavaPlugin {
     {
         if(Bukkit.getScheduler().isCurrentlyRunning(this.task) || Bukkit.getScheduler().isQueued(this.task))
             this.stopAutoSave();
-        CreativeManager plugin = this;
         Messages.log(this, "&2Start autosave task");
-        this.task = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            public void run() {
-                int saved = 0;
-                int deleted = 0;
-                for(Map.Entry<Location, BlockLog> log: dataManager.getBlockBlockLogMap().entrySet()) {
-                    Connection conn = new DataManager("data").getConn();
-                    try {
-                        PreparedStatement ps = conn.prepareStatement("SELECT count(*) FROM block_log WHERE uuid=?");
-                        ps.setString(1, log.getValue().getUuid().toString());
-                        ResultSet rs = ps.executeQuery();
-                        ps.close();
-                        if(rs.next())
+        this.task = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            int saved = 0;
+            int deleted = 0;
+            for(Map.Entry<Location, BlockLog> log: dataManager.getBlockBlockLogMap().entrySet()) {
+                Connection conn = new DataManager("data").getConn();
+                try {
+                    PreparedStatement ps = conn.prepareStatement("SELECT count(*) FROM block_log WHERE uuid=?");
+                    ps.setString(1, log.getValue().getUuid().toString());
+                    ResultSet rs = ps.executeQuery();
+                    ps.close();
+                    if(rs.next())
+                    {
+                        if(rs.getInt("total") <= 0)
                         {
-                            if(rs.getInt("total") <= 0)
-                            {
-                                log.getValue().save();
-                                saved++;
-                            }
+                            log.getValue().save();
+                            saved++;
                         }
-                    } catch (SQLException ex) {
-                        Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
                     }
+                } catch (SQLException ex) {
+                    Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
                 }
-                for(UUID uuid: dataManager.getToDelete())
-                {
-                    Connection conn = new DataManager("data").getConn();
-                    try {
-                        PreparedStatement ps = conn.prepareStatement("DELETE FROM block_log WHERE uuid=?");
-                        ps.setString(1, uuid.toString());
-                        ps.executeUpdate();
-                        ps.close();
-                        deleted++;
-                        dataManager.resetToDelete();
-                    } catch (SQLException ex) {
-                        Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
-                    }
-                }
-                //Messages.log(plugin, "&2Log saved to database ! &7[&cdelete " + deleted + "&7] &7[&aadded " + saved + "&7]");
             }
+            for(UUID uuid: dataManager.getToDelete())
+            {
+                Connection conn = new DataManager("data").getConn();
+                try {
+                    PreparedStatement ps = conn.prepareStatement("DELETE FROM block_log WHERE uuid=?");
+                    ps.setString(1, uuid.toString());
+                    ps.executeUpdate();
+                    ps.close();
+                    deleted++;
+                    dataManager.resetToDelete();
+                } catch (SQLException ex) {
+                    Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
+                }
+            }
+            //Messages.log(plugin, "&2Log saved to database ! &7[&cdelete " + deleted + "&7] &7[&aadded " + saved + "&7]");
         }, 0L, 30*20);
     }
     public void stopAutoSave()
@@ -231,5 +225,9 @@ public class CreativeManager extends JavaPlugin {
     public void onDisable()
     {
         
+    }
+
+    public MessagesManager getMessageManager() {
+        return messagesManager;
     }
 }

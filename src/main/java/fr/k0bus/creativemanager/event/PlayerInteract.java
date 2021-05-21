@@ -1,8 +1,7 @@
 package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.creativemanager.utils.Messages;
-import org.bukkit.ChatColor;
+import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,15 +28,19 @@ public class PlayerInteract implements Listener {
     public void onUse(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && p.getGameMode().equals(GameMode.CREATIVE)) {
-            if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
-                if (!p.hasPermission("creativemanager.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
-                    Messages.sendMessage(plugin, p, "permission.container");
-                    e.setCancelled(true);
+            if(e.getClickedBlock() != null)
+            {
+                if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
+                    if (!p.hasPermission("creativemanager.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
+                        Messages.sendMessage(plugin.getMessageManager(), p, "permission.container");
+                        e.setCancelled(true);
+                    }
                 }
-            } else if (e.getItem() instanceof SpawnEggMeta) {
+            }
+            else if (e.getItem() instanceof SpawnEggMeta) {
                 if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
                     if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                        Messages.sendMessage(plugin, p, "permission.spawn");
+                        Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
                         e.setCancelled(true);
                     }
                 }
@@ -46,7 +49,7 @@ public class PlayerInteract implements Listener {
                     if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
                         HashMap<String, String> replaceMap = new HashMap<>();
                         replaceMap.put("{ITEM}", e.getItem().getType().name());
-                        Messages.sendMessage(plugin, p, "blacklist.use", replaceMap);
+                        Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.use", replaceMap);
                         e.setCancelled(true);
                     }
             }

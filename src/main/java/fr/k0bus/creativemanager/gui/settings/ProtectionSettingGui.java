@@ -3,12 +3,10 @@ package fr.k0bus.creativemanager.gui.settings;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.gui.Gui;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.creativemanager.utils.AkuraHeads;
-import fr.k0bus.creativemanager.utils.LoreUtils;
-import fr.k0bus.creativemanager.utils.MenuUtils;
+import fr.k0bus.k0buslib.utils.AkuraHeads;
+import fr.k0bus.k0buslib.utils.MenuUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -59,7 +57,11 @@ public class ProtectionSettingGui extends Gui {
             boolean newValue = !this.plugin.getSettings().getProtection(prot);
             if(this.plugin.getSettings().isLogged())
                 this.plugin.getSettings().set("protections." + prot.getName(), newValue);
-            this.plugin.getLogger().info(ChatColor.GOLD + e.getWhoClicked().getName() + " change " + prot.getName() + " to " + LoreUtils.getStatusString(newValue));
+            String status = "Enabled";
+            if(!newValue)
+                status = "Disabled";
+            this.plugin.getLogger().info(
+                    ChatColor.GOLD + e.getWhoClicked().getName() + " change " + prot.getName() + " to " + status);
             initItem();
         }
     }

@@ -2,8 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.creativemanager.utils.Messages;
-import org.bukkit.ChatColor;
+import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -31,14 +30,14 @@ public class PlayerBuild  implements Listener{
 		{
 			if(plugin.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build"))
 			{
-				Messages.sendMessage(plugin, p, "permission.build");
+				Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
 				e.setCancelled(true);
 			}
 			else if(plugin.getSettings().getPlaceBL().contains(e.getBlock().getType().name()) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
 			{
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{BLOCK}", e.getBlock().getType().name());
-				Messages.sendMessage(plugin, p, "blacklist.place", replaceMap);
+				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
 			}
 			if(plugin.getSettings().getProtection(Protections.LOOT))

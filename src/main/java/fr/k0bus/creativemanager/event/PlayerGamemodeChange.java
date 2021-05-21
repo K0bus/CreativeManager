@@ -1,7 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
-import fr.k0bus.creativemanager.utils.Messages;
-import org.bukkit.ChatColor;
+import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,7 +56,7 @@ public class PlayerGamemodeChange implements Listener {
 			im.loadInventory(e.getNewGameMode());
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{GAMEMODE}", e.getNewGameMode().name());
-			Messages.sendMessage(plugin, p, "inventory.change", replaceMap);
+			Messages.sendMessage(plugin.getMessageManager(), p, "inventory.change", replaceMap);
 		}
 	}
 }
