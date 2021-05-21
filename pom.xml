@@ -3,7 +3,7 @@
 
   <groupId>CreativeManager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.10.0</version>
+  <version>1.10.1</version>
 
   <name>CreativeManager</name>
 
@@ -52,10 +52,6 @@
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
-    </repository>
-    <repository>
-      <id>skullcreator-repo</id>
-      <url>https://dl.bintray.com/deanveloper/SkullCreator</url>
     </repository>
     <!-- This adds the Spigot Maven repository to the build -->
     <repository>
