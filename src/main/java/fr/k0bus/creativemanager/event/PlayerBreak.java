@@ -31,24 +31,16 @@ public class PlayerBreak implements Listener{
 				Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
 				e.setCancelled(true);
 			}
-			BlockLog blockLog = plugin.getDataManager().getBlockBlockLogMap().get(e.getBlock().getLocation());
-			if(blockLog.isCreative())
-			{
-				e.setDropItems(false);
-				plugin.getDataManager().addToDelete(blockLog.getUuid());
-				plugin.getDataManager().removeLog(blockLog.getBlock().getLocation());
-			}
 		}
 		else
 		{
 			if(!p.hasPermission("creativemanager.bypass.log") && plugin.getSettings().getProtection(Protections.LOOT))
 			{
-				BlockLog blockLog = plugin.getDataManager().getBlockBlockLogMap().get(e.getBlock().getLocation());
+				BlockLog blockLog = new BlockLog(e.getBlock());
 				if(blockLog.isCreative())
 				{
 					e.setDropItems(false);
-					plugin.getDataManager().addToDelete(blockLog.getUuid());
-					plugin.getDataManager().removeLog(blockLog.getBlock().getLocation());
+					blockLog.delete();
 				}
 			}
 		}

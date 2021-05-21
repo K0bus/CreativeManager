@@ -69,28 +69,25 @@ public class BlockLog {
     }
     public void save()
     {
-        if(player != null)
-        {
-            Connection conn = new DataManager("data").getConn();
-            PreparedStatement ps = null;
+        Connection conn = new DataManager("data").getConn();
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement("REPLACE INTO block_log (uuid,world,x,y, z, player) VALUES(?,?,?,?,?,?)");
+            ps.setString(1, uuid.toString());
+            ps.setString(2, block.getWorld().getName());
+            ps.setInt(3, block.getX());
+            ps.setInt(4, block.getY());
+            ps.setInt(5, block.getZ());
+            ps.setString(6, player.getUniqueId().toString());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, ex.toString());
+        } finally {
             try {
-                ps = conn.prepareStatement("REPLACE INTO block_log (uuid,world,x,y, z, player) VALUES(?,?,?,?,?,?)");
-                ps.setString(1, uuid.toString());
-                ps.setString(2, block.getWorld().getName());
-                ps.setInt(3, block.getX());
-                ps.setInt(4, block.getY());
-                ps.setInt(5, block.getZ());
-                ps.setString(6, player.getUniqueId().toString());
-                ps.executeUpdate();
+                if (ps != null)
+                    ps.close();
             } catch (SQLException ex) {
                 Bukkit.getLogger().log(Level.SEVERE, ex.toString());
-            } finally {
-                try {
-                    if (ps != null)
-                        ps.close();
-                } catch (SQLException ex) {
-                    Bukkit.getLogger().log(Level.SEVERE, ex.toString());
-                }
             }
         }
     }
