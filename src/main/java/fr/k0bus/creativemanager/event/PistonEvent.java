@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
@@ -25,15 +26,16 @@ public class PistonEvent implements Listener{
 		{
 			BlockFace pistonDirection = e.getDirection();
 			for (Block toMoveBlock:e.getBlocks()) {
-				BlockLog blockLog = new BlockLog(toMoveBlock);
-				if(blockLog.isCreative())
+				BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
+				if(blockLog != null)
 				{
-					blockLog.delete();
-					Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-							pistonDirection.getModY(),
-							pistonDirection.getModZ()).getBlock();
-					blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
-					blockLog.save();
+					if(blockLog.isCreative())
+					{
+						Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
+								pistonDirection.getModY(),
+								pistonDirection.getModZ());
+						plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
+					}
 				}
 			}
 		}
@@ -45,15 +47,16 @@ public class PistonEvent implements Listener{
 		{
 			BlockFace pistonDirection = e.getDirection();
 			for (Block toMoveBlock:e.getBlocks()) {
-				BlockLog blockLog = new BlockLog(toMoveBlock);
-				if(blockLog.isCreative())
+				BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
+				if(blockLog != null)
 				{
-					blockLog.delete();
-					Block movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-							pistonDirection.getModY(),
-							pistonDirection.getModZ()).getBlock();
-					blockLog = new BlockLog(movedBlock, blockLog.getPlayer());
-					blockLog.save();
+					if(blockLog.isCreative())
+					{
+						Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
+								pistonDirection.getModY(),
+								pistonDirection.getModZ());
+						plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
+					}
 				}
 			}
 		}

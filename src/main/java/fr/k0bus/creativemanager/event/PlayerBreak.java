@@ -36,11 +36,14 @@ public class PlayerBreak implements Listener{
 		{
 			if(!p.hasPermission("creativemanager.bypass.log") && plugin.getSettings().getProtection(Protections.LOOT))
 			{
-				BlockLog blockLog = new BlockLog(e.getBlock());
-				if(blockLog.isCreative())
+				BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
+				if(blockLog != null)
 				{
-					e.setDropItems(false);
-					blockLog.delete();
+					if(blockLog.isCreative())
+					{
+						e.setDropItems(false);
+						plugin.getDataManager().removeBlock(blockLog.getLocation());
+					}
 				}
 			}
 		}

@@ -145,8 +145,9 @@ public class CreativeManager extends JavaPlugin {
     }
     private void loadLog()
     {
-        dataManager = new DataManager("data");
-        Messages.log(this, "&2Log loaded from database ! &7[0]");
+        dataManager = new DataManager("data", this);
+        Messages.log(this,
+                "&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
     }
     public Settings getSettings()
     {
@@ -172,6 +173,6 @@ public class CreativeManager extends JavaPlugin {
     @Override
     public void onDisable()
     {
-        
+        dataManager.saveSync();
     }
 }
