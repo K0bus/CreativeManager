@@ -39,22 +39,16 @@ public class PlayerBuild  implements Listener{
 				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
 			}
-			if(plugin.getSettings().getProtection(Protections.LOOT))
-			{
-				plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
-			}
+			plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
 		}
 		else
 		{
-			if(plugin.getSettings().getProtection(Protections.LOOT))
-			{
-				BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
-				if(blockLog != null)
-					if(blockLog.isCreative())
-					{
-						plugin.getDataManager().removeBlock(blockLog.getLocation());
-					}
-			}
+			BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
+			if(blockLog != null)
+				if(blockLog.isCreative())
+				{
+					plugin.getDataManager().removeBlock(blockLog.getLocation());
+				}
 		}
 
     }
