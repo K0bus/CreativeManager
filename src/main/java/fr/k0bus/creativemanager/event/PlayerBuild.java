@@ -29,14 +29,16 @@ public class PlayerBuild  implements Listener{
 		{
 			if(plugin.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build"))
 			{
-				Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
+				if(plugin.getSettings().getBoolean("send-player-messages"))
+					Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
 				e.setCancelled(true);
 			}
 			else if(plugin.getSettings().getPlaceBL().contains(e.getBlock().getType().name()) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
 			{
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{BLOCK}", e.getBlock().getType().name());
-				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
+				if(plugin.getSettings().getBoolean("send-player-messages"))
+					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
 			}
 			if(plugin.getSettings().getProtection(Protections.LOOT))

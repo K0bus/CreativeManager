@@ -45,7 +45,8 @@ public class InventoryMove implements Listener {
 		{
 			if(plugin.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop"))
 			{
-				Messages.sendMessage(plugin.getMessageManager(), player, "permission.drop");
+				if(plugin.getSettings().getBoolean("send-player-messages"))
+					Messages.sendMessage(plugin.getMessageManager(), player, "permission.drop");
 				e.setCancelled(true);
 			}
 			return;

@@ -28,7 +28,8 @@ public class PlayerBreak implements Listener{
 		{
 			if(plugin.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build"))
 			{
-				Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
+				if(plugin.getSettings().getBoolean("send-player-messages"))
+					Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
 				e.setCancelled(true);
 			}
 		}

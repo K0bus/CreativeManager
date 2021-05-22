@@ -29,7 +29,8 @@ public class PlayerHitEvent implements Listener {
 				{
 					if(!attacker.hasPermission("creativemanager.bypass.pvp") && plugin.getSettings().getProtection(Protections.PVP))
 					{
-						Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.player");
+						if(plugin.getSettings().getBoolean("send-player-messages"))
+							Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.player");
 						e.setCancelled(true);
 					}
 				}
@@ -37,7 +38,8 @@ public class PlayerHitEvent implements Listener {
 				{
 					if(!attacker.hasPermission("creativemanager.bypass.pve") && plugin.getSettings().getProtection(Protections.PVE))
 					{
-						Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.monster");
+						if(plugin.getSettings().getBoolean("send-player-messages"))
+							Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.monster");
 						e.setCancelled(true);
 					}
 				}

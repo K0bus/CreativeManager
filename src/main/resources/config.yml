@@ -3,6 +3,7 @@ tag: '&r[&cCreativeManager&r] '
 lang: en_EN
 log: true
 save-interval: 300
+send-player-messages: true
 ## Protection module
 protections:
   container: true #Bypass : creativemanager.container
