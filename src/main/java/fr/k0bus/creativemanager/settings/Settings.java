@@ -36,6 +36,10 @@ public class Settings extends fr.k0bus.k0buslib.settings.Settings {
     {
         return getStringList("blacklist.get");
     }
+    public List<String> getBreakBL()
+    {
+        return getStringList("blacklist.break");
+    }
     public List<String> getLore()
     {
         return getStringList("creative-lore");

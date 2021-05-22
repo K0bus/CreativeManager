@@ -11,6 +11,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 import fr.k0bus.creativemanager.CreativeManager;
 
+import java.util.HashMap;
+
 public class PlayerBreak implements Listener{
 
 	CreativeManager plugin;
@@ -30,6 +32,14 @@ public class PlayerBreak implements Listener{
 			{
 				if(plugin.getSettings().getBoolean("send-player-messages"))
 					Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
+				e.setCancelled(true);
+			}
+			else if(plugin.getSettings().getBreakBL().contains(e.getBlock().getType().name()) && !p.hasPermission("creativemanager.bypass.blacklist.break"))
+			{
+				HashMap<String, String> replaceMap = new HashMap<>();
+				replaceMap.put("{BLOCK}", e.getBlock().getType().name());
+				if(plugin.getSettings().getBoolean("send-player-messages"))
+					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
 			}
 		}

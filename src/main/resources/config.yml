@@ -30,6 +30,8 @@ blacklist:
     - 'fire_charge'
   get: #Bypass : creativemanager.bypass.blacklist.get
     - 'diamond'
+  break:
+    - 'bedrock'
 ## Lore settings
 creative-lore:
   - '&5Creative {ITEM}'
