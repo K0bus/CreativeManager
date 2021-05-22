@@ -34,7 +34,7 @@ public class PlayerBreak implements Listener{
 					Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
 				e.setCancelled(true);
 			}
-			else if(plugin.getSettings().getBreakBL().contains(e.getBlock().getType().name()) && !p.hasPermission("creativemanager.bypass.blacklist.break"))
+			else if(plugin.getSettings().getBreakBL().stream().anyMatch(e.getBlock().getType().name()::equalsIgnoreCase) && !p.hasPermission("creativemanager.bypass.blacklist.break"))
 			{
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{BLOCK}", e.getBlock().getType().name());

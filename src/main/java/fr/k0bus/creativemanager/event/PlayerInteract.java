@@ -47,7 +47,7 @@ public class PlayerInteract implements Listener {
                     }
                 }
             } else if (e.getItem() != null) {
-                if(plugin.getSettings().getUseBL().contains(e.getItem().getType().name()))
+                if(plugin.getSettings().getUseBL().stream().anyMatch(e.getItem().getType().name()::equalsIgnoreCase))
                     if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
                         HashMap<String, String> replaceMap = new HashMap<>();
                         replaceMap.put("{ITEM}", e.getItem().getType().name());

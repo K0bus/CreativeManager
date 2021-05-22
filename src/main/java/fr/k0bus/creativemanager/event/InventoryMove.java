@@ -53,7 +53,7 @@ public class InventoryMove implements Listener {
 		}
 		List<String> blacklist = plugin.getSettings().getGetBL();
 		if(blacklist.size() > 0)
-			if (blacklist.contains(itemStack.getType().name())) {
+			if (blacklist.stream().anyMatch(itemStack.getType().name()::equalsIgnoreCase)) {
 				if (!player.hasPermission("creativemanager.bypass.blacklist.get")) {
 					if (cdtime.get(player.getUniqueId()) == null || (cdtime.get(player.getUniqueId()) + 1000) <= System.currentTimeMillis()) {
 						if (cdtime.get(player.getUniqueId()) != null) {

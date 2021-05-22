@@ -33,7 +33,7 @@ public class PlayerBuild  implements Listener{
 					Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
 				e.setCancelled(true);
 			}
-			else if(plugin.getSettings().getPlaceBL().contains(e.getBlock().getType().name()) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
+			else if(plugin.getSettings().getPlaceBL().stream().anyMatch(e.getBlock().getType().name()::equalsIgnoreCase) && !p.hasPermission("creativemanager.bypass.blacklist.place"))
 			{
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{BLOCK}", e.getBlock().getType().name());
