@@ -126,6 +126,7 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PistonEvent(this), this);
         pm.registerEvents(new MonsterSpawnEvent(this), this);
         pm.registerEvents(new ProjectileThrow(this), this);
+        pm.registerEvents(new InventoryOpen(this), this);
     }
     private void registerCommand()
     {
