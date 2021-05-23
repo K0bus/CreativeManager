@@ -58,3 +58,6 @@ permissions:
    creativemanager.bypass.loot:
       description: "Allow loot creative placed block"
       default: op
+   creativemanager.bypass.spawn_build:
+      description: "Allow creative player to build golem"
+      default: op
