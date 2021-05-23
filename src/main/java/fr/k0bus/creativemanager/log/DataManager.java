@@ -92,6 +92,10 @@ public class DataManager {
     }
     public void save(BlockLog log)
     {
+        if(log.getLocation().getWorld() == null){
+            delete(log);
+            return;
+        }
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement("REPLACE INTO block_log (uuid,world,x,y, z, player) VALUES(?,?,?,?,?,?)");
