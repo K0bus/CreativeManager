@@ -22,20 +22,17 @@ public class PistonEvent implements Listener{
 	@EventHandler(ignoreCancelled = true)
     public void onExtend(BlockPistonExtendEvent e)
     {
-		if(plugin.getSettings().getProtection(Protections.LOOT))
-		{
-			BlockFace pistonDirection = e.getDirection();
-			for (Block toMoveBlock:e.getBlocks()) {
-				BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
-				if(blockLog != null)
+		BlockFace pistonDirection = e.getDirection();
+		for (Block toMoveBlock:e.getBlocks()) {
+			BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
+			if(blockLog != null)
+			{
+				if(blockLog.isCreative())
 				{
-					if(blockLog.isCreative())
-					{
-						Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-								pistonDirection.getModY(),
-								pistonDirection.getModZ());
-						plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
-					}
+					Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
+							pistonDirection.getModY(),
+							pistonDirection.getModZ());
+					plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
 				}
 			}
 		}
@@ -43,20 +40,17 @@ public class PistonEvent implements Listener{
 	@EventHandler(ignoreCancelled = true)
 	public void onRetract(BlockPistonRetractEvent e)
 	{
-		if(plugin.getSettings().getProtection(Protections.LOOT))
-		{
-			BlockFace pistonDirection = e.getDirection();
-			for (Block toMoveBlock:e.getBlocks()) {
-				BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
-				if(blockLog != null)
+		BlockFace pistonDirection = e.getDirection();
+		for (Block toMoveBlock:e.getBlocks()) {
+			BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
+			if(blockLog != null)
+			{
+				if(blockLog.isCreative())
 				{
-					if(blockLog.isCreative())
-					{
-						Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-								pistonDirection.getModY(),
-								pistonDirection.getModZ());
-						plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
-					}
+					Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
+							pistonDirection.getModY(),
+							pistonDirection.getModZ());
+					plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
 				}
 			}
 		}
