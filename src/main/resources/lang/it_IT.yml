@@ -5,6 +5,7 @@ permission:
   drop: '&4Non hai il permesso di gettare oggetti in Creativa'
   build: '&4Non hai il permesso di costruire in creativa'
   entity: '&4Non hai il permesso di interagire con questa entità in creativa'
+  throw: '&4You don''t have permission to throw projectile'
   hit:
     player: '&cNon hai il permesso di attaccare i giocatori'
     monster: '&cNon hai il permesso di attaccare i mostri'
