@@ -22,7 +22,8 @@ public enum Protections {
     PVE("pve", Material.SKELETON_SKULL, "Disable PVE for Creative", "PVE"),
     LORE("lore", Material.NAME_TAG, "Add lore to Creative Items", "Lore"),
     LOOT("loot", Material.NAME_TAG, "Deny looting from Creative placed block", "Lootable"),
-    SPAWN_BUILD("spawn-build", Material.WITHER_SKELETON_SKULL, "Deny spawn monster with build", "Spawn Build");
+    SPAWN_BUILD("spawn-build", Material.WITHER_SKELETON_SKULL, "Deny spawn monster with build", "Spawn Build"),
+    THROW("throw", Material.WITHER_SKELETON_SKULL, "Deny throw projectile", "Throw");
 
     private final String name;
     private final Material icon;
