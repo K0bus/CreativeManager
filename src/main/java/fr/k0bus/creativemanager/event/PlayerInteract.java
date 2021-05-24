@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.meta.SpawnEggMeta;
 
 import fr.k0bus.creativemanager.CreativeManager;
 
@@ -38,15 +37,7 @@ public class PlayerInteract implements Listener {
                     }
                 }
             }
-            else if (e.getItem() instanceof SpawnEggMeta) {
-                if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
-                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                        if(plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
-                        e.setCancelled(true);
-                    }
-                }
-            } else if (e.getItem() != null) {
+            else if (e.getItem() != null) {
                 if(plugin.getSettings().getUseBL().stream().anyMatch(e.getItem().getType().name()::equalsIgnoreCase))
                     if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
                         HashMap<String, String> replaceMap = new HashMap<>();
