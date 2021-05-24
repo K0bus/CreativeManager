@@ -61,7 +61,8 @@ public class DataManager {
     {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             int n = 0;
-            for (BlockLog log: blockLogHashMap.values()) {
+            HashMap<Location, BlockLog> cloned = (HashMap<Location, BlockLog>) blockLogHashMap.clone();
+            for (BlockLog log: cloned.values()) {
                 save(log);
                 n++;
             }
@@ -73,7 +74,8 @@ public class DataManager {
     public void saveSync()
     {
         int n = 0;
-        for (BlockLog log: blockLogHashMap.values()) {
+        HashMap<Location, BlockLog> cloned = (HashMap<Location, BlockLog>) blockLogHashMap.clone();
+        for (BlockLog log: cloned.values()) {
             save(log);
             n++;
         }
