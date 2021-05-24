@@ -48,34 +48,4 @@ public class PlayerHitEvent implements Listener {
 			}
 		}
 	}
-
-	@EventHandler(ignoreCancelled = true)
-	public void onProjectileHit(ProjectileHitEvent e) {
-		ProjectileSource source = e.getEntity().getShooter();
-		if(source instanceof Player)
-		{
-			Player attacker = (Player) source;
-			if(attacker.getGameMode().equals(GameMode.CREATIVE))
-			{
-				if(e.getHitEntity() instanceof Player)
-				{
-					if(!attacker.hasPermission("creativemanager.bypass.pvp") && plugin.getSettings().getProtection(Protections.PVP))
-					{
-						if(plugin.getSettings().getBoolean("send-player-messages"))
-							Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.player");
-						e.setCancelled(true);
-					}
-				}
-				else
-				{
-					if(!attacker.hasPermission("creativemanager.bypass.pve") && plugin.getSettings().getProtection(Protections.PVE))
-					{
-						if(plugin.getSettings().getBoolean("send-player-messages"))
-							Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.monster");
-						e.setCancelled(true);
-					}
-				}
-			}
-		}
-	}
 }
