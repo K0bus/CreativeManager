@@ -13,16 +13,15 @@ import java.util.List;
 
 public enum Protections {
     CONTAINER("container", Material.CHEST, "Protect container usage", "Container"),
-    SPAWN("spawn", Material.SKELETON_SPAWN_EGG, "Protect spawn egg usage", "Spawn Egg"),
+    SPAWN("spawn", Material.MONSTER_EGG, "Protect spawn egg usage", "Spawn Egg"),
     DROP("drop", Material.DROPPER, "Protect player drop usage", "Drop"),
-    PICKUP("pickup", Material.TRIPWIRE_HOOK, "Protect pickup item on ground", "PickUp"),
-    BUILD("build", Material.OAK_PLANKS, "Protect build in creative", "Build"),
+    BUILD("build", Material.BRICK, "Protect build in creative", "Build"),
     ENTITY("entity", Material.ITEM_FRAME, "Protect entity usage (ItemFrame / ArmorStand ...)", "Entity"),
-    PVP("pvp", Material.PLAYER_HEAD, "Disable PVP for Creative", "PVP"),
-    PVE("pve", Material.SKELETON_SKULL, "Disable PVE for Creative", "PVE"),
+    PVP("pvp", Material.IRON_SWORD, "Disable PVP for Creative", "PVP"),
+    PVE("pve", Material.DIAMOND_SWORD, "Disable PVE for Creative", "PVE"),
     LORE("lore", Material.NAME_TAG, "Add lore to Creative Items", "Lore"),
     LOOT("loot", Material.NAME_TAG, "Deny looting from Creative placed block", "Lootable"),
-    SPAWN_BUILD("spawn-build", Material.WITHER_SKELETON_SKULL, "Deny spawn monster with build", "Spawn Build"),
+    SPAWN_BUILD("spawn-build", Material.PUMPKIN, "Deny spawn monster with build", "Spawn Build"),
     THROW("throw", Material.ARROW, "Deny throw projectile", "Throw");
 
     private final String name;
