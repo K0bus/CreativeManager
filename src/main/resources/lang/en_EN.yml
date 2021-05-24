@@ -6,6 +6,7 @@ permission:
   build: '&4You don''t have permission to build in Creative'
   entity: '&4You don''t have permission to interact with entity in Creative'
   throw: '&4You don''t have permission to throw projectile'
+  general: '&4You don''t have permission'
   hit:
     player: '&cYou don''t have permission to hit player'
     monster: '&cYou don''t have permission to hit monster'

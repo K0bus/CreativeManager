@@ -6,6 +6,7 @@ permission:
   build: '&4У вас нет разрешения на строительство в режиме креатива'
   entity: '&4У вас нет разрешения на взаимодействие с мобами в режиме креатива'
   throw: '&4You don''t have permission to throw projectile'
+  general: '&4You don''t have permission'
   hit:
     player: '&cУ вас нет разрешения бить игрока в режиме креатива'
     monster: '&cУ вас нет разрешения бить моба в режиме креатива'

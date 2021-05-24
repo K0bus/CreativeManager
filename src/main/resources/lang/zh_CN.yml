@@ -6,6 +6,7 @@ permission:
   build: '&4您没有权限在创造模式下建筑'
   entity: '&4您没有权限在创造模式下交互实体'
   throw: '&4You don''t have permission to throw projectile'
+  general: '&4You don''t have permission'
   hit:
     player: '&c您没有权限来对玩家进行打击'
     monster: '&c您没有权限来对怪物进行打击'

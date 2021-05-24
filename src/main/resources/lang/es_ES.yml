@@ -6,6 +6,7 @@ permission:
   build: '&cNo tienes permisos para construir en modo creativo'
   entity: '&cNo puedes interactuar en modo creativo'
   throw: '&4You don''t have permission to throw projectile'
+  general: '&4You don''t have permission'
   hit:
     player: '&cNo puedes hacer daño a otros jugadores en modo creativo'
     monster: '&cYNo puedes hacer daño a monstruos en modo creativo'

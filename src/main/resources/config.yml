@@ -3,6 +3,7 @@ tag: '&r[&cCreativeManager&r] '
 lang: en_EN
 log: true
 save-interval: 300
+save-log: true
 send-player-messages: true
 ## Protection module
 protections:
