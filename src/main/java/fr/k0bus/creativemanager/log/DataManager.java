@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.log;
 
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,9 +19,9 @@ public class DataManager {
     Connection conn;
     String dbname;
     HashMap<Location, BlockLog> blockLogHashMap;
-    JavaPlugin plugin;
+    CreativeManager plugin;
 
-    public DataManager(String dbname, JavaPlugin plugin)
+    public DataManager(String dbname, CreativeManager plugin)
     {
         this.blockLogHashMap = new HashMap<>();
         this.dbname = dbname;
@@ -64,8 +65,9 @@ public class DataManager {
                 save(log);
                 n++;
             }
-            Messages.log(plugin,
-                    "&2Log saved to database ! &7[" + n + "]");
+            if(plugin.getSettings().getBoolean("save-log"))
+                Messages.log(plugin,
+                        "&2Log saved to database ! &7[" + n + "]");
         });
     }
     public void saveSync()
