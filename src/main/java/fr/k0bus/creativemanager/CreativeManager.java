@@ -14,6 +14,7 @@ import fr.k0bus.k0buslib.updater.UpdateChecker;
 import fr.k0bus.k0buslib.utils.Messages;
 import fr.k0bus.k0buslib.utils.MessagesManager;
 import net.md_5.bungee.api.ChatColor;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
@@ -46,6 +47,7 @@ public class CreativeManager extends JavaPlugin {
             Messages.log(this, "&2CreativeManager &cv" + this.getDescription().getVersion() +
                     " (Update " + updateChecker.getVersion() + " available on SpigotMC)");
         }
+        Metrics metrics = new Metrics(this, 11481);
         Messages.log(this, "&9=============================================================");
         Messages.log(this, "&2Created by K0bus for AkuraGaming");
         Messages.log(this, "&9=============================================================");

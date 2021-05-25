@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>CreativeManager</groupId>
+  <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.13.6</version>
+  <version>1.13.8</version>
 
   <name>CreativeManager</name>
 
@@ -35,6 +35,13 @@
             </goals>
             <configuration>
               <createDependencyReducedPom>false</createDependencyReducedPom>
+              <relocations>
+                <relocation>
+                  <pattern>org.bstats</pattern>
+                  <!-- Replace this with your package! -->
+                  <shadedPattern>fr.k0bus.creativemanager.bstats</shadedPattern>
+                </relocation>
+              </relocations>
             </configuration>
           </execution>
         </executions>
@@ -71,6 +78,12 @@
       <groupId>com.github.K0bus</groupId>
       <artifactId>K0busLib</artifactId>
       <version>1.1.3</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.bstats</groupId>
+      <artifactId>bstats-bukkit</artifactId>
+      <version>2.2.1</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
