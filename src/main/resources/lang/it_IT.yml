@@ -14,5 +14,6 @@ blacklist:
   place: '&4Non hai il permesso di piazzare {BLOCK} in Creativa'
   use: '&4Non hai il permesso di usare {ITEM} in Creativa'
   get: '&4Non hai il permesso di ottenere {ITEM} nel tuo inventario in Creativa'
+  commands: '&4You don''t have permission to use this command in Creative'
 inventory:
   change: '&dSei passato all''inventario della modalità {GAMEMODE} !'

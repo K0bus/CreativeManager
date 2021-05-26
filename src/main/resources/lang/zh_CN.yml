@@ -14,5 +14,6 @@ blacklist:
   place: '&4您没有权限在创造模式下放置方块 {BLOCK} '
   use: '&4您没有权限在创造模式下使用 {ITEM} '
   get: '&4您没有权限在创造模式下来往背包放 {ITEM} '
+  commands: '&4You don''t have permission to use this command in Creative'
 inventory:
   change: '&d您切换至模式 {GAMEMODE} 的隔离背包 !'

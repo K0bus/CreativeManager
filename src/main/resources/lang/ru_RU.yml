@@ -14,5 +14,6 @@ blacklist:
   place: '&4У вас нет разрешения на установку {BLOCK} в режиме креатива'
   use: '&4У вас нет разрешения на использование {ITEM} в режиме креатива'
   get: '&4У вас нет разрешения на добавление {ITEM} в свой инвентарь в режиме креатива'
+  commands: '&4You don''t have permission to use this command in Creative'
 inventory:
   change: '&dВаш инвентарь переключился на инвентарь {GAMEMODE}!'

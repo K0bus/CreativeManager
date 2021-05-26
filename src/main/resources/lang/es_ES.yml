@@ -14,5 +14,6 @@ blacklist:
   place: '&cEste bloque &a({BLOCK}) &cestá prohibido en modo creativo'
   use: '&cNo puedes utilizar &a({ITEM}) &céste objeto en modo creativo'
   get: '&cNo puedes obtener &a({ITEM}) &céste objeto en modo creativo'
+  commands: '&4You don''t have permission to use this command in Creative'
 inventory:
   change: '&eTu inventario ha sido restaurado a tu inventario del modo de juego: &a{GAMEMODE}'

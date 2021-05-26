@@ -40,6 +40,12 @@ permissions:
    creativemanager.bypass.blacklist.get:
       description: "Bypass Creative Inventory Mode"
       default: op
+   creativemanager.bypass.blacklist.break:
+      description: "Bypass Creative Break blacklist"
+      default: op
+   creativemanager.bypass.blacklist.commands:
+      description: "Bypass Creative Commands blacklist"
+      default: op
    creativemanager.bypass.lore:
       description: "Bypass Creative Lore"
       default: op
