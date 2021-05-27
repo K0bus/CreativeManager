@@ -1,46 +1,52 @@
 package fr.k0bus.creativemanager.commands;
 
+import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.gui.settings.ProtectionSettingGui;
+import fr.k0bus.creativemanager.manager.InventoryManager;
 import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.creativemanager.manager.InventoryManager;
-
+/**
+ * Main command class.
+ */
 public class MainCommand implements CommandExecutor {
+    private final CreativeManager plugin;
 
-    CreativeManager plugin;
-
-    public MainCommand(CreativeManager instance)
-    {
+    /**
+     * Instantiates a new Main command.
+     *
+     * @param instance the instance.
+     */
+    public MainCommand(CreativeManager instance) {
         plugin = instance;
     }
 
+    /**
+     * On command.
+     *
+     * @param sender the sender.
+     * @param cmd    the cmd.
+     * @param label  the label.
+     * @param args   the args.
+     * @return the boolean.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if(args.length>=1)
-        {
-            if(args[0].equals("reload"))
-            {
-                if(!(sender instanceof Player) || sender.hasPermission("creativemanager.reload"))
-                {
+        if (args.length >= 1) {
+            if (args[0].equals("reload")) {
+                if (!(sender instanceof Player) || sender.hasPermission("creativemanager.reload")) {
                     plugin.loadConfigManager();
                     Messages.sendMessageText(plugin.getMessageManager(), sender, " &5Configuration reloaded !");
-                }
-                else
-                {
+                } else {
                     Messages.sendMessage(plugin.getMessageManager(), sender, "permission.general");
                 }
             } else if (args[0].equals("settings")) {
-                if(sender instanceof Player && sender.hasPermission("creativemanager.admin"))
-                {
+                if (sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
                     new ProtectionSettingGui((Player) sender, plugin).show();
-                }
-                else
-                {
+                } else {
                     Messages.sendMessage(plugin.getMessageManager(), sender, "permission.general");
                 }
             } else if (args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
@@ -63,12 +69,9 @@ public class MainCommand implements CommandExecutor {
             } else {
                 Messages.sendMessageText(plugin.getMessageManager(), sender, " &4Unknown command " + args[0] + " !");
             }
-        }
-        else
-        {
+        } else {
             Messages.sendMessageText(plugin.getMessageManager(), sender, " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion());
         }
-        
         return true;
     }
 }

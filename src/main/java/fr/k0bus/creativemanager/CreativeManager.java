@@ -1,15 +1,14 @@
 package fr.k0bus.creativemanager;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-
 import com.google.common.io.Files;
+import fr.k0bus.creativemanager.commands.MainCommand;
+import fr.k0bus.creativemanager.commands.MainCommandTab;
+import fr.k0bus.creativemanager.event.*;
 import fr.k0bus.creativemanager.log.DataManager;
+import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.creativemanager.task.SaveTask;
 import fr.k0bus.k0buslib.settings.Configuration;
 import fr.k0bus.k0buslib.settings.Lang;
-import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.k0buslib.updater.UpdateChecker;
 import fr.k0bus.k0buslib.utils.Messages;
 import fr.k0bus.k0buslib.utils.MessagesManager;
@@ -22,28 +21,26 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.k0bus.creativemanager.commands.*;
-import fr.k0bus.creativemanager.event.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
 
 public class CreativeManager extends JavaPlugin {
 
-    public Settings settings;
-    public Lang lang;
-    public final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
+    private final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
+    private Settings settings;
+    private Lang lang;
     private MessagesManager messagesManager;
-    public DataManager dataManager;
+    private DataManager dataManager;
     private int saveTask;
 
     @Override
     public void onEnable() {
         Messages.log(this, "&9=============================================================");
         UpdateChecker updateChecker = new UpdateChecker(this, 75097);
-        if(updateChecker.isUpToDate())
-        {
+        if (updateChecker.isUpToDate()) {
             Messages.log(this, "&2CreativeManager &av" + this.getDescription().getVersion());
-        }
-        else
-        {
+        } else {
             Messages.log(this, "&2CreativeManager &cv" + this.getDescription().getVersion() +
                     " (Update " + updateChecker.getVersion() + " available on SpigotMC)");
         }
@@ -68,26 +65,23 @@ public class CreativeManager extends JavaPlugin {
         Messages.log(this, "&2Configuration loaded !");
         this.lang = new Lang(settings.getLang(), this);
         Messages.log(this, "&2Language loaded ! &7[" + settings.getLang() + "]");
-        if(this.messagesManager != null)
-        {
+        if (this.messagesManager != null) {
             messagesManager.setLang(lang);
             messagesManager.setSettings(settings);
-        }
-        else
+        } else
             this.messagesManager = new MessagesManager(settings, lang);
     }
-    public void updateConfig()
-    {
+
+    public void updateConfig() {
         Configuration.updateConfig("lang/en_EN.yml", this);
         Configuration.updateConfig("lang/es_ES.yml", this);
         Configuration.updateConfig("lang/fr_FR.yml", this);
         Configuration.updateConfig("lang/it_IT.yml", this);
         Configuration.updateConfig("lang/ru_RU.yml", this);
         Configuration oldConfig = new Configuration("config.yml", this);
-        if(oldConfig.contains("build-protection"))
-        {
+        if (oldConfig.contains("build-protection")) {
             try {
-                Files.move(oldConfig.getFile(),new File(oldConfig.getFile().getParentFile(), "old_config.yml"));
+                Files.move(oldConfig.getFile(), new File(oldConfig.getFile().getParentFile(), "old_config.yml"));
                 oldConfig = new Configuration("old_config.yml", this);
                 this.settings = new Settings(this);
                 this.settings.set("protections.entity", oldConfig.getBoolean("entity-protection"));
@@ -112,10 +106,10 @@ public class CreativeManager extends JavaPlugin {
         }
         Configuration.updateConfig("config.yml", this);
     }
-	private void registerEvent(PluginManager pm)
-	{
-		pm.registerEvents(new PlayerBuild(this), this);
-		pm.registerEvents(new PlayerBreak(this), this);
+
+    private void registerEvent(PluginManager pm) {
+        pm.registerEvents(new PlayerBuild(this), this);
+        pm.registerEvents(new PlayerBreak(this), this);
         pm.registerEvents(new PlayerInteract(this), this);
         pm.registerEvents(new PlayerInteractEntity(this), this);
         pm.registerEvents(new PlayerInteractAtEntity(this), this);
@@ -132,42 +126,40 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new PlayerPickup(this), this);
     }
-    private void registerCommand()
-    {
+
+    private void registerCommand() {
         PluginCommand mainCommand = this.getCommand("cm");
-        if(mainCommand != null)
-        {
+        if (mainCommand != null) {
             mainCommand.setExecutor(new MainCommand(this));
             mainCommand.setTabCompleter(new MainCommandTab());
         }
     }
-    private void registerPermissions()
-    {
+
+    private void registerPermissions() {
         PluginManager pm = getServer().getPluginManager();
         Set<Permission> permissions = pm.getPermissions();
         int n = 0;
-        for (EntityType entityType: EntityType.values()) {
+        for (EntityType entityType : EntityType.values()) {
             Permission perm = new Permission("creativemanager.bypass.entity." + entityType.name());
-            if(!permissions.contains(perm))
-            {
+            if (!permissions.contains(perm)) {
                 pm.addPermission(perm);
                 n++;
             }
         }
         Messages.log(this, "&2Entities permissions registered ! &7[" + n + "]");
     }
-    private void loadLog()
-    {
+
+    private void loadLog() {
         dataManager = new DataManager("data", this);
         Messages.log(this,
                 "&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
     }
-    public Settings getSettings()
-    {
+
+    public Settings getSettings() {
         return this.settings;
     }
-    public Lang getLang()
-    {
+
+    public Lang getLang() {
         return this.lang;
     }
 
@@ -184,9 +176,8 @@ public class CreativeManager extends JavaPlugin {
     }
 
     @Override
-    public void onDisable()
-    {
-        if(Bukkit.getScheduler().isCurrentlyRunning(saveTask) || Bukkit.getScheduler().isQueued(saveTask))
+    public void onDisable() {
+        if (Bukkit.getScheduler().isCurrentlyRunning(saveTask) || Bukkit.getScheduler().isQueued(saveTask))
             Bukkit.getScheduler().cancelTask(saveTask);
         dataManager.saveSync();
     }

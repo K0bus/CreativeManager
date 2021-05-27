@@ -5,7 +5,6 @@ import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,15 +13,22 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.logging.Level;
 
+/**
+ * Data manager class.
+ */
 public class DataManager {
+    private final String dbname;
+    private final HashMap<Location, BlockLog> blockLogHashMap;
+    private final CreativeManager plugin;
+    private Connection conn;
 
-    Connection conn;
-    String dbname;
-    HashMap<Location, BlockLog> blockLogHashMap;
-    CreativeManager plugin;
-
-    public DataManager(String dbname, CreativeManager plugin)
-    {
+    /**
+     * Instantiates a new Data manager.
+     *
+     * @param dbname the dbname.
+     * @param plugin the plugin.
+     */
+    public DataManager(String dbname, CreativeManager plugin) {
         this.blockLogHashMap = new HashMap<>();
         this.dbname = dbname;
         this.plugin = plugin;
@@ -31,51 +37,75 @@ public class DataManager {
         load();
     }
 
-    public BlockLog getBlockFrom(Location location)
-    {
+    /**
+     * Gets block from.
+     *
+     * @param location the location.
+     * @return the block from.
+     */
+    public BlockLog getBlockFrom(Location location) {
         return blockLogHashMap.get(location);
     }
-    public void moveBlock(Location from, Location to)
-    {
-        if(blockLogHashMap.containsKey(from))
-        {
+
+    /**
+     * Move block.
+     *
+     * @param from the from location.
+     * @param to   the to location.
+     */
+    public void moveBlock(Location from, Location to) {
+        if (blockLogHashMap.containsKey(from)) {
             BlockLog blockLog = blockLogHashMap.get(from);
             blockLog.setLocation(to);
             blockLogHashMap.put(to, blockLog);
             blockLogHashMap.remove(from);
         }
     }
-    public void removeBlock(Location location)
-    {
+
+    /**
+     * Remove block.
+     *
+     * @param location the location.
+     */
+    public void removeBlock(Location location) {
         BlockLog blockLog = blockLogHashMap.get(location);
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> delete(blockLog));
         blockLogHashMap.remove(location);
     }
 
-    public void addBlock(BlockLog log)
-    {
+    /**
+     * Add block.
+     *
+     * @param log the log.
+     */
+    public void addBlock(BlockLog log) {
         blockLogHashMap.put(log.getLocation(), log);
     }
 
-    public void save()
-    {
+    /**
+     * Save.
+     */
+    public void save() {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             int n = 0;
             HashMap<Location, BlockLog> cloned = new HashMap<>(blockLogHashMap);
-            for (BlockLog log: cloned.values()) {
+            for (BlockLog log : cloned.values()) {
                 save(log);
                 n++;
             }
-            if(plugin.getSettings().getBoolean("save-log"))
+            if (plugin.getSettings().getBoolean("save-log"))
                 Messages.log(plugin,
                         "&2Log saved to database ! &7[" + n + "]");
         });
     }
-    public void saveSync()
-    {
+
+    /**
+     * Save sync.
+     */
+    public void saveSync() {
         int n = 0;
         HashMap<Location, BlockLog> cloned = new HashMap<>(blockLogHashMap);
-        for (BlockLog log: cloned.values()) {
+        for (BlockLog log : cloned.values()) {
             save(log);
             n++;
         }
@@ -83,8 +113,12 @@ public class DataManager {
                 "&2Log saved to database ! &7[" + n + "]");
     }
 
-    public void delete(BlockLog log)
-    {
+    /**
+     * Delete.
+     *
+     * @param log the log.
+     */
+    public void delete(BlockLog log) {
         try {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM block_log WHERE uuid=?");
             ps.setString(1, log.getUuid().toString());
@@ -94,9 +128,14 @@ public class DataManager {
             Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
         }
     }
-    public void save(BlockLog log)
-    {
-        if(log.getLocation().getWorld() == null){
+
+    /**
+     * Save.
+     *
+     * @param log the log.
+     */
+    public void save(BlockLog log) {
+        if (log.getLocation().getWorld() == null) {
             delete(log);
             return;
         }
@@ -122,6 +161,11 @@ public class DataManager {
         }
     }
 
+    /**
+     * Start connection.
+     *
+     * @return the connection.
+     */
     public Connection startConnection() {
         if (this.conn != null)
             return this.conn;
@@ -143,6 +187,10 @@ public class DataManager {
         }
         return null;
     }
+
+    /**
+     * Init.
+     */
     public void init() {
         try {
             this.conn = startConnection();
@@ -156,8 +204,10 @@ public class DataManager {
         }
     }
 
-    private void load()
-    {
+    /**
+     * Load.
+     */
+    private void load() {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM block_log");
             ResultSet rs = ps.executeQuery();
@@ -177,6 +227,11 @@ public class DataManager {
         }
     }
 
+    /**
+     * Gets block log hash map.
+     *
+     * @return the block log hash map
+     */
     public HashMap<Location, BlockLog> getBlockLogHashMap() {
         return blockLogHashMap;
     }

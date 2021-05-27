@@ -11,17 +11,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * The type Player login.
+ */
 public class PlayerLogin implements Listener {
-
     private final CreativeManager plugin;
 
-    public PlayerLogin(CreativeManager plugin)
-    {
+    /**
+     * Instantiates a new Player login.
+     *
+     * @param plugin the plugin.
+     */
+    public PlayerLogin(CreativeManager plugin) {
         this.plugin = plugin;
     }
+
+    /**
+     * On player login/join.
+     *
+     * @param e the event.
+     */
     @EventHandler(ignoreCancelled = true)
-    public void onLogin(PlayerJoinEvent e)
-    {
+    public void onLogin(PlayerJoinEvent e) {
         boolean forceGamemode = false;
 
         try {
@@ -34,9 +45,8 @@ public class PlayerLogin implements Listener {
             //
         }
         System.out.println("Force GM : " + forceGamemode);
-        if (forceGamemode)
-        {
-            if(!e.getPlayer().hasPermission("creativemanager.bypass.inventory")) {
+        if (forceGamemode) {
+            if (!e.getPlayer().hasPermission("creativemanager.bypass.inventory")) {
                 InventoryManager im = new InventoryManager(e.getPlayer(), plugin);
                 im.loadInventory(plugin.getServer().getDefaultGameMode());
             }

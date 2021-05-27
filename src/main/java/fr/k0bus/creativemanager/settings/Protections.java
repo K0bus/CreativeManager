@@ -11,6 +11,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Protections.
+ */
 public enum Protections {
     CONTAINER("container", Material.CHEST, "Protect container usage", "Container"),
     SPAWN("spawn", Material.SKELETON_SPAWN_EGG, "Protect spawn egg usage", "Spawn Egg"),
@@ -31,6 +34,14 @@ public enum Protections {
     private final String desc;
     private final String displayName;
 
+    /**
+     * Instantiates a new Protections.
+     *
+     * @param name        the name.
+     * @param icon        the icon.
+     * @param desc        the desc.
+     * @param displayName the display name.
+     */
     Protections(String name, Material icon, String desc, String displayName) {
         this.name = name;
         this.icon = icon;
@@ -38,20 +49,30 @@ public enum Protections {
         this.displayName = displayName;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets icon item.
+     *
+     * @param value the value.
+     * @return the icon item.
+     */
     public ItemStack getIconItem(boolean value) {
         ItemStack item = new ItemStack(this.icon);
         ItemMeta itemMeta = item.getItemMeta();
-        if(itemMeta != null)
-        {
+        if (itemMeta != null) {
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.DARK_GRAY + "------");
             lore.addAll(LoreUtils.formatLoreString(ChatColor.RESET + this.desc));
             lore.add(ChatColor.DARK_GRAY + "------");
-            if(value)
+            if (value)
                 lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : Enabled");
             else
                 lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : Disabled");
