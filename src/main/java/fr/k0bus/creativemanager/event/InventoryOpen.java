@@ -31,7 +31,7 @@ public class InventoryOpen implements Listener {
             {
                 if(isProtectedChest(e.getInventory()))
                 {
-                    if (p.hasPermission("creativemanager.bypass.container")) {
+                    if (!p.hasPermission("creativemanager.bypass.container")) {
                         if(plugin.getSettings().getBoolean("send-player-messages"))
                             Messages.sendMessage(plugin.getMessageManager(), p, "permission.container");
                         e.setCancelled(true);
