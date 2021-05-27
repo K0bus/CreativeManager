@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -23,6 +24,7 @@ public class PlayerPreCommand implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent e)
     {
         if(!plugin.getSettings().getProtection(Protections.COMMANDS)) return;
+        if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         String cmd = e.getMessage().toLowerCase().substring(1);
         for (String blCmd:plugin.getSettings().getCommandBL()) {
             if(blCmd.toLowerCase().startsWith(cmd))
