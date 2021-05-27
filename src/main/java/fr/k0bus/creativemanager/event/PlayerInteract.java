@@ -27,7 +27,29 @@ public class PlayerInteract implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onUse(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && p.getGameMode().equals(GameMode.CREATIVE)) {
+        if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+        if(e.getItem() != null)
+        {
+            if(plugin.getSettings().getUseBL().stream().anyMatch(e.getItem().getType().name()::equalsIgnoreCase))
+                if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
+                    HashMap<String, String> replaceMap = new HashMap<>();
+                    replaceMap.put("{ITEM}", e.getItem().getType().name());
+                    Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.use", replaceMap);
+                    e.setCancelled(true);
+                    return;
+                }
+            if (e.getItem() instanceof SpawnEggMeta) {
+                if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
+                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
+                        if(plugin.getSettings().getBoolean("send-player-messages"))
+                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+            }
+        }
+        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if(e.getClickedBlock() != null)
             {
                 if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
@@ -37,23 +59,6 @@ public class PlayerInteract implements Listener {
                         e.setCancelled(true);
                     }
                 }
-            }
-            else if (e.getItem() instanceof SpawnEggMeta) {
-                if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
-                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                        if(plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
-                        e.setCancelled(true);
-                    }
-                }
-            } else if (e.getItem() != null) {
-                if(plugin.getSettings().getUseBL().stream().anyMatch(e.getItem().getType().name()::equalsIgnoreCase))
-                    if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
-                        HashMap<String, String> replaceMap = new HashMap<>();
-                        replaceMap.put("{ITEM}", e.getItem().getType().name());
-                        Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.use", replaceMap);
-                        e.setCancelled(true);
-                    }
             }
         }
     }
