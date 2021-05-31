@@ -8,20 +8,32 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 
+/**
+ * Player pickup event listener.
+ */
 public class PlayerPickup implements Listener {
-    CreativeManager plugin;
-    public PlayerPickup(CreativeManager plugin)
-    {
+    private final CreativeManager plugin;
+
+    /**
+     * Instantiates a new Player pickup.
+     *
+     * @param plugin the plugin.
+     */
+    public PlayerPickup(CreativeManager plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * On pickup.
+     *
+     * @param e the event.
+     */
     @EventHandler
-    public void onPickup(EntityPickupItemEvent e)
-    {
-        if(!plugin.getSettings().getProtection(Protections.PICKUP)) return;
-        if(!(e.getEntity() instanceof Player)) return;
+    public void onPickup(EntityPickupItemEvent e) {
+        if (!plugin.getSettings().getProtection(Protections.PICKUP)) return;
+        if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
-        if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+        if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if (!p.hasPermission("creativemanager.bypass.pickup")) {
             e.setCancelled(true);
         }
