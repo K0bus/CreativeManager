@@ -48,14 +48,12 @@ public class PlayerInteract implements Listener {
                     e.setCancelled(true);
                     return;
                 }
-            if (e.getItem() instanceof SpawnEggMeta) {
-                if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
-                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                        if(plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
-                        e.setCancelled(true);
-                        return;
-                    }
+            if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
+                if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
+                    if(plugin.getSettings().getBoolean("send-player-messages"))
+                        Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
+                    e.setCancelled(true);
+                    return;
                 }
             }
         }
