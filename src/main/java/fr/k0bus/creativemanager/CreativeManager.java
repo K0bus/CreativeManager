@@ -125,6 +125,7 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new InventoryOpen(this), this);
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new PlayerPickup(this), this);
+        pm.registerEvents(new ExplodeEvent(this), this);
     }
 
     private void registerCommand() {
