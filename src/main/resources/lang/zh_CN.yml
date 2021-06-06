@@ -5,15 +5,15 @@ permission:
   drop: '&4您没有权限在创造模式下丢弃物品'
   build: '&4您没有权限在创造模式下建筑'
   entity: '&4您没有权限在创造模式下交互实体'
-  throw: '&4You don''t have permission to throw projectile'
-  general: '&4You don''t have permission'
+  throw: '&4您没有权限在创造模式下射击'
+  general: '&4您没有权限'
   hit:
-    player: '&c您没有权限来对玩家进行打击'
-    monster: '&c您没有权限来对怪物进行打击'
+    player: '&c您没有权限攻击玩家'
+    monster: '&c您没有权限攻击怪物'
 blacklist:
   place: '&4您没有权限在创造模式下放置方块 {BLOCK} '
   use: '&4您没有权限在创造模式下使用 {ITEM} '
   get: '&4您没有权限在创造模式下来往背包放 {ITEM} '
-  commands: '&4You don''t have permission to use this command in Creative'
+  commands: '&4您没有权限在创造模式下使用该指令'
 inventory:
-  change: '&d您切换至模式 {GAMEMODE} 的隔离背包 !'
+  change: '&d您切换至模式 {GAMEMODE} 的独立背包 !'
