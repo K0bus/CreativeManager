@@ -53,6 +53,7 @@ public class PlayerBreak implements Listener {
 				if (blockLog != null) {
 					if (blockLog.isCreative()) {
 						e.setDropItems(false);
+						e.setExpToDrop(0);
 						plugin.getDataManager().removeBlock(blockLog.getLocation());
 					}
 				}
