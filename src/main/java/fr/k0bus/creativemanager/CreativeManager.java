@@ -69,7 +69,7 @@ public class CreativeManager extends JavaPlugin {
             messagesManager.setLang(lang);
             messagesManager.setSettings(settings);
         } else
-            this.messagesManager = new MessagesManager(settings, lang);
+            this.messagesManager = new MessagesManager(settings, lang, this);
     }
 
     public void updateConfig() {
@@ -180,6 +180,7 @@ public class CreativeManager extends JavaPlugin {
     public void onDisable() {
         if (Bukkit.getScheduler().isCurrentlyRunning(saveTask) || Bukkit.getScheduler().isQueued(saveTask))
             Bukkit.getScheduler().cancelTask(saveTask);
-        dataManager.saveSync();
+        if(dataManager != null)
+            dataManager.saveSync();
     }
 }
