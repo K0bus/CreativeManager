@@ -22,16 +22,12 @@ public class ExplodeEvent implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockExplodeEvent e) {
-        Messages.log(plugin, "CHHT");
         if (plugin.getSettings().getProtection(Protections.LOOT)) {
-            Messages.log(plugin, "GO");
             for(Block block: e.blockList())
             {
-                Messages.log(plugin, "CHECK");
                 BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
                 if (blockLog != null) {
                     if (blockLog.isCreative()) {
-                        Messages.log(plugin, "REMOVE BLOCK");
                         block.setType(Material.AIR);
                         plugin.getDataManager().removeBlock(blockLog.getLocation());
                     }
