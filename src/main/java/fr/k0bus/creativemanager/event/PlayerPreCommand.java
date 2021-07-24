@@ -27,7 +27,8 @@ public class PlayerPreCommand implements Listener {
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         String cmd = e.getMessage().toLowerCase().substring(1);
         for (String blCmd:plugin.getSettings().getCommandBL()) {
-            if(blCmd.toLowerCase().startsWith(cmd))
+            Messages.log(plugin, blCmd.toLowerCase() + " / " + cmd);
+            if(cmd.startsWith(blCmd.toLowerCase()))
             {
                 e.setCancelled(true);
                 if(plugin.getSettings().getBoolean("send-player-messages"))
