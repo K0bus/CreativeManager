@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.14.14</version>
+  <version>1.14.15</version>
 
   <name>CreativeManager</name>
 
@@ -77,7 +77,7 @@
     <dependency>
       <groupId>com.github.K0bus</groupId>
       <artifactId>K0busLib</artifactId>
-      <version>1.1.4</version>
+      <version>1.1.5</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
