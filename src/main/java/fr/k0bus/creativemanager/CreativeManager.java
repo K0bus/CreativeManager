@@ -126,6 +126,7 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
+        pm.registerEvents(new PlayerDeath(this), this);
     }
 
     private void registerCommand() {
@@ -147,6 +148,7 @@ public class CreativeManager extends JavaPlugin {
                 n++;
             }
         }
+        pm.addPermission(new Permission("creativemanager.bypass.deathdrop"));
         Messages.log(this, "&2Entities permissions registered ! &7[" + n + "]");
     }
 
