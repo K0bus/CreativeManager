@@ -20,6 +20,7 @@ protections:
   spawn-build: true
   throw: true
   commands: true
+  useblock: true
 ## Multi inventory
 inventory:
   adventure: true #Bypass : cm.bypass.inventory
@@ -38,6 +39,8 @@ blacklist:
     - 'bedrock'
   commands:
     -  'somecommandtoblacklist optionnaly with some argument'
+  useblock:
+    - 'CRAFTING_TABLE'
 ## Lore settings
 creative-lore:
   - '&5Creative {ITEM}'
