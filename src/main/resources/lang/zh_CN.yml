@@ -15,5 +15,6 @@ blacklist:
   use: '&4您没有权限在创造模式下使用 {ITEM} '
   get: '&4您没有权限在创造模式下来往背包放 {ITEM} '
   commands: '&4您没有权限在创造模式下使用该指令'
+  useblock: '&4You don''t have permission to use this block in Creative'
 inventory:
   change: '&d您切换至模式 {GAMEMODE} 的独立背包 !'

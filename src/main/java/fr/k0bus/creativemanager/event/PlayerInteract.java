@@ -66,6 +66,15 @@ public class PlayerInteract implements Listener {
                         e.setCancelled(true);
                     }
                 }
+                if(!p.hasPermission("creativemanager.bypass.blacklist.useblock") && plugin.getSettings().getProtection(Protections.BLOCK_USE))
+                {
+                    if(plugin.getSettings().getUseBlockBL().stream().anyMatch(e.getClickedBlock().getType().name()::equalsIgnoreCase))
+                    {
+                        if (plugin.getSettings().getBoolean("send-player-messages"))
+                            Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.useblock");
+                        e.setCancelled(true);
+                    }
+                }
             }
         }
     }

@@ -15,5 +15,6 @@ blacklist:
   use: '&4You don''t have permission to use {ITEM} in Creative'
   get: '&4You don''t have permission to get {ITEM} into your inventory in Creative'
   commands: '&4You don''t have permission to use this command in Creative'
+  useblock: '&4You don''t have permission to use this block in Creative'
 inventory:
   change: '&dYour inventory switch to {GAMEMODE} inventory !'

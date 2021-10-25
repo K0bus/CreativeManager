@@ -15,5 +15,6 @@ blacklist:
   use: '&4Nemate dozvolu za upotrebu {ITEM} u Creative modu'
   get: '&4Nemate dozvolu da dobijete {ITEM} u svoj inventar u Creative modu'
   commands: '&4Nemate dozvolu za upotrebu ove komande u Creative modu'
+  useblock: '&4You don''t have permission to use this block in Creative'
 inventory:
   change: '&dVas inventar se prebacuje na {GAMEMODE} inventar !'
