@@ -73,6 +73,15 @@ public class Settings extends fr.k0bus.k0buslib.settings.Settings {
     }
 
     /**
+     * Gets use bl.
+     *
+     * @return the use blacklist.
+     */
+    public List<String> getUseBlockBL() {
+        return getStringList("blacklist.useblock");
+    }
+
+    /**
      * Gets get bl.
      *
      * @return the get blacklist.

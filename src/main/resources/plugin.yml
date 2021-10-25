@@ -46,6 +46,9 @@ permissions:
    creativemanager.bypass.blacklist.commands:
       description: "Bypass Creative Commands blacklist"
       default: op
+   creativemanager.bypass.blacklist.useblock:
+      description: "Bypass Creative Block use blacklist"
+      default: op
    creativemanager.bypass.lore:
       description: "Bypass Creative Lore"
       default: op

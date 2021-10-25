@@ -27,7 +27,8 @@ public enum Protections {
     LOOT("loot", Material.NAME_TAG, "Deny looting from Creative placed block", "Lootable"),
     SPAWN_BUILD("spawn-build", Material.WITHER_SKELETON_SKULL, "Deny spawn monster with build", "Spawn Build"),
     THROW("throw", Material.ARROW, "Deny throw projectile", "Throw"),
-    COMMANDS("commands", Material.COMMAND_BLOCK, "Deny using blacklisted commands", "Commands");
+    COMMANDS("commands", Material.COMMAND_BLOCK, "Deny using blacklisted commands", "Commands"),
+    BLOCK_USE("blockuse", Material.CRAFTING_TABLE, "Deny using blacklisted blocks", "Use block");
 
     private final String name;
     private final Material icon;
