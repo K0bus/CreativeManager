@@ -108,7 +108,7 @@ public class InventoryMove implements Listener {
 					String string = (String) obj;
 					string = string.replace("{PLAYER}", p.getName())
 							.replace("{UUID}", p.getUniqueId().toString())
-							.replace("{ITEM}", item.getType().getKey().getKey());
+							.replace("{ITEM}", item.getType().name());
 					lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
 				}
 			}

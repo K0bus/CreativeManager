@@ -17,13 +17,16 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class CreativeManager extends JavaPlugin {
 
@@ -116,7 +119,6 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerDrop(this), this);
         pm.registerEvents(new InventoryMove(this), this);
         pm.registerEvents(new PlayerGamemodeChange(this), this);
-        pm.registerEvents(new PlayerHitEvent(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerLogin(this), this);
         pm.registerEvents(new PistonEvent(this), this);
@@ -124,9 +126,22 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new ProjectileThrow(this), this);
         pm.registerEvents(new InventoryOpen(this), this);
         pm.registerEvents(new PlayerPreCommand(this), this);
-        pm.registerEvents(new PlayerPickup(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
+        Method methodToFind = null;
+        try {
+            methodToFind = ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
+            pm.registerEvents(new PlayerHitEvent(this, true), this);
+        } catch (NoSuchMethodException | SecurityException e) {
+            Messages.log(this, "PvP / PvE Protection can't protect from projectil on this Spigot version !", Level.WARNING);
+            pm.registerEvents(new PlayerHitEvent(this, false), this);
+        }
+        try {
+            Class.forName( "org.bukkit.event.entity.EntityPickupItemEvent" );
+            pm.registerEvents(new PlayerPickup(this), this);
+        } catch( ClassNotFoundException e ) {
+            Messages.log(this, "Player pickup protection not enabled on this Spigot version !", Level.WARNING);
+        }
     }
 
     private void registerCommand() {

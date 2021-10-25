@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,8 +53,7 @@ public class PlayerBreak implements Listener {
 				BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
 				if (blockLog != null) {
 					if (blockLog.isCreative()) {
-						e.setDropItems(false);
-						e.setExpToDrop(0);
+						e.getBlock().setType(Material.AIR);
 						plugin.getDataManager().removeBlock(blockLog.getLocation());
 					}
 				}

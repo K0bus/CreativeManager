@@ -16,14 +16,16 @@ import org.bukkit.projectiles.ProjectileSource;
  */
 public class PlayerHitEvent implements Listener {
 	private final CreativeManager plugin;
+	private final boolean ensablePorjectile;
 
 	/**
 	 * Instantiates a new Player hit event.
 	 *
 	 * @param instance the instance.
 	 */
-	public PlayerHitEvent(CreativeManager instance) {
+	public PlayerHitEvent(CreativeManager instance, boolean ensablePorjectile) {
 		plugin = instance;
+		this.ensablePorjectile = ensablePorjectile;
 	}
 
 	/**
@@ -60,6 +62,7 @@ public class PlayerHitEvent implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onProjectileHit(ProjectileHitEvent e) {
+		if(!ensablePorjectile) return;
 		ProjectileSource source = e.getEntity().getShooter();
 		if (source instanceof Player) {
 			Player attacker = (Player) source;

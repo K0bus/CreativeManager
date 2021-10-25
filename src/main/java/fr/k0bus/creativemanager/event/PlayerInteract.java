@@ -48,14 +48,17 @@ public class PlayerInteract implements Listener {
                     e.setCancelled(true);
                     return;
                 }
-            if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
-                if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                    if(plugin.getSettings().getBoolean("send-player-messages"))
-                        Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
-                    e.setCancelled(true);
-                    return;
+            try {
+                Class.forName( "org.bukkit.inventory.meta.SpawnEggMeta" );
+                if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
+                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
+                        if (plugin.getSettings().getBoolean("send-player-messages"))
+                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
+                        e.setCancelled(true);
+                        return;
+                    }
                 }
-            }
+            }catch (ClassNotFoundException ignored){}
         }
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (e.getClickedBlock() != null) {
