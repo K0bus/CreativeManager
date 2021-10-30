@@ -72,17 +72,17 @@ public class InventoryOpen implements Listener {
      */
     public List<InventoryType> getProtectedType() {
         List<InventoryType> typeList = new ArrayList<>();
-        typeList.add(InventoryType.CHEST);
-        typeList.add(InventoryType.FURNACE);
-        typeList.add(InventoryType.BLAST_FURNACE);
-        typeList.add(InventoryType.BARREL);
-        typeList.add(InventoryType.BEACON);
-        typeList.add(InventoryType.BREWING);
-        typeList.add(InventoryType.DISPENSER);
-        typeList.add(InventoryType.DROPPER);
-        typeList.add(InventoryType.HOPPER);
-        typeList.add(InventoryType.SHULKER_BOX);
-        typeList.add(InventoryType.LECTERN);
+        try {typeList.add(InventoryType.CHEST);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.FURNACE);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.BLAST_FURNACE);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.BARREL);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.BEACON);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.BREWING);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.DISPENSER);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.DROPPER);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.HOPPER);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.SHULKER_BOX);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.LECTERN);}catch (NoSuchFieldError ignored){}
         return typeList;
     }
 }
