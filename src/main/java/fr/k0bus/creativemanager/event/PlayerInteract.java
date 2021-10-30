@@ -63,7 +63,7 @@ public class PlayerInteract implements Listener {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             if (e.getClickedBlock() != null) {
                 if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
-                    if (!p.hasPermission("creativemanager.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
+                    if (!p.hasPermission("creativemanager.bypass.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
                         if (plugin.getSettings().getBoolean("send-player-messages"))
                             Messages.sendMessage(plugin.getMessageManager(), p, "permission.container");
                         e.setCancelled(true);
