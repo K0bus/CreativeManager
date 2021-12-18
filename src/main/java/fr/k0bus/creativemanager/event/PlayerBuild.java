@@ -46,8 +46,9 @@ public class PlayerBuild implements Listener {
 				if (plugin.getSettings().getBoolean("send-player-messages"))
 					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
+			} else {
+				plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
 			}
-			plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
 		} else {
 			BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
 			if (blockLog != null)
