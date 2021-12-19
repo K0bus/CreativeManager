@@ -8,7 +8,7 @@ send-player-messages: true
 ## Protection module
 protections:
   container: true #Bypass : creativemanager.container
-  spawn_egg: false #Bypass : creativemanager.spawner
+  spawn: false #Bypass : creativemanager.spawner
   drop: true #Bypass : creativemanager.drop
   pickup: true #Bypass : creativemanager.pickup
   build: false #Bypass : creativemanager.build
