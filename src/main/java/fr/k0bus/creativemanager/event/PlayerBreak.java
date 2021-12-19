@@ -49,6 +49,8 @@ public class PlayerBreak implements Listener {
 				if (plugin.getSettings().getBoolean("send-player-messages"))
 					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
+			} else {
+				if(!e.isCancelled()) plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
 			}
 		} else {
 			if (!p.hasPermission("creativemanager.bypass.log") && plugin.getSettings().getProtection(Protections.LOOT)) {

@@ -32,7 +32,7 @@ public class PlayerBuild implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler
 	public void onPlace(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
 		if (p.getGameMode() == GameMode.CREATIVE) {
@@ -47,7 +47,7 @@ public class PlayerBuild implements Listener {
 					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
 				e.setCancelled(true);
 			} else {
-				plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
+				if(!e.isCancelled()) plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
 			}
 		} else {
 			BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
