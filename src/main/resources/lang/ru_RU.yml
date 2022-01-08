@@ -10,6 +10,7 @@ permission:
   hit:
     player: '&cУ вас нет разрешения бить игрока в режиме креатива'
     monster: '&cУ вас нет разрешения бить моба в режиме креатива'
+  plugins: '&cYou don''t have permission to interact with {PLUGIN}'
 blacklist:
   place: '&4У вас нет разрешения на установку {BLOCK} в режиме креатива'
   use: '&4У вас нет разрешения на использование {ITEM} в режиме креатива'

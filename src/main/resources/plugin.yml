@@ -32,22 +32,22 @@ permissions:
       description: "Bypass Creative Inventory Mode"
       default: op
    creativemanager.bypass.blacklist.place:
-      description: "Bypass Creative Inventory Mode"
+      description: "Player bypass 'place' blacklist"
       default: op
    creativemanager.bypass.blacklist.use:
-      description: "Bypass Creative Inventory Mode"
+      description: "Player bypass 'use' blacklist"
       default: op
    creativemanager.bypass.blacklist.get:
-      description: "Bypass Creative Inventory Mode"
+      description: "Player bypass 'get' blacklist"
       default: op
    creativemanager.bypass.blacklist.break:
-      description: "Bypass Creative Break blacklist"
+      description: "Player bypass 'break' blacklist"
       default: op
    creativemanager.bypass.blacklist.commands:
-      description: "Bypass Creative Commands blacklist"
+      description: "Player bypass 'commands' blacklist"
       default: op
    creativemanager.bypass.blacklist.useblock:
-      description: "Bypass Creative Block use blacklist"
+      description: "Player bypass 'useblock' blacklist"
       default: op
    creativemanager.bypass.lore:
       description: "Bypass Creative Lore"

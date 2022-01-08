@@ -10,6 +10,7 @@ permission:
   hit:
     player: '&cNon hai il permesso di attaccare i giocatori'
     monster: '&cNon hai il permesso di attaccare i mostri'
+  plugins: '&cYou don''t have permission to interact with {PLUGIN}'
 blacklist:
   place: '&4Non hai il permesso di piazzare {BLOCK} in Creativa'
   use: '&4Non hai il permesso di usare {ITEM} in Creativa'

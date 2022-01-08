@@ -10,6 +10,7 @@ permission:
   hit:
     player: '&cNemate dozvolu da udarite igraca'
     monster: '&cNemate dozvolu da udarite čudoviste'
+  plugins: '&cYou don''t have permission to interact with {PLUGIN}'
 blacklist:
   place: '&4Nemate dozvolu za postavljanje {BLOCK} u Creative modu'
   use: '&4Nemate dozvolu za upotrebu {ITEM} u Creative modu'

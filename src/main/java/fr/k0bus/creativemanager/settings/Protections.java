@@ -28,7 +28,9 @@ public enum Protections {
     SPAWN_BUILD("spawn-build", Material.PUMPKIN, "Deny spawn monster with build", "Spawn Build"),
     THROW("throw", Material.ARROW, "Deny throw projectile", "Throw"),
     COMMANDS("commands", Material.PAPER, "Deny using blacklisted commands", "Commands"),
-    BLOCK_USE("blockuse", Material.FURNACE, "Deny using blacklisted blocks", "Use block");
+    BLOCK_USE("blockuse", Material.FURNACE, "Deny using blacklisted blocks", "Use block"),
+    SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
+    CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop");
 
     private final String name;
     private final Material icon;

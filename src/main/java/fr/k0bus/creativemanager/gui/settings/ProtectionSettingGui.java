@@ -4,12 +4,15 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.gui.Gui;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.AkuraHeads;
+import fr.k0bus.k0buslib.utils.AkuraItems;
 import fr.k0bus.k0buslib.utils.MenuUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -41,8 +44,8 @@ public class ProtectionSettingGui extends Gui {
     @Override
     public void initItem() {
         int i = 0;
-        MenuUtils.addSeparator(getInv(), 2);
-        MenuUtils.addSeparator(getInv(), 3);
+        addSeparator(2);
+        addSeparator(3);
         for (Protections prot : Protections.values()) {
             ItemStack itemStack = prot.getIconItem(this.plugin.getSettings().getProtection(prot));
             getInv().setItem(i, itemStack);
@@ -79,5 +82,13 @@ public class ProtectionSettingGui extends Gui {
                     ChatColor.GOLD + e.getWhoClicked().getName() + " change " + prot.getName() + " to " + status);
             initItem();
         }
+    }
+    private void addSeparator(int row) {
+        try {
+            for (int i = 0; i < 9; i++) {
+                getInv().setItem((row - 1) * 9 + i, new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE));
+            }
+        }
+        catch (Error ignored){}
     }
 }

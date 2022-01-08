@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.17.5</version>
+  <version>1.18.1-INDEV</version>
 
   <name>CreativeManager</name>
 
@@ -65,6 +65,10 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+      <id>chestshop-repo</id>
+      <url>https://repo.minebench.de/</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -79,6 +83,18 @@
       <artifactId>K0busLib</artifactId>
       <version>1.1.7</version>
       <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.Slimefun</groupId>
+      <artifactId>Slimefun4</artifactId>
+      <version>RC-30</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.acrobot.chestshop</groupId>
+      <artifactId>chestshop</artifactId>
+      <version>3.12</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.bstats</groupId>

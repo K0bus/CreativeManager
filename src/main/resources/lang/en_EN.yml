@@ -10,6 +10,7 @@ permission:
   hit:
     player: '&cYou don''t have permission to hit player'
     monster: '&cYou don''t have permission to hit monster'
+  plugins: '&cYou don''t have permission to interact with {PLUGIN}'
 blacklist:
   place: '&4You don''t have permission to place {BLOCK} in Creative'
   use: '&4You don''t have permission to use {ITEM} in Creative'

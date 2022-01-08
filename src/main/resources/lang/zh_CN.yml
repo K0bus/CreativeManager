@@ -10,6 +10,7 @@ permission:
   hit:
     player: '&c您没有权限攻击玩家'
     monster: '&c您没有权限攻击怪物'
+  plugins: '&cYou don''t have permission to interact with {PLUGIN}'
 blacklist:
   place: '&4您没有权限在创造模式下放置方块 {BLOCK} '
   use: '&4您没有权限在创造模式下使用 {ITEM} '

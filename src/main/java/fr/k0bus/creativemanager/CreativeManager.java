@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import fr.k0bus.creativemanager.commands.MainCommand;
 import fr.k0bus.creativemanager.commands.MainCommandTab;
 import fr.k0bus.creativemanager.event.*;
+import fr.k0bus.creativemanager.event.plugin.SlimeFun;
 import fr.k0bus.creativemanager.log.DataManager;
 import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.creativemanager.task.SaveTask;
@@ -128,6 +129,7 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
+        /*  Add event checked for old version */
         Method methodToFind = null;
         try {
             methodToFind = ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
@@ -142,6 +144,9 @@ public class CreativeManager extends JavaPlugin {
         } catch( ClassNotFoundException e ) {
             Messages.log(this, "Player pickup protection not enabled on this Spigot version !", Level.WARNING);
         }
+        /* Add plugin event */
+        if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
+            pm.registerEvents(new SlimeFun(this), this);
     }
 
     private void registerCommand() {
