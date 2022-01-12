@@ -129,6 +129,7 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(this), this);
+        pm.registerEvents(new CreativeCopy(this), this);
         /*  Add event checked for old version */
         Method methodToFind = null;
         try {
@@ -146,6 +147,8 @@ public class CreativeManager extends JavaPlugin {
         }
         /* Add plugin event */
         if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
+            pm.registerEvents(new SlimeFun(this), this);
+        if(getServer().getPluginManager().isPluginEnabled("ChestShop"))
             pm.registerEvents(new SlimeFun(this), this);
     }
 
