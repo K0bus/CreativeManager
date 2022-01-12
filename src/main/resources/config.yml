@@ -21,6 +21,7 @@ protections:
   throw: true
   commands: true
   useblock: true
+  blockcopy: true
   plugins:
     slimefun: true
 ## Multi inventory
