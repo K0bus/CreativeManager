@@ -35,7 +35,7 @@ public class ChestShop implements Listener {
         if(!plugin.getSettings().getProtection(Protections.CHESTSHOP)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
-        replaceMap.put("{PLUGIN}", "SlimeFun");
+        replaceMap.put("{PLUGIN}", "ChestShop");
         Messages.sendMessage(plugin.getMessageManager(), e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
@@ -45,7 +45,7 @@ public class ChestShop implements Listener {
         if(!plugin.getSettings().getProtection(Protections.CHESTSHOP)) return;
         if(e.getClient().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
-        replaceMap.put("{PLUGIN}", "SlimeFun");
+        replaceMap.put("{PLUGIN}", "ChestShop");
         Messages.sendMessage(plugin.getMessageManager(), e.getClient(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
