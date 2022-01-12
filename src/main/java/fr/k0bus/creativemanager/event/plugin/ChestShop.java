@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class ChestShop implements Listener {
 
-    CreativeManager plugin;
+    final CreativeManager plugin;
 
     public ChestShop(CreativeManager plugin)
     {

@@ -8,13 +8,6 @@ import org.bukkit.event.Listener;
 
 public class PlayerDeath implements Listener {
 
-    CreativeManager plugin;
-
-    public PlayerDeath(CreativeManager plugin)
-    {
-        this.plugin = plugin;
-    }
-
     @EventHandler
     public void onPlayerDeath(org.bukkit.event.entity.PlayerDeathEvent e)
     {

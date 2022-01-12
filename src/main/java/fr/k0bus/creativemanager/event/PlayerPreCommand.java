@@ -9,13 +9,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.logging.Handler;
-
 public class PlayerPreCommand implements Listener {
 
-    CreativeManager plugin;
+    final CreativeManager plugin;
 
     public PlayerPreCommand(CreativeManager plugin)
     {

@@ -5,7 +5,6 @@ import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +16,9 @@ import java.util.logging.Level;
 public class DataManager {
 
     Connection conn;
-    String dbname;
-    HashMap<Location, BlockLog> blockLogHashMap;
-    CreativeManager plugin;
+    final String dbname;
+    final HashMap<Location, BlockLog> blockLogHashMap;
+    final CreativeManager plugin;
 
     public DataManager(String dbname, CreativeManager plugin)
     {

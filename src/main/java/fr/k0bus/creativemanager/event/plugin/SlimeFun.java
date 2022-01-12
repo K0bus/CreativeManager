@@ -5,21 +5,18 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ToolUseHandler;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Set;
 
 public class SlimeFun implements Listener {
 
-    CreativeManager plugin;
+    final CreativeManager plugin;
 
     public SlimeFun(CreativeManager plugin)
     {

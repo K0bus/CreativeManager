@@ -64,15 +64,6 @@ public class InventoryManager {
     }
 
     /**
-     * Gets player.
-     *
-     * @return the player.
-     */
-    public Player getPlayer() {
-        return this.p;
-    }
-
-    /**
      * Load inventory.
      *
      * @param gm the game mode.

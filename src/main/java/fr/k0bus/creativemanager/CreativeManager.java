@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import fr.k0bus.creativemanager.commands.MainCommand;
 import fr.k0bus.creativemanager.commands.MainCommandTab;
 import fr.k0bus.creativemanager.event.*;
+import fr.k0bus.creativemanager.event.plugin.ChestShop;
 import fr.k0bus.creativemanager.event.plugin.SlimeFun;
 import fr.k0bus.creativemanager.log.DataManager;
 import fr.k0bus.creativemanager.settings.Settings;
@@ -25,7 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -48,7 +48,7 @@ public class CreativeManager extends JavaPlugin {
             Messages.log(this, "&2CreativeManager &cv" + this.getDescription().getVersion() +
                     " (Update " + updateChecker.getVersion() + " available on SpigotMC)");
         }
-        Metrics metrics = new Metrics(this, 11481);
+        new Metrics(this, 11481);
         Messages.log(this, "&9=============================================================");
         Messages.log(this, "&2Created by K0bus for AkuraGaming");
         Messages.log(this, "&9=============================================================");
@@ -128,12 +128,11 @@ public class CreativeManager extends JavaPlugin {
         pm.registerEvents(new InventoryOpen(this), this);
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
-        pm.registerEvents(new PlayerDeath(this), this);
+        pm.registerEvents(new PlayerDeath(), this);
         pm.registerEvents(new CreativeCopy(this), this);
         /*  Add event checked for old version */
-        Method methodToFind = null;
         try {
-            methodToFind = ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
+            ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
             pm.registerEvents(new PlayerHitEvent(this, true), this);
         } catch (NoSuchMethodException | SecurityException e) {
             Messages.log(this, "PvP / PvE Protection can't protect from projectil on this Spigot version !", Level.WARNING);
@@ -149,7 +148,7 @@ public class CreativeManager extends JavaPlugin {
         if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
             pm.registerEvents(new SlimeFun(this), this);
         if(getServer().getPluginManager().isPluginEnabled("ChestShop"))
-            pm.registerEvents(new SlimeFun(this), this);
+            pm.registerEvents(new ChestShop(this), this);
     }
 
     private void registerCommand() {

@@ -71,8 +71,7 @@ public abstract class Gui implements Listener {
      * @param e the event.
      */
     @EventHandler
-    public void onInventoryClose(final InventoryCloseEvent e) {
-    }
+    public void onInventoryClose(final InventoryCloseEvent e){}
 
     /**
      * Gets player.

@@ -46,7 +46,8 @@ public class MainCommand implements CommandExecutor {
             if (args[0].equals("reload")) {
                 if (!(sender instanceof Player) || sender.hasPermission("creativemanager.reload")) {
                     plugin.loadConfigManager();
-                    Messages.sendMessageText(plugin.getMessageManager(), conversable, " &5Configuration reloaded !");
+                    if(conversable != null)
+                        Messages.sendMessageText(plugin.getMessageManager(), conversable, " &5Configuration reloaded !");
                 } else {
                     Messages.sendMessage(plugin.getMessageManager(), conversable, "permission.general");
                 }
@@ -54,7 +55,8 @@ public class MainCommand implements CommandExecutor {
                 if (sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
                     new ProtectionSettingGui((Player) sender, plugin).show();
                 } else {
-                    Messages.sendMessage(plugin.getMessageManager(), conversable, "permission.general");
+                    if(conversable != null)
+                        Messages.sendMessage(plugin.getMessageManager(), conversable, "permission.general");
                 }
             } else if (args[0].equals("inventory") && sender instanceof Player && sender.hasPermission("creativemanager.admin")) {
                 if (args.length >= 2) {
@@ -74,10 +76,12 @@ public class MainCommand implements CommandExecutor {
                     Messages.sendMessageText(plugin.getMessageManager(), conversable, " &4Missing argument !");
                 }
             } else {
-                Messages.sendMessageText(plugin.getMessageManager(), conversable, " &4Unknown command " + args[0] + " !");
+                if(conversable != null)
+                    Messages.sendMessageText(plugin.getMessageManager(), conversable, " &4Unknown command " + args[0] + " !");
             }
         } else {
-            Messages.sendMessageText(plugin.getMessageManager(), conversable, " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion());
+            if(conversable != null)
+                Messages.sendMessageText(plugin.getMessageManager(), conversable, " &aRunning " + plugin.getName() + " v" + plugin.getDescription().getVersion());
         }
         return true;
     }

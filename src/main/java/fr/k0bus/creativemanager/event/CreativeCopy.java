@@ -4,6 +4,7 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -11,13 +12,14 @@ import org.bukkit.inventory.ItemStack;
 
 public class CreativeCopy implements Listener {
 
-    CreativeManager plugin;
+    final CreativeManager plugin;
 
     public CreativeCopy(CreativeManager plugin)
     {
         this.plugin = plugin;
     }
 
+    @EventHandler
     public void onBlockCopy(final InventoryClickEvent e)
     {
         if(!e.getClick().equals(ClickType.CREATIVE)) return;

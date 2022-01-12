@@ -9,8 +9,8 @@ import java.util.UUID;
 public class BlockLog {
 
     private Location location;
-    private UUID uuid;
-    private OfflinePlayer player;
+    private final UUID uuid;
+    private final OfflinePlayer player;
     private boolean saved;
 
     public BlockLog(Block block, OfflinePlayer player)

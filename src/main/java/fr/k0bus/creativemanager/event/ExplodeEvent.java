@@ -3,7 +3,6 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
