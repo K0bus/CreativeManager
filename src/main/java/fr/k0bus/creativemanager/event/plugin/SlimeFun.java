@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -34,6 +35,7 @@ public class SlimeFun implements Listener {
     public void onMultiBlockInteract(MultiBlockInteractEvent e)
     {
         if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
+        if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
@@ -46,6 +48,7 @@ public class SlimeFun implements Listener {
     {
         if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
         if(SlimefunItem.getByItem(e.getPlayer().getItemInUse()) == null) return;
+        if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
