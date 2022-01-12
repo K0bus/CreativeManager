@@ -2,6 +2,9 @@ name: ${project.artifactId}
 main: fr.k0bus.creativemanager.CreativeManager
 version: ${project.version}
 api-version: 1.16
+softdepend:
+   - Slimefun
+   - ChestShop
 commands:
    cm:
       description: Commande principale !
@@ -69,4 +72,7 @@ permissions:
       default: op
    creativemanager.bypass.spawn_build:
       description: "Allow creative player to build golem"
+      default: op
+   creativemanager.bypass.blockcopy:
+      description: "Allow creative player to copy block with NBT"
       default: op
