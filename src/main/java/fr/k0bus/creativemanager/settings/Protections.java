@@ -30,7 +30,8 @@ public enum Protections {
     COMMANDS("commands", Material.PAPER, "Deny using blacklisted commands", "Commands"),
     BLOCK_USE("blockuse", Material.FURNACE, "Deny using blacklisted blocks", "Use block"),
     SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
-    CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop");
+    CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop"),
+    COPY("blockcopy", Material.SHEARS, "Deny copy block in Creative", "Block Copy");
 
     private final String name;
     private final Material icon;
