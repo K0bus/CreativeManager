@@ -4,12 +4,14 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,28 +61,30 @@ public class InventoryMove implements Listener {
 			}
 			return;
 		}
-		List<String> blacklist = plugin.getSettings().getGetBL();
-		if(blacklist.size() > 0)
-			if (blacklist.stream().anyMatch(itemStack.getType().name()::equalsIgnoreCase)) {
-				if (!player.hasPermission("creativemanager.bypass.blacklist.get")) {
-					if (cdtime.get(player.getUniqueId()) == null || (cdtime.get(player.getUniqueId()) + 1000) <= System.currentTimeMillis()) {
-						if (cdtime.get(player.getUniqueId()) != null) {
-							cdtime.remove(player.getUniqueId());
-						}
-						String blget = plugin.getLang().getString("blacklist.get");
-						HashMap<String, String> replaceMap = new HashMap<>();
-						replaceMap.put("{ITEM}", itemStack.getType().name());
-						if (blget != null)
-							Messages.sendMessage(plugin.getMessageManager(), player, "blacklist.get", replaceMap);
-						cdtime.put(player.getUniqueId(), System.currentTimeMillis());
-					}
-					e.setCancelled(true);
-				}
-			}
 		if (!player.hasPermission("creativemanager.bypass.lore") && plugin.getSettings().getProtection(Protections.LORE)) {
 			e.setCurrentItem(addLore(e.getCurrentItem(), player));
 			e.setCursor(addLore(e.getCursor(), player));
 		}
+	}
+	@EventHandler(ignoreCancelled = true)
+	public void checkBlackList(final InventoryClickEvent e)
+	{
+		Player p = (Player) e.getWhoClicked();
+		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
+		if(e.getCursor() == null) return;
+		List<String> blacklist = plugin.getSettings().getGetBL();
+		if(blacklist.size() > 0)
+			if (blacklist.stream().anyMatch(e.getCursor().getType().name()::equalsIgnoreCase)) {
+				HashMap<String, String> replaceMap = new HashMap<>();
+				replaceMap.put("{ITEM}", e.getCursor().getType().name());
+				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.get", replaceMap);
+				p.setItemOnCursor(null);
+				e.setCurrentItem(null);
+				p.getInventory().setItem(e.getSlot(), null);
+				p.updateInventory();
+				e.setCancelled(true);
+			}
 	}
 
 	/**
