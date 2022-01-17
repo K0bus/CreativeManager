@@ -4,6 +4,7 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -45,6 +46,7 @@ public class PlayerHitEvent implements Listener {
 						e.setCancelled(true);
 					}
 				} else {
+					if(e.getEntity().getType().equals(EntityType.ARMOR_STAND)) return;
 					if (!attacker.hasPermission("creativemanager.bypass.pve") && plugin.getSettings().getProtection(Protections.PVE)) {
 						if (plugin.getSettings().getBoolean("send-player-messages"))
 							Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.monster");
