@@ -6,7 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,12 +22,11 @@ public class CreativeCopy implements Listener {
     @EventHandler
     public void onBlockCopy(final InventoryClickEvent e)
     {
-        if(!e.getClick().equals(ClickType.CREATIVE)) return;
+        if(!e.getAction().equals(InventoryAction.CLONE_STACK)) return;
         if(!plugin.getSettings().getProtection(Protections.COPY)) return;
-        if(e.getCursor() == null) return;
         Player p = (Player) e.getWhoClicked();
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.blockcopy")) return;
-        p.setItemOnCursor(new ItemStack(e.getCursor().getType()));
+        e.setCurrentItem(new ItemStack(e.getCurrentItem().getType()));
     }
 }
