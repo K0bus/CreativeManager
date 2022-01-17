@@ -5,6 +5,7 @@ import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
@@ -33,6 +34,7 @@ public class ChestShop implements Listener {
     public void onShopCreation(PreShopCreationEvent e)
     {
         if(!plugin.getSettings().getProtection(Protections.CHESTSHOP)) return;
+        if(e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
@@ -43,6 +45,7 @@ public class ChestShop implements Listener {
     public void onShopTransaction(PreTransactionEvent e)
     {
         if(!plugin.getSettings().getProtection(Protections.CHESTSHOP)) return;
+        if(e.getClient().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getClient().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
