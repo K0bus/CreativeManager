@@ -5,17 +5,17 @@ permission:
   drop: '&4У вас нет разрешения на дроп предметов в режиме креатива'
   build: '&4У вас нет разрешения на строительство в режиме креатива'
   entity: '&4У вас нет разрешения на взаимодействие с мобами в режиме креатива'
-  throw: '&4You don''t have permission to throw projectile'
-  general: '&4You don''t have permission'
+  throw: '&4У вас нет разрешения метать снаряды'
+  general: '&4У вас нет разрешения'
   hit:
     player: '&cУ вас нет разрешения бить игрока в режиме креатива'
     monster: '&cУ вас нет разрешения бить моба в режиме креатива'
-  plugins: '&cYou don''t have permission to interact with {PLUGIN}'
+  plugins: '&cУ вас нет разрешения на взаимодействие с {PLUGIN}'
 blacklist:
   place: '&4У вас нет разрешения на установку {BLOCK} в режиме креатива'
   use: '&4У вас нет разрешения на использование {ITEM} в режиме креатива'
   get: '&4У вас нет разрешения на добавление {ITEM} в свой инвентарь в режиме креатива'
-  commands: '&4You don''t have permission to use this command in Creative'
-  useblock: '&4You don''t have permission to use this block in Creative'
+  commands: '&4У вас нет разрешения на использование этой команды в режиме Креатива'
+  useblock: '&4У вас нет разрешения на использование этого блока в режиме Креатива.'
 inventory:
   change: '&dВаш инвентарь переключился на инвентарь {GAMEMODE}!'
