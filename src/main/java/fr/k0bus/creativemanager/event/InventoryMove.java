@@ -66,25 +66,34 @@ public class InventoryMove implements Listener {
 			e.setCursor(addLore(e.getCursor(), player));
 		}
 	}
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void checkBlackList(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
-		if(e.getCursor() == null) return;
 		List<String> blacklist = plugin.getSettings().getGetBL();
-		if(blacklist.size() > 0)
-			if (blacklist.stream().anyMatch(e.getCursor().getType().name()::equalsIgnoreCase)) {
-				HashMap<String, String> replaceMap = new HashMap<>();
-				replaceMap.put("{ITEM}", e.getCursor().getType().name());
-				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.get", replaceMap);
-				p.setItemOnCursor(null);
-				e.setCurrentItem(null);
-				p.getInventory().setItem(e.getSlot(), null);
-				p.updateInventory();
-				e.setCancelled(true);
-			}
+		if(e.getCursor() != null){
+			if (blacklist.size() > 0)
+				if (blacklist.stream().anyMatch(e.getCursor().getType().name()::equalsIgnoreCase)) {
+					HashMap<String, String> replaceMap = new HashMap<>();
+					replaceMap.put("{ITEM}", e.getCursor().getType().name());
+					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.get", replaceMap);
+					e.setCancelled(true);
+					p.updateInventory();
+					return;
+				}
+		}
+		if(e.getCurrentItem() != null) {
+			if (blacklist.size() > 0)
+				if (blacklist.stream().anyMatch(e.getCurrentItem().getType().name()::equalsIgnoreCase)) {
+					HashMap<String, String> replaceMap = new HashMap<>();
+					replaceMap.put("{ITEM}", e.getCursor().getType().name());
+					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.get", replaceMap);
+					e.setCancelled(true);
+					p.updateInventory();
+				}
+		}
 	}
 
 	/**
