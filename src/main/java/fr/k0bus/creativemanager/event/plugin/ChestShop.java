@@ -34,7 +34,7 @@ public class ChestShop implements Listener {
     public void onShopCreation(PreShopCreationEvent e)
     {
         if(!plugin.getSettings().getProtection(Protections.CHESTSHOP)) return;
-        if(e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
+        if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
@@ -45,7 +45,7 @@ public class ChestShop implements Listener {
     public void onShopTransaction(PreTransactionEvent e)
     {
         if(!plugin.getSettings().getProtection(Protections.CHESTSHOP)) return;
-        if(e.getClient().getGameMode().equals(GameMode.CREATIVE)) return;
+        if(!e.getClient().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getClient().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
