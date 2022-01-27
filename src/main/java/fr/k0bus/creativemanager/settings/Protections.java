@@ -31,7 +31,8 @@ public enum Protections {
     BLOCK_USE("blockuse", Material.FURNACE, "Deny using blacklisted blocks", "Use block"),
     SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
     CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop"),
-    COPY("blockcopy", Material.SHEARS, "Deny copy block in Creative", "Block Copy");
+    COPY("blockcopy", Material.SHEARS, "Deny copy block in Creative", "Block Copy"),
+    ENCHANTANDPOTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion");
 
     private final String name;
     private final Material icon;

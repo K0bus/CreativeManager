@@ -6,6 +6,7 @@ import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,11 +16,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Inventory move listener.
@@ -46,11 +46,6 @@ public class InventoryMove implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onInventoryClick(InventoryCreativeEvent e) {
 		Player player = (Player) e.getWhoClicked();
-		ItemStack itemStack = e.getCurrentItem();
-		if (itemStack == null)
-			itemStack = e.getCursor();
-		else if (itemStack.getType().equals(Material.AIR))
-			itemStack = e.getCursor();
 		if (e.getClick().equals(ClickType.DROP) || e.getClick().equals(ClickType.CONTROL_DROP) ||
 				e.getClick().equals(ClickType.WINDOW_BORDER_LEFT) || e.getClick().equals(ClickType.WINDOW_BORDER_RIGHT) ||
 				e.getClick().equals(ClickType.UNKNOWN)) {
@@ -64,6 +59,49 @@ public class InventoryMove implements Listener {
 		if (!player.hasPermission("creativemanager.bypass.lore") && plugin.getSettings().getProtection(Protections.LORE)) {
 			e.setCurrentItem(addLore(e.getCurrentItem(), player));
 			e.setCursor(addLore(e.getCursor(), player));
+		}
+	}
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	public void checkEnchantAndPotion(final InventoryClickEvent e)
+	{
+		Player p = (Player) e.getWhoClicked();
+		if(!plugin.getSettings().getProtection(Protections.ENCHANTANDPOTION)) return;
+		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+		if(p.hasPermission("creativemanager.bypass.enchants-and-potions")) return;
+		if(e.getCursor() != null){
+			if(!e.getCursor().getEnchantments().isEmpty())
+			{
+				for (Map.Entry<Enchantment, Integer> enc : e.getCursor().getEnchantments().entrySet()) {
+					e.getCursor().removeEnchantment(enc.getKey());
+				}
+			}
+			ItemMeta meta = e.getCursor().getItemMeta();
+			if(meta instanceof PotionMeta)
+			{
+				PotionMeta potionMeta = (PotionMeta) meta;
+				for (PotionEffect effect:potionMeta.getCustomEffects()) {
+					potionMeta.removeCustomEffect(effect.getType());
+				}
+				e.getCursor().setItemMeta(potionMeta);
+			}
+		}
+		if(e.getCurrentItem() != null){
+			if(!e.getCurrentItem().getEnchantments().isEmpty())
+			{
+				for (Map.Entry<Enchantment, Integer> enc : e.getCurrentItem().getEnchantments().entrySet()) {
+					e.getCurrentItem().removeEnchantment(enc.getKey());
+				}
+			}
+			ItemMeta meta = e.getCurrentItem().getItemMeta();
+			if(meta instanceof PotionMeta)
+			{
+				PotionMeta potionMeta = (PotionMeta) meta;
+				for (PotionEffect effect:potionMeta.getCustomEffects()) {
+					potionMeta.removeCustomEffect(effect.getType());
+				}
+				e.getCurrentItem().setItemMeta(potionMeta);
+			}
 		}
 	}
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
