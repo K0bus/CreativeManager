@@ -54,6 +54,15 @@ public class PlayerGamemodeChange implements Listener {
 					return;
 				}
 			}
+			if (!plugin.getSettings().spectatorInvEnable()) {
+				if (e.getNewGameMode().equals(GameMode.SPECTATOR)) {
+					im.saveInventory(p.getGameMode());
+					return;
+				} else if (p.getGameMode().equals(GameMode.SPECTATOR)) {
+					im.saveInventory(GameMode.SURVIVAL);
+					return;
+				}
+			}
 			im.saveInventory(p.getGameMode());
 			im.loadInventory(e.getNewGameMode());
 			HashMap<String, String> replaceMap = new HashMap<>();

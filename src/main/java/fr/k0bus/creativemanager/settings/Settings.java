@@ -55,6 +55,15 @@ public class Settings extends fr.k0bus.k0buslib.settings.Settings {
     }
 
     /**
+     * Spectator inv enable boolean.
+     *
+     * @return True if yes, otherwise false.
+     */
+    public boolean spectatorInvEnable() {
+        return getBoolean("inventory.spectator");
+    }
+
+    /**
      * Gets place bl.
      *
      * @return the placed blocks.

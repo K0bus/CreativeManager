@@ -8,11 +8,13 @@ import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 
@@ -99,6 +101,8 @@ public class SlimeFun implements Listener {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
             Messages.sendMessage(plugin.getMessageManager(), e.getPlayer(), "permission.plugins", replaceMap);
+            e.setUseBlock(Event.Result.DENY);
+            e.setUseItem(Event.Result.DENY);
             e.cancel();
         }
     }

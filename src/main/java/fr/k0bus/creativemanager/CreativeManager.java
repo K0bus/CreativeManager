@@ -1,8 +1,10 @@
 package fr.k0bus.creativemanager;
 
 import com.google.common.io.Files;
-import fr.k0bus.creativemanager.commands.MainCommand;
-import fr.k0bus.creativemanager.commands.MainCommandTab;
+import fr.k0bus.creativemanager.commands.CustomCommands;
+import fr.k0bus.creativemanager.commands.SubCommands;
+import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommands;
+import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommandTab;
 import fr.k0bus.creativemanager.event.*;
 import fr.k0bus.creativemanager.event.plugin.ChestShop;
 import fr.k0bus.creativemanager.event.plugin.SlimeFun;
@@ -14,6 +16,8 @@ import fr.k0bus.k0buslib.settings.Lang;
 import fr.k0bus.k0buslib.updater.UpdateChecker;
 import fr.k0bus.k0buslib.utils.Messages;
 import fr.k0bus.k0buslib.utils.MessagesManager;
+import me.angeschossen.lands.api.integration.LandsIntegration;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -37,6 +41,9 @@ public class CreativeManager extends JavaPlugin {
     private MessagesManager messagesManager;
     private DataManager dataManager;
     private int saveTask;
+
+    private LandsIntegration landsIntegration;
+    private GriefPrevention griefPrevention;
 
     @Override
     public void onEnable() {
@@ -62,6 +69,14 @@ public class CreativeManager extends JavaPlugin {
         this.loadLog();
         this.saveTask = SaveTask.run(this);
         Messages.log(this, "&9=============================================================");
+    }
+
+    public void registerProtectionsAPI()
+    {
+        if(getServer().getPluginManager().isPluginEnabled("Lands"))
+            landsIntegration = new LandsIntegration(this);
+        if(getServer().getPluginManager().isPluginEnabled("GriefPrevention"))
+            griefPrevention = GriefPrevention.instance;
     }
 
     public void loadConfigManager() {
@@ -154,8 +169,8 @@ public class CreativeManager extends JavaPlugin {
     private void registerCommand() {
         PluginCommand mainCommand = this.getCommand("cm");
         if (mainCommand != null) {
-            mainCommand.setExecutor(new MainCommand(this));
-            mainCommand.setTabCompleter(new MainCommandTab());
+            mainCommand.setExecutor(new CreativeManagerCommands(this));
+            mainCommand.setTabCompleter(new CreativeManagerCommandTab((SubCommands) mainCommand.getExecutor()));
         }
     }
 
@@ -198,6 +213,14 @@ public class CreativeManager extends JavaPlugin {
 
     public DataManager getDataManager() {
         return dataManager;
+    }
+
+    public LandsIntegration getLandsIntegration() {
+        return landsIntegration;
+    }
+
+    public GriefPrevention getGriefPrevention() {
+        return griefPrevention;
     }
 
     @Override

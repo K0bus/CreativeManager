@@ -10,10 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SpawnEggMeta;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Player interact event listener.
@@ -30,55 +33,61 @@ public class PlayerInteract implements Listener {
         plugin = instance;
     }
 
-    /**
-     * On interact/use.
-     *
-     * @param e the event.
-     */
-    @EventHandler(ignoreCancelled = true)
-    public void onUse(PlayerInteractEvent e) {
+    @EventHandler
+    public void checkBlacklistUse(PlayerInteractEvent e)
+    {
         Player p = e.getPlayer();
+        ItemStack itemStack = e.getItem();
         if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
-        if (e.getItem() != null) {
-            if (plugin.getSettings().getUseBL().stream().anyMatch(e.getItem().getType().name()::equalsIgnoreCase))
-                if (!p.hasPermission("creativemanager.bypass.blacklist.use")) {
-                    HashMap<String, String> replaceMap = new HashMap<>();
-                    replaceMap.put("{ITEM}", e.getItem().getType().name());
-                    Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.use", replaceMap);
-                    e.setCancelled(true);
-                    return;
-                }
-            try {
-                Class.forName( "org.bukkit.inventory.meta.SpawnEggMeta" );
-                if (e.getItem().getItemMeta() instanceof SpawnEggMeta) {
-                    if (!p.hasPermission("creativemanager.bypass.spawn_egg") && plugin.getSettings().getProtection(Protections.SPAWN)) {
-                        if (plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
-                        e.setCancelled(true);
-                        return;
-                    }
-                }
-            }catch (ClassNotFoundException ignored){}
+        if (itemStack == null) return;
+        String itemName = itemStack.getType().name().toLowerCase();
+        if(p.hasPermission("creativemanager.bypass.blacklist.use")) return;
+        if(p.hasPermission("creativemanager.bypass.blacklist.use" + itemName)) return;
+        List<String> blacklist = plugin.getSettings().getUseBL();
+        if(blacklist.isEmpty()) return;
+        if (blacklist.stream().anyMatch(itemName::equalsIgnoreCase))
+        {
+            HashMap<String, String> replaceMap = new HashMap<>();
+            replaceMap.put("{ITEM}", itemName);
+            Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.use", replaceMap);
+            e.setCancelled(true);
         }
-        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (e.getClickedBlock() != null) {
-                if (e.getClickedBlock().getState() instanceof InventoryHolder || e.getClickedBlock().getType().equals(Material.ENDER_CHEST)) {
-                    if (!p.hasPermission("creativemanager.bypass.container") && plugin.getSettings().getProtection(Protections.CONTAINER)) {
-                        if (plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.container");
-                        e.setCancelled(true);
-                    }
-                }
-                if(!p.hasPermission("creativemanager.bypass.blacklist.useblock") && plugin.getSettings().getProtection(Protections.BLOCK_USE))
-                {
-                    if(plugin.getSettings().getUseBlockBL().stream().anyMatch(e.getClickedBlock().getType().name()::equalsIgnoreCase))
-                    {
-                        if (plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.useblock");
-                        e.setCancelled(true);
-                    }
-                }
+    }
+    @EventHandler
+    public void checkBlacklistUseBlock(PlayerInteractEvent e)
+    {
+        Player p = e.getPlayer();
+        ItemStack itemStack = e.getItem();
+        List<String> blacklist = plugin.getSettings().getUseBlockBL();
+        if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
+        if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+        if (itemStack == null) return;
+        String itemName = itemStack.getType().name().toLowerCase();
+        if(blacklist.isEmpty()) return;
+        if(p.hasPermission("creativemanager.bypass.blacklist.useblock")) return;
+        if(blacklist.stream().anyMatch(itemName::equalsIgnoreCase))
+        {
+            if (plugin.getSettings().getBoolean("send-player-messages"))
+                Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.useblock");
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void checkSpawnEgg(PlayerInteractEvent e)
+    {
+        Player p = e.getPlayer();
+        ItemStack itemStack = e.getItem();
+        if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
+        if (itemStack == null) return;
+        if(p.hasPermission("creativemanager.bypass.spawn_egg")) return;
+        if(!plugin.getSettings().getProtection(Protections.SPAWN)) return;
+        try {
+            Class.forName( "org.bukkit.inventory.meta.SpawnEggMeta" );
+            if (itemStack.getItemMeta() instanceof SpawnEggMeta) {
+                if (plugin.getSettings().getBoolean("send-player-messages"))
+                    Messages.sendMessage(plugin.getMessageManager(), p, "permission.spawn");
+                e.setCancelled(true);
             }
-        }
+        }catch (ClassNotFoundException ignored){}
     }
 }

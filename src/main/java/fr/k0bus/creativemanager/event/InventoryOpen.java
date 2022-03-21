@@ -34,8 +34,9 @@ public class InventoryOpen implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
+        if(e.isCancelled()) return;
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
             if (p.getGameMode().equals(GameMode.CREATIVE) && plugin.getSettings().getProtection(Protections.CONTAINER)) {
@@ -75,6 +76,7 @@ public class InventoryOpen implements Listener {
         try {typeList.add(InventoryType.CHEST);}catch (NoSuchFieldError ignored){}
         try {typeList.add(InventoryType.FURNACE);}catch (NoSuchFieldError ignored){}
         try {typeList.add(InventoryType.BLAST_FURNACE);}catch (NoSuchFieldError ignored){}
+        try {typeList.add(InventoryType.SMOKER);}catch (NoSuchFieldError ignored){}
         try {typeList.add(InventoryType.BARREL);}catch (NoSuchFieldError ignored){}
         try {typeList.add(InventoryType.BEACON);}catch (NoSuchFieldError ignored){}
         try {typeList.add(InventoryType.BREWING);}catch (NoSuchFieldError ignored){}

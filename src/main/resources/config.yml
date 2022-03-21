@@ -28,6 +28,7 @@ protections:
 inventory:
   adventure: true #Bypass : cm.bypass.inventory
   creative: true #Bypass : cm.bypass.inventory
+  spectator: true #Bypass : cm.bypass.inventory
 ## Black List
 blacklist:
   place: #Bypass : creativemanager.bypass.blacklist.place

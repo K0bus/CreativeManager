@@ -76,3 +76,9 @@ permissions:
    creativemanager.bypass.blockcopy:
       description: "Allow creative player to copy block with NBT"
       default: op
+   creativemanager.bypass.log:
+      description: "Allow survival player to loot from creative placed block"
+      default: op
+   creativemanager.bypass.logged:
+      description: "Allow creative player to bypass block logging"
+      default: op

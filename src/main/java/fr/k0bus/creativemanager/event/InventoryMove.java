@@ -5,7 +5,6 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +26,6 @@ import java.util.*;
 public class InventoryMove implements Listener {
 
 	private final CreativeManager plugin;
-	private final HashMap<UUID, Long> cdtime = new HashMap<>();
 
 	/**
 	 * Instantiates a new Inventory move.
@@ -112,6 +110,8 @@ public class InventoryMove implements Listener {
 		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
 		List<String> blacklist = plugin.getSettings().getGetBL();
 		if(e.getCursor() != null){
+			String itemName = e.getCursor().getType().name().toLowerCase();
+			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
 			if (blacklist.size() > 0)
 				if (blacklist.stream().anyMatch(e.getCursor().getType().name()::equalsIgnoreCase)) {
 					HashMap<String, String> replaceMap = new HashMap<>();
@@ -123,6 +123,8 @@ public class InventoryMove implements Listener {
 				}
 		}
 		if(e.getCurrentItem() != null) {
+			String itemName = e.getCurrentItem().getType().name().toLowerCase();
+			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
 			if (blacklist.size() > 0)
 				if (blacklist.stream().anyMatch(e.getCurrentItem().getType().name()::equalsIgnoreCase)) {
 					HashMap<String, String> replaceMap = new HashMap<>();
