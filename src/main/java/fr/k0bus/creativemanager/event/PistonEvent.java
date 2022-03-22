@@ -54,6 +54,7 @@ public class PistonEvent implements Listener {
     }
 
     private void pistonCheck(BlockFace blockFace, List<Block> blocks) {
+        // Разработано для: ZDStudio(https://vk.com/zdstudio_ru)
         Collections.reverse(blocks);
         for (Block toMoveBlock : blocks) {
             BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());

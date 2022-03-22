@@ -34,6 +34,7 @@ public class DataManager {
     {
         return blockLogHashMap.get(location);
     }
+
     public void moveBlock(Location from, Location to)
     {
         if(blockLogHashMap.containsKey(from))
