@@ -6,4 +6,4 @@ CreativeManager is a Spigot plugin allow admin to manage what creative player ca
 
 ## Wiki
 
-[CreativeManager Wiki moved here](https://k0bus.fr:3443/en/creativemanager)
+[CreativeManager Wiki moved here](https://wiki.k0bus.fr)
