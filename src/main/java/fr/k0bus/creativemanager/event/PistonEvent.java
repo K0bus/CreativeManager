@@ -10,60 +10,57 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Piston event listener.
  */
 public class PistonEvent implements Listener {
-	private final CreativeManager plugin;
+    private final CreativeManager plugin;
 
-	/**
-	 * Instantiates a new Piston event.
-	 *
-	 * @param instance the instance.
-	 */
-	public PistonEvent(CreativeManager instance) {
-		plugin = instance;
-	}
+    /**
+     * Instantiates a new Piston event.
+     *
+     * @param instance the instance.
+     */
+    public PistonEvent(CreativeManager instance) {
+        plugin = instance;
+    }
 
-	/**
-	 * On extend.
-	 *
-	 * @param e the event.
-	 */
-	@EventHandler(ignoreCancelled = true)
-	public void onExtend(BlockPistonExtendEvent e) {
-		BlockFace pistonDirection = e.getDirection();
-		for (Block toMoveBlock : e.getBlocks()) {
-			BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
-			if (blockLog != null) {
-				if (blockLog.isCreative()) {
-					Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-							pistonDirection.getModY(),
-							pistonDirection.getModZ());
-					plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
-				}
-			}
-		}
-	}
+    /**
+     * On extend.
+     *
+     * @param event the event.
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onExtend(BlockPistonExtendEvent event) {
+        BlockFace pistonDirection = event.getDirection();
+        List<Block> blocks = new ArrayList<>(event.getBlocks());
+        this.pistonCheck(pistonDirection, blocks);
+    }
 
-	/**
-	 * On retract.
-	 *
-	 * @param e the event.
-	 */
-	@EventHandler(ignoreCancelled = true)
-	public void onRetract(BlockPistonRetractEvent e) {
-		BlockFace pistonDirection = e.getDirection();
-		for (Block toMoveBlock : e.getBlocks()) {
-			BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
-			if (blockLog != null) {
-				if (blockLog.isCreative()) {
-					Location movedBlock = toMoveBlock.getLocation().add(pistonDirection.getModX(),
-							pistonDirection.getModY(),
-							pistonDirection.getModZ());
-					plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
-				}
-			}
-		}
-	}
+    /**
+     * On retract.
+     *
+     * @param event the event.
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onRetract(BlockPistonRetractEvent event) {
+        BlockFace pistonDirection = event.getDirection();
+        List<Block> blocks = new ArrayList<>(event.getBlocks());
+        this.pistonCheck(pistonDirection, blocks);
+    }
+
+    private void pistonCheck(BlockFace blockFace, List<Block> blocks) {
+        Collections.reverse(blocks);
+        for (Block toMoveBlock : blocks) {
+            BlockLog blockLog = plugin.getDataManager().getBlockFrom(toMoveBlock.getLocation());
+            if (blockLog != null && blockLog.isCreative()) {
+                Location movedBlock = toMoveBlock.getRelative(blockFace).getLocation();
+                plugin.getDataManager().moveBlock(toMoveBlock.getLocation(), movedBlock);
+            }
+        }
+    }
 }
