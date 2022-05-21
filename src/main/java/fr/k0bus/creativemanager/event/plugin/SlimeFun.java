@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event.plugin;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buslib.utils.Messages;
@@ -14,7 +15,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 
@@ -87,7 +87,6 @@ public class SlimeFun implements Listener {
             Messages.sendMessage(plugin.getMessageManager(), (Player) e.getWhoClicked(), "permission.plugins", replaceMap);
             e.getWhoClicked().setItemOnCursor(null);
             e.setCancelled(true);
-            return;
         }
     }
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -96,7 +95,9 @@ public class SlimeFun implements Listener {
         if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
-        if(SlimefunItem.getByItem(e.getPlayer().getInventory().getItemInMainHand()) != null)
+        NBTItem tmp = new NBTItem(e.getPlayer().getInventory().getItemInMainHand());
+        if (tmp.hasNBTData() && tmp.hasKey("PublicBukkitValues")
+                && tmp.getCompound("PublicBukkitValues").hasKey("slimefun:slimefun_item"))
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
