@@ -7,3 +7,32 @@ CreativeManager is a Spigot plugin allow admin to manage what creative player ca
 ## Wiki
 
 [CreativeManager Wiki moved here](https://wiki.k0bus.fr)
+
+
+## Maven API
+
+You can use CreativeManager in your own plugins with our Maven repo
+
+[![](https://jitpack.io/v/K0bus/CreativeManager.svg)](https://jitpack.io/#K0bus/CreativeManager)
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+```xml
+<dependency>
+    <groupId>com.github.K0bus</groupId>
+    <artifactId>CreativeManager</artifactId>
+    <version>1.21</version>
+</dependency>
+```
+
+
+## Javadoc
+
+https://javadocs.k0bus.fr/creativemanager/index.html
