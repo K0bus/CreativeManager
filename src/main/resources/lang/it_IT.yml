@@ -7,6 +7,7 @@ permission:
   entity: '&4Non hai il permesso di interagire con questa entità in creativa'
   throw: '&4You don''t have permission to throw projectile'
   general: '&4You don''t have permission'
+  gui: '&4You don''t have permission to open GUI in Creative'
   hit:
     player: '&cNon hai il permesso di attaccare i giocatori'
     monster: '&cNon hai il permesso di attaccare i mostri'

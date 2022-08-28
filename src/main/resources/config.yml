@@ -22,6 +22,7 @@ protections:
   commands: true
   useblock: true
   blockcopy: true
+  gui: false
   plugins:
     slimefun: true
 ## Multi inventory

@@ -7,6 +7,7 @@ permission:
   entity: '&4Nemate dozvolu za interakciju s entitetom u Creative modu'
   throw: '&4Nemate dozvolu za bacanje projektila'
   general: '&4Nemate dozvolu'
+  gui: '&4You don''t have permission to open GUI in Creative'
   hit:
     player: '&cNemate dozvolu da udarite igraca'
     monster: '&cNemate dozvolu da udarite čudoviste'

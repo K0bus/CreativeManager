@@ -32,7 +32,8 @@ public enum Protections {
     SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
     CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop"),
     COPY("blockcopy", Material.SHEARS, "Deny copy block in Creative", "Block Copy"),
-    ENCHANTANDPOTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion");
+    ENCHANTANDPOTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion"),
+    GUI("gui", Material.ENDER_CHEST, "Deny player to open any GUI (Including vanilla container)", "GUI");
 
     private final String name;
     private final Material icon;

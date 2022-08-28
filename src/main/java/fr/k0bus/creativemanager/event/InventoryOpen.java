@@ -52,6 +52,26 @@ public class InventoryOpen implements Listener {
     }
 
     /**
+     * On inventory open.
+     *
+     * @param e the event.
+     */
+    @EventHandler
+    public void onGuiOpen(InventoryOpenEvent e) {
+        if(e.isCancelled()) return;
+        if (e.getPlayer() instanceof Player) {
+            Player p = (Player) e.getPlayer();
+            if (p.getGameMode().equals(GameMode.CREATIVE) && plugin.getSettings().getProtection(Protections.GUI)) {
+                if (!p.hasPermission("creativemanager.bypass.container")) {
+                    if (plugin.getSettings().getBoolean("send-player-messages"))
+                        Messages.sendMessage(plugin.getMessageManager(), p, "permission.gui");
+                    e.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    /**
      * Whether or not chest is protected.
      *
      * @param inventory the inventory.
