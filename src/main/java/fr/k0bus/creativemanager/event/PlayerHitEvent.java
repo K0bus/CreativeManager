@@ -77,6 +77,7 @@ public class PlayerHitEvent implements Listener {
 					}
 				} else {
 					if (!attacker.hasPermission("creativemanager.bypass.pve") && plugin.getSettings().getProtection(Protections.PVE)) {
+						if(e.getHitEntity() == null) return;
 						if (plugin.getSettings().getBoolean("send-player-messages"))
 							Messages.sendMessage(plugin.getMessageManager(), attacker, "permission.hit.monster");
 						e.setCancelled(true);
