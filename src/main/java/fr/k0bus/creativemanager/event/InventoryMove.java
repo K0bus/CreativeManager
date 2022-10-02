@@ -4,6 +4,7 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -55,44 +56,55 @@ public class InventoryMove implements Listener {
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	public void checkNBT(final InventoryClickEvent e)
+	{
+		Player p = (Player) e.getWhoClicked();
+		if(!CreativeManager.getSettings().getProtection(Protections.CUSTOM_NBT)) return;
+		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+		if(p.hasPermission("creativemanager.bypass.custom_nbt")) return;
+
+		List<ItemStack> itemStackList = new ArrayList<>();
+		if(e.getCursor() != null) itemStackList.add(e.getCursor());
+		if(e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
+		for (ItemStack item:itemStackList) {
+			ItemMeta itemMeta = item.getItemMeta();
+			if(itemMeta != null)
+				if(!itemMeta.getPersistentDataContainer().isEmpty())
+				{
+					for (NamespacedKey key:itemMeta.getPersistentDataContainer().getKeys()) {
+						itemMeta.getPersistentDataContainer().remove(key);
+					}
+					item.setItemMeta(itemMeta);
+				}
+		}
+	}
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void checkEnchantAndPotion(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
 		if(!CreativeManager.getSettings().getProtection(Protections.ENCHANT_AND_POTION)) return;
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.enchants-and-potions")) return;
-		if(e.getCursor() != null){
-			if(!e.getCursor().getEnchantments().isEmpty())
+
+		List<ItemStack> itemStackList = new ArrayList<>();
+		if(e.getCursor() != null) itemStackList.add(e.getCursor());
+		if(e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
+		for (ItemStack item:itemStackList) {
+			if(!item.getEnchantments().isEmpty())
 			{
-				for (Map.Entry<Enchantment, Integer> enc : e.getCursor().getEnchantments().entrySet()) {
-					e.getCursor().removeEnchantment(enc.getKey());
+				for (Map.Entry<Enchantment, Integer> enc : item.getEnchantments().entrySet()) {
+					item.removeEnchantment(enc.getKey());
 				}
 			}
-			ItemMeta meta = e.getCursor().getItemMeta();
+			ItemMeta meta = item.getItemMeta();
 			if(meta instanceof PotionMeta)
 			{
 				PotionMeta potionMeta = (PotionMeta) meta;
 				for (PotionEffect effect:potionMeta.getCustomEffects()) {
 					potionMeta.removeCustomEffect(effect.getType());
 				}
-				e.getCursor().setItemMeta(potionMeta);
-			}
-		}
-		if(e.getCurrentItem() != null){
-			if(!e.getCurrentItem().getEnchantments().isEmpty())
-			{
-				for (Map.Entry<Enchantment, Integer> enc : e.getCurrentItem().getEnchantments().entrySet()) {
-					e.getCurrentItem().removeEnchantment(enc.getKey());
-				}
-			}
-			ItemMeta meta = e.getCurrentItem().getItemMeta();
-			if(meta instanceof PotionMeta)
-			{
-				PotionMeta potionMeta = (PotionMeta) meta;
-				for (PotionEffect effect:potionMeta.getCustomEffects()) {
-					potionMeta.removeCustomEffect(effect.getType());
-				}
-				e.getCurrentItem().setItemMeta(potionMeta);
+				item.setItemMeta(potionMeta);
 			}
 		}
 	}
@@ -103,29 +115,21 @@ public class InventoryMove implements Listener {
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
 		List<String> blacklist = CreativeManager.getSettings().getGetBL();
-		if(e.getCursor() != null){
-			String itemName = e.getCursor().getType().name().toLowerCase();
+
+		List<ItemStack> itemStackList = new ArrayList<>();
+		if(e.getCursor() != null) itemStackList.add(e.getCursor());
+		if(e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
+		for (ItemStack item:itemStackList) {
+			String itemName = item.getType().name().toLowerCase();
 			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
 			if (blacklist.size() > 0)
-				if (blacklist.stream().anyMatch(e.getCursor().getType().name()::equalsIgnoreCase)) {
+				if (blacklist.stream().anyMatch(item.getType().name()::equalsIgnoreCase)) {
 					HashMap<String, String> replaceMap = new HashMap<>();
-					replaceMap.put("{ITEM}", e.getCursor().getType().name());
+					replaceMap.put("{ITEM}", item.getType().name());
 					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
 					e.setCancelled(true);
 					p.updateInventory();
 					return;
-				}
-		}
-		if(e.getCurrentItem() != null) {
-			String itemName = e.getCurrentItem().getType().name().toLowerCase();
-			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
-			if (blacklist.size() > 0)
-				if (blacklist.stream().anyMatch(e.getCurrentItem().getType().name()::equalsIgnoreCase)) {
-					HashMap<String, String> replaceMap = new HashMap<>();
-					replaceMap.put("{ITEM}", e.getCursor().getType().name());
-					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
-					e.setCancelled(true);
-					p.updateInventory();
 				}
 		}
 	}

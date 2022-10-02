@@ -24,6 +24,7 @@ protections:
   useblock: true
   blockcopy: true
   gui: false
+  custom-nbt: false
   plugins:
     citizens: true
     chestshop: true

@@ -83,3 +83,9 @@ permissions:
    creativemanager.bypass.logged:
       description: "Allow creative player to bypass block logging"
       default: op
+   creativemanager.bypass.custom_nbt:
+      description: "Allow creative player to bypass custom NBT protection"
+      default: op
+   creativemanager.bypass.enchants-and-potions:
+      description: "Allow creative player to bypass enchants-and-potions protection"
+      default: op
