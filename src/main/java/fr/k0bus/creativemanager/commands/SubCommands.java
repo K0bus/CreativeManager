@@ -4,7 +4,6 @@ import fr.k0bus.creativemanager.CreativeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -61,34 +60,35 @@ public abstract class SubCommands implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if(subCmd(sender, args)) return true;
-        if(!canUse(sender)) return true;
+        if(cantUse(sender)) return true;
         run(sender, args);
         return true;
     }
 
     public void onCommand(CommandSender sender, String[] args) {
         if(subCmd(sender, args)) return;
-        if(!canUse(sender)) return;
+        if(cantUse(sender)) return;
         run(sender, args);
     }
 
     public boolean canUse(CommandSender sender, boolean sendMessage)
     {
         if(checkPlayer(sender, sendMessage))
-            return checkPermission(sender);
+            return checkPermission(sender, sendMessage);
         return false;
     }
 
-    public boolean canUse(CommandSender sender)
+    public boolean cantUse(CommandSender sender)
     {
-        return canUse(sender, true);
+        return !canUse(sender, true);
     }
-    private boolean checkPermission(CommandSender sender)
+    private boolean checkPermission(CommandSender sender, boolean sendMessage)
     {
         if(permissions != null)
             if(!sender.hasPermission(permissions))
             {
-                sender.sendMessage(CreativeManager.TAG + CreativeManager.getLang().getString("permission.general"));
+                if(sendMessage)
+                    sender.sendMessage(CreativeManager.TAG + CreativeManager.getLang().getString("permission.general"));
                 return false;
             }
         return true;
@@ -98,21 +98,12 @@ public abstract class SubCommands implements CommandExecutor {
         if(playerOnly)
             if(!(sender instanceof Player))
             {
-                sender.sendMessage(CreativeManager.TAG + CreativeManager.getLang().getString("permission.general"));
+                if(sendMessage)
+                    sender.sendMessage(CreativeManager.TAG + CreativeManager.getLang().getString("permission.general"));
                 return false;
             }
         return true;
     }
-    private Conversable getConversable(CommandSender sender)
-    {
-        Conversable conversable = null;
-        if(sender instanceof ConsoleCommandSender)
-            conversable = (ConsoleCommandSender) sender;
-        else if(sender instanceof Player)
-            conversable = (Player) sender;
-        return conversable;
-    }
-
     private boolean subCmd(CommandSender sender, String[] args)
     {
         if(subCommands.size() == 0) return false;
