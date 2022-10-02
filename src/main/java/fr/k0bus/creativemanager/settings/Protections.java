@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager.settings;
 
-import fr.k0bus.k0buslib.utils.LoreUtils;
+import fr.k0bus.k0buscore.utils.StringUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -29,11 +29,12 @@ public enum Protections {
     THROW("throw", Material.ARROW, "Deny throw projectile", "Throw"),
     COMMANDS("commands", Material.PAPER, "Deny using blacklisted commands", "Commands"),
     BLOCK_USE("blockuse", Material.FURNACE, "Deny using blacklisted blocks", "Use block"),
-    SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
-    CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop"),
+    PL_SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
+    PL_CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop"),
     COPY("blockcopy", Material.SHEARS, "Deny copy block in Creative", "Block Copy"),
-    ENCHANTANDPOTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion"),
-    GUI("gui", Material.ENDER_CHEST, "Deny player to open any GUI (Including vanilla container)", "GUI");
+    ENCHANT_AND_POTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion"),
+    GUI("gui", Material.ENDER_CHEST, "Deny player to open any GUI (Including vanilla container)", "GUI"),
+    PL_CITIZENS("plugins.citizens", Material.PLAYER_HEAD, "Deny player to interact with Citizens", "Plugins - Citizens");
 
     private final String name;
     private final Material icon;
@@ -76,12 +77,12 @@ public enum Protections {
         if (itemMeta != null) {
             List<String> lore = new ArrayList<>();
             lore.add(ChatColor.DARK_GRAY + "------");
-            lore.addAll(LoreUtils.formatLoreString(ChatColor.RESET + this.desc));
+            lore.add(StringUtils.translateColor(ChatColor.RESET + this.desc));
             lore.add(ChatColor.DARK_GRAY + "------");
             if (value)
-                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : Enabled");
+                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : " + ChatColor.GREEN + "Enabled");
             else
-                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : Disabled");
+                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : " + ChatColor.RED + "Disabled");
             itemMeta.setLore(lore);
             itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.BOLD + ChatColor.GOLD + this.displayName);
             if(value)

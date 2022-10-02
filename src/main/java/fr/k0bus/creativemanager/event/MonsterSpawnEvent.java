@@ -36,7 +36,7 @@ public class MonsterSpawnEvent implements Listener {
      */
     @EventHandler
     public void onSpawn(CreatureSpawnEvent e) {
-        if (!plugin.getSettings().getProtection(Protections.SPAWN_BUILD)) return;
+        if (!CreativeManager.getSettings().getProtection(Protections.SPAWN_BUILD)) return;
         Block baseBlock = e.getLocation().getBlock();
         List<Block> blockList = new ArrayList<>();
         if (e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN)) {

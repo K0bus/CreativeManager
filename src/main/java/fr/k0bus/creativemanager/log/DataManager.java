@@ -1,7 +1,6 @@
 package fr.k0bus.creativemanager.log;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -67,10 +66,9 @@ public class DataManager {
                 save(log);
                 n++;
             }
-            if(plugin.getSettings().getBoolean("save-log"))
+            if(CreativeManager.getSettings().getBoolean("save-log"))
                 if(n>0)
-                    Messages.log(plugin,
-                        "&2Log saved to database ! &7[" + n + "]");
+                    CreativeManager.getLog().log("&2Log saved to database ! &7[" + n + "]");
         });
     }
     public void saveSync()
@@ -83,8 +81,7 @@ public class DataManager {
             n++;
         }
         if(n>0)
-            Messages.log(plugin,
-                "&2Log saved to database ! &7[" + n + "]");
+            CreativeManager.getLog().log("&2Log saved to database ! &7[" + n + "]");
     }
 
     public void delete(BlockLog log)

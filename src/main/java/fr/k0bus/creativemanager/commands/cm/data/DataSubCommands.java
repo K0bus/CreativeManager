@@ -16,5 +16,6 @@ public class DataSubCommands extends SubCommands {
         super(instance, "creativemanager.admin", false);
 
         registerCommands("purge", new DataPurgeSubCommands(getPlugin()));
+        //registerCommands("convert", new DataConvertorSubCommands(getPlugin()));
     }
 }

@@ -1,7 +1,6 @@
 package fr.k0bus.creativemanager.commands;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,14 +42,12 @@ public abstract class CustomCommands implements CommandExecutor {
             if (subCommands.containsKey(args[0]))
                 subCommands.get(args[0]).onCommand(sender, Arrays.copyOfRange(args, 1, args.length));
             else if (sender instanceof Conversable)
-                Messages.sendMessageText(plugin.getMessageManager(),
-                        (Conversable) sender,
-                        "&cUnknown subcommands !");
+                sender.sendMessage(CreativeManager.TAG + "&cUnknown subcommands !");
         }else {
             if (defaultSubCmd != null)
                 subCommands.get(defaultSubCmd).onCommand(sender, args);
             else
-                sender.sendMessage(plugin.getSettings().getTag() + " &cMissing arguments !");
+                sender.sendMessage(CreativeManager.TAG + " &cMissing arguments !");
         }
 
         return true;

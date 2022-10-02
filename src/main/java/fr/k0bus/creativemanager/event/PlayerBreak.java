@@ -3,7 +3,6 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -40,11 +39,11 @@ public class PlayerBreak implements Listener {
 		if(e.isCancelled()) return;
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
-		if(!plugin.getSettings().getProtection(Protections.BUILD)) return;
+		if(!CreativeManager.getSettings().getProtection(Protections.BUILD)) return;
 		if(p.hasPermission("creativemanager.bypass.build")) return;
 		if (p.getGameMode() == GameMode.CREATIVE) {
-			if (plugin.getSettings().getBoolean("send-player-messages"))
-				Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
+			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
 			e.setCancelled(true);
 		}
 	}
@@ -57,13 +56,13 @@ public class PlayerBreak implements Listener {
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.break")) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.break." + blockName)) return;
-		List<String> blacklist = plugin.getSettings().getBreakBL();
+		List<String> blacklist = CreativeManager.getSettings().getBreakBL();
 		if(blacklist.isEmpty()) return;
 		if (blacklist.stream().anyMatch(blockName::equalsIgnoreCase)) {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", e.getBlock().getType().name());
-			if (plugin.getSettings().getBoolean("send-player-messages"))
-				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
+			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
 			e.setCancelled(true);
 		}
 	}
@@ -75,7 +74,7 @@ public class PlayerBreak implements Listener {
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) {
 			if (p.hasPermission("creativemanager.bypass.log")) return;
-			if (!plugin.getSettings().getProtection(Protections.LOOT)) return;
+			if (!CreativeManager.getSettings().getProtection(Protections.LOOT)) return;
 			BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
 			if (blockLog != null) {
 				if (blockLog.isCreative()) {

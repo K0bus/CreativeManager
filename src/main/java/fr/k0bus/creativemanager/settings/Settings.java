@@ -1,20 +1,22 @@
 package fr.k0bus.creativemanager.settings;
 
 import fr.k0bus.creativemanager.CreativeManager;
+import fr.k0bus.k0buscore.config.Configuration;
+import fr.k0bus.k0buscore.utils.StringUtils;
 
 import java.util.List;
 
 /**
  * Settings class.
  */
-public class Settings extends fr.k0bus.k0buslib.settings.Settings {
+public class Settings extends Configuration {
     /**
      * Instantiates a new Settings.
      *
      * @param instance the instance
      */
     public Settings(CreativeManager instance) {
-        super(instance);
+        super("config.yml", instance);
     }
 
     /**
@@ -34,6 +36,16 @@ public class Settings extends fr.k0bus.k0buslib.settings.Settings {
      */
     public boolean getProtection(Protections protections) {
         return getBoolean("protections." + protections.getName());
+    }
+
+    /**
+     * Gets protection.
+     *
+     * @param protections the protections.
+     * @param value the protections.
+     */
+    public void setProtection(Protections protections, boolean value) {
+        set("protections." + protections.getName(), value);
     }
 
     /**
@@ -124,5 +136,13 @@ public class Settings extends fr.k0bus.k0buslib.settings.Settings {
      */
     public List<String> getLore() {
         return getStringList("creative-lore");
+    }
+
+    public String getLang() {
+        return getString("lang");
+    }
+    public String getTag()
+    {
+        return StringUtils.translateColor(getString("tag"));
     }
 }

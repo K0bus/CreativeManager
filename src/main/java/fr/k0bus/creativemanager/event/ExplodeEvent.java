@@ -22,7 +22,7 @@ public class ExplodeEvent implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockExplodeEvent e) {
-        if (plugin.getSettings().getProtection(Protections.LOOT)) {
+        if (CreativeManager.getSettings().getProtection(Protections.LOOT)) {
             for(Block block: e.blockList())
             {
                 BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
@@ -37,7 +37,7 @@ public class ExplodeEvent implements Listener {
     }
     @EventHandler
     public void onBlockBreak(EntityExplodeEvent e) {
-        if (plugin.getSettings().getProtection(Protections.LOOT)) {
+        if (CreativeManager.getSettings().getProtection(Protections.LOOT)) {
             for(Block block: e.blockList())
             {
                 BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());

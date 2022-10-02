@@ -2,7 +2,6 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,15 +13,12 @@ import org.bukkit.projectiles.ProjectileSource;
  * Projectile throw event listener.
  */
 public class ProjectileThrow implements Listener {
-	private final CreativeManager plugin;
 
 	/**
 	 * Instantiates a new Projectile throw.
 	 *
-	 * @param instance the instance.
 	 */
-	public ProjectileThrow(CreativeManager instance) {
-		plugin = instance;
+	public ProjectileThrow() {
 	}
 
 	/**
@@ -35,10 +31,10 @@ public class ProjectileThrow implements Listener {
 		ProjectileSource source = e.getEntity().getShooter();
 		if (source instanceof Player) {
 			Player p = (Player) source;
-			if (plugin.getSettings().getProtection(Protections.THROW) && p.getGameMode().equals(GameMode.CREATIVE)) {
+			if (CreativeManager.getSettings().getProtection(Protections.THROW) && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.throw")) {
-					if (plugin.getSettings().getBoolean("send-player-messages"))
-						Messages.sendMessage(plugin.getMessageManager(), p, "permission.throw");
+					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+						CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.throw"));
 					e.setCancelled(true);
 				}
 			}

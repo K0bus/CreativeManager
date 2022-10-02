@@ -2,7 +2,6 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.enchantments.Enchantment;
@@ -25,16 +24,11 @@ import java.util.*;
  */
 public class InventoryMove implements Listener {
 
-	private final CreativeManager plugin;
-
 	/**
 	 * Instantiates a new Inventory move.
 	 *
-	 * @param instance the instance.
 	 */
-	public InventoryMove(CreativeManager instance) {
-		plugin = instance;
-	}
+	public InventoryMove() {}
 
 	/**
 	 * On inventory click.
@@ -47,14 +41,14 @@ public class InventoryMove implements Listener {
 		if (e.getClick().equals(ClickType.DROP) || e.getClick().equals(ClickType.CONTROL_DROP) ||
 				e.getClick().equals(ClickType.WINDOW_BORDER_LEFT) || e.getClick().equals(ClickType.WINDOW_BORDER_RIGHT) ||
 				e.getClick().equals(ClickType.UNKNOWN)) {
-			if (plugin.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop")) {
-				if (plugin.getSettings().getBoolean("send-player-messages"))
-					Messages.sendMessage(plugin.getMessageManager(), player, "permission.drop");
+			if (CreativeManager.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop")) {
+				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+					CreativeManager.sendMessage(player, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
 				e.setCancelled(true);
 			}
 			return;
 		}
-		if (!player.hasPermission("creativemanager.bypass.lore") && plugin.getSettings().getProtection(Protections.LORE)) {
+		if (!player.hasPermission("creativemanager.bypass.lore") && CreativeManager.getSettings().getProtection(Protections.LORE)) {
 			e.setCurrentItem(addLore(e.getCurrentItem(), player));
 			e.setCursor(addLore(e.getCursor(), player));
 		}
@@ -64,7 +58,7 @@ public class InventoryMove implements Listener {
 	public void checkEnchantAndPotion(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
-		if(!plugin.getSettings().getProtection(Protections.ENCHANTANDPOTION)) return;
+		if(!CreativeManager.getSettings().getProtection(Protections.ENCHANT_AND_POTION)) return;
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.enchants-and-potions")) return;
 		if(e.getCursor() != null){
@@ -108,7 +102,7 @@ public class InventoryMove implements Listener {
 		Player p = (Player) e.getWhoClicked();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
-		List<String> blacklist = plugin.getSettings().getGetBL();
+		List<String> blacklist = CreativeManager.getSettings().getGetBL();
 		if(e.getCursor() != null){
 			String itemName = e.getCursor().getType().name().toLowerCase();
 			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
@@ -116,7 +110,7 @@ public class InventoryMove implements Listener {
 				if (blacklist.stream().anyMatch(e.getCursor().getType().name()::equalsIgnoreCase)) {
 					HashMap<String, String> replaceMap = new HashMap<>();
 					replaceMap.put("{ITEM}", e.getCursor().getType().name());
-					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.get", replaceMap);
+					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
 					e.setCancelled(true);
 					p.updateInventory();
 					return;
@@ -129,7 +123,7 @@ public class InventoryMove implements Listener {
 				if (blacklist.stream().anyMatch(e.getCurrentItem().getType().name()::equalsIgnoreCase)) {
 					HashMap<String, String> replaceMap = new HashMap<>();
 					replaceMap.put("{ITEM}", e.getCursor().getType().name());
-					Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.get", replaceMap);
+					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
 					e.setCancelled(true);
 					p.updateInventory();
 				}
@@ -152,7 +146,7 @@ public class InventoryMove implements Listener {
 		if (meta == null) {
 			return item;
 		}
-		List<?> lore = this.plugin.getSettings().getLore();
+		List<?> lore = CreativeManager.getSettings().getLore();
 		List<String> lore_t = new ArrayList<>();
 
 		if (lore != null) {

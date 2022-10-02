@@ -3,7 +3,6 @@ package fr.k0bus.creativemanager.event.plugin;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -34,31 +33,31 @@ public class SlimeFun implements Listener {
         if (!permissions.contains(perm)) {
             pm.addPermission(perm);
         }
-        Messages.log(plugin, "&2Slimefun permissions registered ! &7[1]");
+        CreativeManager.getLog().log("&2Slimefun permissions registered ! &7[1]");
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onMultiBlockInteract(MultiBlockInteractEvent e)
     {
-        if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
+        if(!CreativeManager.getSettings().getProtection(Protections.PL_SLIMEFUN)) return;
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
-        Messages.sendMessage(plugin.getMessageManager(), e.getPlayer(), "permission.plugins", replaceMap);
+        CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void protectBreakWithSlimefun(BlockBreakEvent e)
     {
-        if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
+        if(!CreativeManager.getSettings().getProtection(Protections.PL_SLIMEFUN)) return;
         if(SlimefunItem.getByItem(e.getPlayer().getItemInUse()) == null) return;
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
-        Messages.sendMessage(plugin.getMessageManager(), e.getPlayer(), "permission.plugins", replaceMap);
+        CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
 
@@ -66,14 +65,14 @@ public class SlimeFun implements Listener {
     public void protectSlimefunItemInventory(final InventoryClickEvent e)
     {
         Player p = (Player) e.getWhoClicked();
-        if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
+        if(!CreativeManager.getSettings().getProtection(Protections.PL_SLIMEFUN)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.slimefun")) return;
         if(SlimefunItem.getByItem(e.getCurrentItem()) != null)
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            Messages.sendMessage(plugin.getMessageManager(), (Player)e.getWhoClicked(), "permission.plugins", replaceMap);
+            CreativeManager.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
             e.setCancelled(true);
             e.setCurrentItem(null);
             p.setItemOnCursor(null);
@@ -84,7 +83,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            Messages.sendMessage(plugin.getMessageManager(), (Player) e.getWhoClicked(), "permission.plugins", replaceMap);
+            CreativeManager.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
             e.getWhoClicked().setItemOnCursor(null);
             e.setCancelled(true);
         }
@@ -92,7 +91,7 @@ public class SlimeFun implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void protectSlimefunItemInteract(final PlayerRightClickEvent e)
     {
-        if(!plugin.getSettings().getProtection(Protections.SLIMEFUN)) return;
+        if(!CreativeManager.getSettings().getProtection(Protections.PL_SLIMEFUN)) return;
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         NBTItem tmp = new NBTItem(e.getPlayer().getInventory().getItemInMainHand());
@@ -101,7 +100,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            Messages.sendMessage(plugin.getMessageManager(), e.getPlayer(), "permission.plugins", replaceMap);
+            CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
             e.setUseBlock(Event.Result.DENY);
             e.setUseItem(Event.Result.DENY);
             e.cancel();

@@ -2,7 +2,6 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,15 +17,12 @@ import java.util.List;
  * Inventory open listener.
  */
 public class InventoryOpen implements Listener {
-    private final CreativeManager plugin;
 
     /**
      * Instantiates a new Inventory open.
      *
-     * @param instance the instance
      */
-    public InventoryOpen(CreativeManager instance) {
-        plugin = instance;
+    public InventoryOpen() {
     }
 
     /**
@@ -39,11 +35,11 @@ public class InventoryOpen implements Listener {
         if(e.isCancelled()) return;
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
-            if (p.getGameMode().equals(GameMode.CREATIVE) && plugin.getSettings().getProtection(Protections.CONTAINER)) {
+            if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.CONTAINER)) {
                 if (isProtectedChest(e.getInventory())) {
                     if (!p.hasPermission("creativemanager.bypass.container")) {
-                        if (plugin.getSettings().getBoolean("send-player-messages"))
-                            Messages.sendMessage(plugin.getMessageManager(), p, "permission.container");
+                        if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+                            CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
                         e.setCancelled(true);
                     }
                 }
@@ -61,10 +57,10 @@ public class InventoryOpen implements Listener {
         if(e.isCancelled()) return;
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
-            if (p.getGameMode().equals(GameMode.CREATIVE) && plugin.getSettings().getProtection(Protections.GUI)) {
+            if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.GUI)) {
                 if (!p.hasPermission("creativemanager.bypass.container")) {
-                    if (plugin.getSettings().getBoolean("send-player-messages"))
-                        Messages.sendMessage(plugin.getMessageManager(), p, "permission.gui");
+                    if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+                        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.gui"));
                     e.setCancelled(true);
                 }
             }
@@ -72,7 +68,7 @@ public class InventoryOpen implements Listener {
     }
 
     /**
-     * Whether or not chest is protected.
+     * Whether chest is protected.
      *
      * @param inventory the inventory.
      * @return True if yes, otherwise false.

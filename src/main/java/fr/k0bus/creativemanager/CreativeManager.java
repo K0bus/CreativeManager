@@ -1,7 +1,5 @@
 package fr.k0bus.creativemanager;
 
-import com.google.common.io.Files;
-import fr.k0bus.creativemanager.commands.CustomCommands;
 import fr.k0bus.creativemanager.commands.SubCommands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommandTab;
@@ -11,11 +9,9 @@ import fr.k0bus.creativemanager.event.plugin.SlimeFun;
 import fr.k0bus.creativemanager.log.DataManager;
 import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.creativemanager.task.SaveTask;
-import fr.k0bus.k0buslib.settings.Configuration;
-import fr.k0bus.k0buslib.settings.Lang;
-import fr.k0bus.k0buslib.updater.UpdateChecker;
-import fr.k0bus.k0buslib.utils.Messages;
-import fr.k0bus.k0buslib.utils.MessagesManager;
+import fr.k0bus.k0buscore.K0busCore;
+import fr.k0bus.k0buscore.config.Lang;
+import fr.k0bus.k0buscore.utils.StringUtils;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.md_5.bungee.api.ChatColor;
@@ -26,49 +22,41 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Set;
-import java.util.logging.Level;
+public class CreativeManager extends K0busCore {
 
-public class CreativeManager extends JavaPlugin {
-
+    public static String TAG = StringUtils.translateColor("&r[&cCreativeManager&r] ");
     private final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
-    private Settings settings;
-    private Lang lang;
-    private MessagesManager messagesManager;
+    private static Settings settings;
+    private static Lang lang;
     private DataManager dataManager;
     private int saveTask;
-
     private LandsIntegration landsIntegration;
     private GriefPrevention griefPrevention;
 
     @Override
     public void onEnable() {
-        Messages.log(this, "&9=============================================================");
-        UpdateChecker updateChecker = new UpdateChecker(this, 75097);
-        if (updateChecker.isUpToDate()) {
-            Messages.log(this, "&2CreativeManager &av" + this.getDescription().getVersion());
-        } else {
-            Messages.log(this, "&2CreativeManager &cv" + this.getDescription().getVersion() +
-                    " (Update " + updateChecker.getVersion() + " available on SpigotMC)");
-        }
+        super.onEnable();
+        getLog().log("&9=============================================================");
+        checkUpdate(75097);
         new Metrics(this, 11481);
-        Messages.log(this, "&9=============================================================");
-        Messages.log(this, "&2Created by K0bus for AkuraGaming");
-        Messages.log(this, "&9=============================================================");
+        getLog().log("&9=============================================================");
+        getLog().log("&2Created by K0bus for AkuraGaming");
+        getLog().log("&9=============================================================");
+        getLog().log("&2Check config file for update");
         this.updateConfig();
+        getLog().log("&2Loading config file");
         this.loadConfigManager();
         this.registerEvent(this.getServer().getPluginManager());
-        Messages.log(this, "&2Listener registered !");
+        getLog().log("&2Listener registered");
         this.registerCommand();
-        Messages.log(this, "&2Commands registered !");
+        getLog().log("&2Commands registered");
         this.registerPermissions();
         this.loadLog();
         this.saveTask = SaveTask.run(this);
-        Messages.log(this, "&9=============================================================");
+        if(getSettings().getBoolean("stop-inventory-save"))
+            getLog().log("&cWarning : &4'stop-inventory-save' set on 'true' then all features about inventory as been disabled !");
+        getLog().log("&9=============================================================");
     }
 
     public void registerProtectionsAPI()
@@ -80,67 +68,38 @@ public class CreativeManager extends JavaPlugin {
     }
 
     public void loadConfigManager() {
-        this.settings = new Settings(this);
-        Messages.log(this, "&2Configuration loaded !");
-        this.lang = new Lang(settings.getLang(), this);
-        Messages.log(this, "&2Language loaded ! &7[" + settings.getLang() + "]");
-        if (this.messagesManager != null) {
-            messagesManager.setLang(lang);
-            messagesManager.setSettings(settings);
-        } else
-            this.messagesManager = new MessagesManager(settings, lang, this);
+        settings = new Settings(this);
+        getLog().log("&2Configuration loaded");
+        lang = new Lang(settings.getLang(), this);
+        getLog().log("&2Language loaded &7[" + settings.getLang() + "]");
+        TAG = settings.getTag();
+        antiSpamTick = settings.getInt("antispam-tick");
     }
 
     public void updateConfig() {
-        Configuration.updateConfig("lang/en_EN.yml", this);
-        Configuration.updateConfig("lang/es_ES.yml", this);
-        Configuration.updateConfig("lang/fr_FR.yml", this);
-        Configuration.updateConfig("lang/it_IT.yml", this);
-        Configuration.updateConfig("lang/ru_RU.yml", this);
-        Configuration oldConfig = new Configuration("config.yml", this);
-        if (oldConfig.contains("build-protection")) {
-            try {
-                Files.move(oldConfig.getFile(), new File(oldConfig.getFile().getParentFile(), "old_config.yml"));
-                oldConfig = new Configuration("old_config.yml", this);
-                this.settings = new Settings(this);
-                this.settings.set("protections.entity", oldConfig.getBoolean("entity-protection"));
-                this.settings.set("protections.pvp", oldConfig.getBoolean("pvp-protection"));
-                this.settings.set("protections.container", oldConfig.getBoolean("container-protection"));
-                this.settings.set("protections.spawn", oldConfig.getBoolean("spawn-protection"));
-                this.settings.set("protections.drop", oldConfig.getBoolean("drop-protection"));
-                this.settings.set("protections.pve", oldConfig.getBoolean("hitmonster-protection"));
-                this.settings.set("protections.lore", oldConfig.getBoolean("add-lore"));
-                this.settings.set("inventory.adventure", oldConfig.getBoolean("adventure-inventory"));
-                this.settings.set("inventory.creative", oldConfig.getBoolean("creative-inventory"));
-                this.settings.set("tag", oldConfig.getString("tag"));
-                this.settings.set("lang", oldConfig.getString("lang"));
-                this.settings.set("log", oldConfig.getBoolean("log"));
-                this.settings.set("blacklist", oldConfig.getConfigurationSection("blacklist"));
-                this.settings.set("blacklist", oldConfig.getConfigurationSection("blacklist"));
-                this.settings.set("save-interval", 300);
-                this.settings.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        Configuration.updateConfig("config.yml", this);
+        Settings.updateConfig("lang/en_EN.yml", this);
+        Settings.updateConfig("lang/es_ES.yml", this);
+        Settings.updateConfig("lang/fr_FR.yml", this);
+        Settings.updateConfig("lang/it_IT.yml", this);
+        Settings.updateConfig("lang/ru_RU.yml", this);
+        Settings.updateConfig("config.yml", this);
     }
 
     private void registerEvent(PluginManager pm) {
         pm.registerEvents(new PlayerBuild(this), this);
         pm.registerEvents(new PlayerBreak(this), this);
-        pm.registerEvents(new PlayerInteract(this), this);
-        pm.registerEvents(new PlayerInteractEntity(this), this);
-        pm.registerEvents(new PlayerInteractAtEntity(this), this);
-        pm.registerEvents(new PlayerDrop(this), this);
-        pm.registerEvents(new InventoryMove(this), this);
+        pm.registerEvents(new PlayerInteract(), this);
+        pm.registerEvents(new PlayerInteractEntity(), this);
+        pm.registerEvents(new PlayerInteractAtEntity(), this);
+        pm.registerEvents(new PlayerDrop(), this);
+        pm.registerEvents(new InventoryMove(), this);
         pm.registerEvents(new PlayerGamemodeChange(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerLogin(this), this);
         pm.registerEvents(new PistonEvent(this), this);
         pm.registerEvents(new MonsterSpawnEvent(this), this);
-        pm.registerEvents(new ProjectileThrow(this), this);
-        pm.registerEvents(new InventoryOpen(this), this);
+        pm.registerEvents(new ProjectileThrow(), this);
+        pm.registerEvents(new InventoryOpen(), this);
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(), this);
@@ -148,16 +107,16 @@ public class CreativeManager extends JavaPlugin {
         /*  Add event checked for old version */
         try {
             ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
-            pm.registerEvents(new PlayerHitEvent(this, true), this);
+            pm.registerEvents(new PlayerHitEvent(true), this);
         } catch (NoSuchMethodException | SecurityException e) {
-            Messages.log(this, "PvP / PvE Protection can't protect from projectil on this Spigot version !", Level.WARNING);
-            pm.registerEvents(new PlayerHitEvent(this, false), this);
+            getLog().log("PvP / PvE Protection can't protect from projectile on this Spigot version !");
+            pm.registerEvents(new PlayerHitEvent(false), this);
         }
         try {
             Class.forName( "org.bukkit.event.entity.EntityPickupItemEvent" );
-            pm.registerEvents(new PlayerPickup(this), this);
+            pm.registerEvents(new PlayerPickup(), this);
         } catch( ClassNotFoundException e ) {
-            Messages.log(this, "Player pickup protection not enabled on this Spigot version !", Level.WARNING);
+            getLog().log("Player pickup protection not enabled on this Spigot version !");
         }
         /* Add plugin event */
         if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
@@ -176,39 +135,34 @@ public class CreativeManager extends JavaPlugin {
 
     private void registerPermissions() {
         PluginManager pm = getServer().getPluginManager();
-        Set<Permission> permissions = pm.getPermissions();
         int n = 0;
         for (EntityType entityType : EntityType.values()) {
             Permission perm = new Permission("creativemanager.bypass.entity." + entityType.name());
-            if (!permissions.contains(perm)) {
+
+            if (!pm.getPermissions().contains(perm)) {
                 pm.addPermission(perm);
                 n++;
             }
         }
         pm.addPermission(new Permission("creativemanager.bypass.deathdrop"));
-        Messages.log(this, "&2Entities permissions registered ! &7[" + n + "]");
+        getLog().log("&2Entities permissions registered ! &7[" + n + "]");
     }
 
     private void loadLog() {
         dataManager = new DataManager("data", this);
-        Messages.log(this,
-                "&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
+        getLog().log("&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
     }
 
-    public Settings getSettings() {
-        return this.settings;
+    public static Settings getSettings() {
+        return settings;
     }
 
-    public Lang getLang() {
-        return this.lang;
+    public static Lang getLang() {
+        return lang;
     }
 
     public String getInvTag() {
         return invTag;
-    }
-
-    public MessagesManager getMessageManager() {
-        return messagesManager;
     }
 
     public DataManager getDataManager() {
@@ -222,6 +176,8 @@ public class CreativeManager extends JavaPlugin {
     public GriefPrevention getGriefPrevention() {
         return griefPrevention;
     }
+
+
 
     @Override
     public void onDisable() {

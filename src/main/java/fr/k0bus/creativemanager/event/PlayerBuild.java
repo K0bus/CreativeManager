@@ -3,7 +3,6 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,9 +37,9 @@ public class PlayerBuild implements Listener {
 	public void checkBuild(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
 		if (p.getGameMode() == GameMode.CREATIVE) {
-			if (plugin.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build")) {
-				if (plugin.getSettings().getBoolean("send-player-messages"))
-					Messages.sendMessage(plugin.getMessageManager(), p, "permission.build");
+			if (CreativeManager.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build")) {
+				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
 				e.setCancelled(true);
 			}
 		}
@@ -54,9 +53,9 @@ public class PlayerBuild implements Listener {
 	public void checkBlackList(BlockPlaceEvent e)
 	{
 		if(e.isCancelled()) return;
- 		Player p = e.getPlayer();
+		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
-		List<String> blacklist = plugin.getSettings().getPlaceBL();
+		List<String> blacklist = CreativeManager.getSettings().getPlaceBL();
 		String blockName = e.getBlock().getType().name().toLowerCase();
 		if(blacklist.isEmpty()) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place")) return;
@@ -65,8 +64,8 @@ public class PlayerBuild implements Listener {
 		if (blacklist.stream().anyMatch(blockName::equalsIgnoreCase)) {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", e.getBlock().getType().name());
-			if (plugin.getSettings().getBoolean("send-player-messages"))
-				Messages.sendMessage(plugin.getMessageManager(), p, "blacklist.place", replaceMap);
+			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
 			e.setCancelled(true);
 		}
 	}

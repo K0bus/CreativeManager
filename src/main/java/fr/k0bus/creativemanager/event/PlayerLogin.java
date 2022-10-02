@@ -2,7 +2,6 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

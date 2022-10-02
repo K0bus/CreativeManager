@@ -69,6 +69,7 @@ public class InventoryManager {
      * @param gm the game mode.
      */
     public void loadInventory(GameMode gm) {
+        if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
         String gm_name = gm.name();
         if (cm.contains(gm_name + ".content") && cm.isString(gm_name + ".content") && cm.contains(gm_name + ".armor") && cm.isString(gm_name + ".armor")) {
             try {
@@ -93,6 +94,7 @@ public class InventoryManager {
      * @param gm the game mode.
      */
     public void saveInventory(GameMode gm) {
+        if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
         String gm_name = gm.name();
         String[] encoded = this.playerInventoryToBase64(p.getInventory());
         cm.set(gm_name + ".content", encoded[0]);
@@ -122,7 +124,6 @@ public class InventoryManager {
     /**
      * Special thanks to Comphenix in the Bukkit forums or also known
      * as aadnk on GitHub.
-     *
      * <a href="https://gist.github.com/aadnk/8138186">Original Source</a>
      *
      * @param inventory the inventory

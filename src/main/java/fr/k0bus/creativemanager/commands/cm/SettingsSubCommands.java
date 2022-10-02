@@ -14,6 +14,6 @@ public class SettingsSubCommands extends SubCommands {
 
     @Override
     protected void run(CommandSender sender, String[] args) {
-        new ProtectionSettingGui((Player) sender, plugin).show();
+        new ProtectionSettingGui(plugin).open((Player) sender);
     }
 }

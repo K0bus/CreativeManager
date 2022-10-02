@@ -1,6 +1,5 @@
 package fr.k0bus.creativemanager.event;
 
-import fr.k0bus.creativemanager.CreativeManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

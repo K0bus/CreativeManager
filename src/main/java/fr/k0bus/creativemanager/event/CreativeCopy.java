@@ -23,10 +23,14 @@ public class CreativeCopy implements Listener {
     public void onBlockCopy(final InventoryClickEvent e)
     {
         if(!e.getAction().equals(InventoryAction.CLONE_STACK)) return;
-        if(!plugin.getSettings().getProtection(Protections.COPY)) return;
+        if(!CreativeManager.getSettings().getProtection(Protections.COPY)) return;
         Player p = (Player) e.getWhoClicked();
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.blockcopy")) return;
-        e.setCurrentItem(new ItemStack(e.getCurrentItem().getType()));
+        ItemStack i = e.getCurrentItem();
+        if(i != null)
+            e.setCurrentItem(new ItemStack(i.getType()));
+        else
+            e.setCurrentItem(null);
     }
 }

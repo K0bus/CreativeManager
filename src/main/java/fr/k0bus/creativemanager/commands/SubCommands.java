@@ -1,13 +1,13 @@
 package fr.k0bus.creativemanager.commands;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,24 +59,23 @@ public abstract class SubCommands implements CommandExecutor {
     protected void run(CommandSender sender, String[] args){}
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if(subCmd(sender, args)) return true;
         if(!canUse(sender)) return true;
         run(sender, args);
         return true;
     }
 
-    public boolean onCommand(CommandSender sender, String[] args) {
-        if(subCmd(sender, args)) return true;
-        if(!canUse(sender)) return true;
+    public void onCommand(CommandSender sender, String[] args) {
+        if(subCmd(sender, args)) return;
+        if(!canUse(sender)) return;
         run(sender, args);
-        return true;
     }
 
     public boolean canUse(CommandSender sender, boolean sendMessage)
     {
         if(checkPlayer(sender, sendMessage))
-            return checkPermission(sender, sendMessage);
+            return checkPermission(sender);
         return false;
     }
 
@@ -84,14 +83,12 @@ public abstract class SubCommands implements CommandExecutor {
     {
         return canUse(sender, true);
     }
-    private boolean checkPermission(CommandSender sender, boolean sendMessage)
+    private boolean checkPermission(CommandSender sender)
     {
         if(permissions != null)
             if(!sender.hasPermission(permissions))
             {
-                Conversable conversable = getConversable(sender);
-                if(conversable != null && sendMessage)
-                    Messages.sendMessage(plugin.getMessageManager(), conversable, "permission.general");
+                sender.sendMessage(CreativeManager.TAG + CreativeManager.getLang().getString("permission.general"));
                 return false;
             }
         return true;
@@ -101,9 +98,7 @@ public abstract class SubCommands implements CommandExecutor {
         if(playerOnly)
             if(!(sender instanceof Player))
             {
-                Conversable conversable = getConversable(sender);
-                if(conversable != null && sendMessage)
-                    Messages.sendMessage(plugin.getMessageManager(), conversable, "permission.general");
+                sender.sendMessage(CreativeManager.TAG + CreativeManager.getLang().getString("permission.general"));
                 return false;
             }
         return true;
@@ -120,7 +115,7 @@ public abstract class SubCommands implements CommandExecutor {
 
     private boolean subCmd(CommandSender sender, String[] args)
     {
-        if(subCommands.size()<=0) return false;
+        if(subCommands.size() == 0) return false;
         if(args.length > 0) {
             if (subCommands.containsKey(args[0]))
             {
@@ -128,12 +123,12 @@ public abstract class SubCommands implements CommandExecutor {
                 return true;
             }
             else if (sender instanceof Conversable)
-                sender.sendMessage(plugin.getSettings().getTag() + " &cUnknown subcommands !");
+                sender.sendMessage(CreativeManager.TAG + CreativeManager.getSettings().getTag() + " &cUnknown subcommands !");
         }else {
             if (defaultSubCmd != null)
                 subCommands.get(defaultSubCmd).onCommand(sender, args);
             else
-                    sender.sendMessage(plugin.getSettings().getTag() + " &cMissing arguments !");
+                    sender.sendMessage(CreativeManager.TAG + CreativeManager.getSettings().getTag() + " &cMissing arguments !");
         }
 
         return false;
@@ -147,11 +142,4 @@ public abstract class SubCommands implements CommandExecutor {
         return plugin;
     }
 
-    public String getDefaultSubCmd() {
-        return defaultSubCmd;
-    }
-
-    public String getPermissions() {
-        return permissions;
-    }
 }

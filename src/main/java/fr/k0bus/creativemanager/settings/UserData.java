@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager.settings;
 
-import fr.k0bus.k0buslib.settings.Configuration;
+import fr.k0bus.k0buscore.config.Configuration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 

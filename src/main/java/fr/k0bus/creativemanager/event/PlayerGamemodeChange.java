@@ -2,7 +2,6 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
-import fr.k0bus.k0buslib.utils.Messages;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,10 +32,12 @@ public class PlayerGamemodeChange implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onGMChange(PlayerGameModeChangeEvent e) {
+		e.getPlayer().closeInventory();
+		if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
 		Player p = e.getPlayer();
 		if (!p.hasPermission("creativemanager.bypass.inventory")) {
 			InventoryManager im = new InventoryManager(p, plugin);
-			if (!plugin.getSettings().adventureInvEnable()) {
+			if (!CreativeManager.getSettings().adventureInvEnable()) {
 				if (e.getNewGameMode().equals(GameMode.ADVENTURE)) {
 					im.saveInventory(p.getGameMode());
 					return;
@@ -45,7 +46,7 @@ public class PlayerGamemodeChange implements Listener {
 					return;
 				}
 			}
-			if (!plugin.getSettings().creativeInvEnable()) {
+			if (!CreativeManager.getSettings().creativeInvEnable()) {
 				if (e.getNewGameMode().equals(GameMode.CREATIVE)) {
 					im.saveInventory(p.getGameMode());
 					return;
@@ -54,7 +55,7 @@ public class PlayerGamemodeChange implements Listener {
 					return;
 				}
 			}
-			if (!plugin.getSettings().spectatorInvEnable()) {
+			if (!CreativeManager.getSettings().spectatorInvEnable()) {
 				if (e.getNewGameMode().equals(GameMode.SPECTATOR)) {
 					im.saveInventory(p.getGameMode());
 					return;
@@ -67,8 +68,8 @@ public class PlayerGamemodeChange implements Listener {
 			im.loadInventory(e.getNewGameMode());
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{GAMEMODE}", e.getNewGameMode().name());
-			if(plugin.getSettings().getBoolean("send-player-messages"))
-				Messages.sendMessage(plugin.getMessageManager(), p, "inventory.change", replaceMap);
+			if(CreativeManager.getSettings().getBoolean("send-player-messages"))
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
 		}
 	}
 }
