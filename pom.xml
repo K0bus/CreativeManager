@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.24.2</version>
+  <version>1.25-BETA</version>
 
   <name>CreativeManager</name>
 
@@ -168,6 +168,7 @@
       <groupId>net.citizensnpcs</groupId>
       <artifactId>citizensapi</artifactId>
       <version>2.0.30-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
