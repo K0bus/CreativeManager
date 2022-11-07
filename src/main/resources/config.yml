@@ -25,6 +25,7 @@ protections:
   blockcopy: true
   gui: false
   custom-nbt: false
+  armor: false
   plugins:
     citizens: true
     chestshop: true
@@ -51,6 +52,39 @@ blacklist:
     -  'somecommandtoblacklist optionnaly with some argument'
   useblock:
     - 'CRAFTING_TABLE'
+creative_armor:
+  helmet:
+    name: '&6Creative Helmet'
+    lore:
+      - '&7This creative Helmet is bind to your Gamemode !'
+    material: BEDROCK
+    model-data: 0
+    items-adder: ''
+  chestplate:
+    name: '&6Creative Chestplate'
+    lore:
+      - '&7This &6Creative Chestplate&7 is bind to your Gamemode !'
+    material: LEATHER_CHESTPLATE
+    leather-color:
+      red: 255
+      green: 255
+      blue: 255
+    model-data: 0
+    items-adder: ''
+  leggings:
+    name: '&6Creative Leggings'
+    lore:
+      - '&7This &6Creative Leggings&7 is bind to your Gamemode !'
+    material: CHAINMAIL_LEGGINGS
+    model-data: 0
+    items-adder: ''
+  boots:
+    name: '&6Creative Boots'
+    lore:
+      - '&7This &6Creative Boots&7 is bind to your Gamemode !'
+    material: CHAINMAIL_BOOTS
+    model-data: 0
+    items-adder: ''
 ## Lore settings
 creative-lore:
   - '&5Creative {ITEM}'
