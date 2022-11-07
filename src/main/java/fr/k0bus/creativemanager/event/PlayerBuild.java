@@ -3,6 +3,8 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.SearchUtils;
+import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,10 +62,9 @@ public class PlayerBuild implements Listener {
 		if(blacklist.isEmpty()) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place")) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place." + blockName)) return;
-
-		if (blacklist.stream().anyMatch(blockName::equalsIgnoreCase)) {
+		if(SearchUtils.inList(blacklist, blockName)){
 			HashMap<String, String> replaceMap = new HashMap<>();
-			replaceMap.put("{BLOCK}", e.getBlock().getType().name());
+			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
 				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
 			e.setCancelled(true);

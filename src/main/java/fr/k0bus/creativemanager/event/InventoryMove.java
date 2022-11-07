@@ -2,17 +2,19 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.SearchUtils;
+import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCreativeEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -50,8 +52,14 @@ public class InventoryMove implements Listener {
 			return;
 		}
 		if (!player.hasPermission("creativemanager.bypass.lore") && CreativeManager.getSettings().getProtection(Protections.LORE)) {
-			e.setCurrentItem(addLore(e.getCurrentItem(), player));
-			e.setCursor(addLore(e.getCursor(), player));
+			boolean changeLore = !e.getSlotType().equals(InventoryType.SlotType.ARMOR);
+			if(!changeLore)
+				changeLore = !CreativeManager.getSettings().getProtection(Protections.ARMOR) || player.hasPermission("creativemanager.bypass.armor");
+			if(changeLore)
+			{
+				e.setCurrentItem(addLore(e.getCurrentItem(), player));
+				e.setCursor(addLore(e.getCursor(), player));
+			}
 		}
 	}
 
@@ -76,6 +84,21 @@ public class InventoryMove implements Listener {
 					}
 					item.setItemMeta(itemMeta);
 				}
+		}
+	}
+
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void checkArmorClick(final InventoryCreativeEvent e) {
+		Player p = (Player) e.getWhoClicked();
+		if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
+		if (!CreativeManager.getSettings().getProtection(Protections.ARMOR)) return;
+		if (p.hasPermission("creativemanager.bypass.armor")) return;
+		if (e.getSlotType().equals(InventoryType.SlotType.ARMOR)) {
+			e.setResult(Event.Result.DENY);
+			e.setCursor(new ItemStack(Material.AIR));
+			e.setCurrentItem(e.getCurrentItem());
+			p.updateInventory();
+			e.setCancelled(true);
 		}
 	}
 
@@ -122,15 +145,15 @@ public class InventoryMove implements Listener {
 		for (ItemStack item:itemStackList) {
 			String itemName = item.getType().name().toLowerCase();
 			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
-			if (blacklist.size() > 0)
-				if (blacklist.stream().anyMatch(item.getType().name()::equalsIgnoreCase)) {
-					HashMap<String, String> replaceMap = new HashMap<>();
-					replaceMap.put("{ITEM}", item.getType().name());
-					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
-					e.setCancelled(true);
-					p.updateInventory();
-					return;
-				}
+			if(SearchUtils.inList(blacklist, item.getType().name()))
+			{
+				HashMap<String, String> replaceMap = new HashMap<>();
+				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
+				e.setCancelled(true);
+				p.updateInventory();
+				return;
+			}
 		}
 	}
 
@@ -159,7 +182,7 @@ public class InventoryMove implements Listener {
 					String string = (String) obj;
 					string = string.replace("{PLAYER}", p.getName())
 							.replace("{UUID}", p.getUniqueId().toString())
-							.replace("{ITEM}", item.getType().name());
+							.replace("{ITEM}", StringUtils.proper(item.getType().name()));
 					lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
 				}
 			}

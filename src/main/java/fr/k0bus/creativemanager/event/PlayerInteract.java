@@ -2,6 +2,8 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.SearchUtils;
+import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,11 +40,10 @@ public class PlayerInteract implements Listener {
         if(p.hasPermission("creativemanager.bypass.blacklist.use")) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.use" + itemName)) return;
         List<String> blacklist = CreativeManager.getSettings().getUseBL();
-        if(blacklist.isEmpty()) return;
-        if (blacklist.stream().anyMatch(itemName::equalsIgnoreCase))
+        if(SearchUtils.inList(blacklist, itemName))
         {
             HashMap<String, String> replaceMap = new HashMap<>();
-            replaceMap.put("{ITEM}", itemName);
+            replaceMap.put("{ITEM}", StringUtils.proper(itemName));
             CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.use", replaceMap));
             e.setCancelled(true);
         }
@@ -51,15 +52,14 @@ public class PlayerInteract implements Listener {
     public void checkBlacklistUseBlock(PlayerInteractEvent e)
     {
         Player p = e.getPlayer();
-        ItemStack itemStack = e.getItem();
         List<String> blacklist = CreativeManager.getSettings().getUseBlockBL();
         if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (itemStack == null) return;
-        String itemName = itemStack.getType().name().toLowerCase();
+        if(e.getClickedBlock() == null) return;
+        String itemName = e.getClickedBlock().getType().name().toLowerCase();
         if(blacklist.isEmpty()) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.useblock")) return;
-        if(blacklist.stream().anyMatch(itemName::equalsIgnoreCase))
+        if(SearchUtils.inList(blacklist, itemName))
         {
             if (CreativeManager.getSettings().getBoolean("send-player-messages"))
                 CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.useblock"));
