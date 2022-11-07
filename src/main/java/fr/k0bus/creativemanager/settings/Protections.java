@@ -35,7 +35,8 @@ public enum Protections {
     ENCHANT_AND_POTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion"),
     GUI("gui", Material.ENDER_CHEST, "Deny player to open any GUI (Including vanilla container)", "GUI"),
     PL_CITIZENS("plugins.citizens", Material.PLAYER_HEAD, "Deny player to interact with Citizens", "Plugins - Citizens"),
-    CUSTOM_NBT("custom-nbt", Material.PLAYER_HEAD, "Deny player to get items with custom NBT", "Custom NBT");
+    CUSTOM_NBT("custom-nbt", Material.PLAYER_HEAD, "Deny player to get items with custom NBT", "Custom NBT"),
+    ARMOR("armor", Material.CHAINMAIL_HELMET, "Set a defined player armor set", "Creative Armor");
 
     private final String name;
     private final Material icon;
