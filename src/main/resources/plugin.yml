@@ -6,6 +6,7 @@ softdepend:
    - Slimefun
    - ChestShop
    - Citizens
+   - ItemsAdder
 commands:
    cm:
       description: Commande principale !
