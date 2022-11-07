@@ -4,7 +4,7 @@
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
   <name>CreativeManager</name>
-  <version>1.25-BETA</version>
+  <version>1.28</version>
   <build>
     <resources>
       <resource>
@@ -94,7 +94,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.17.1-R0.1-SNAPSHOT</version>
+      <version>1.19.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
