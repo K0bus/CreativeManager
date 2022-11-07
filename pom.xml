@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.25-BETA</version>
+  <version>1.28</version>
 
   <name>CreativeManager</name>
 
@@ -108,7 +108,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.17.1-R0.1-SNAPSHOT</version>
+      <version>1.19.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -161,7 +161,7 @@
     <dependency>
       <groupId>fr.k0bus</groupId>
       <artifactId>K0busCore</artifactId>
-      <version>0.9.4-BETA</version>
+      <version>0.11.2-BETA</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
