@@ -38,7 +38,8 @@ public class PlayerInteract implements Listener {
         if (itemStack == null) return;
         String itemName = itemStack.getType().name().toLowerCase();
         if(p.hasPermission("creativemanager.bypass.blacklist.use")) return;
-        if(p.hasPermission("creativemanager.bypass.blacklist.use" + itemName)) return;
+        if(p.hasPermission("creativemanager.bypass.blacklist.use." + itemName)) return;
+        if(p.hasPermission("creativemanager.bypass.blacklist.use" + itemName)) return; // TODO: To remove
         List<String> blacklist = CreativeManager.getSettings().getUseBL();
         if(SearchUtils.inList(blacklist, itemName))
         {
