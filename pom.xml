@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.28</version>
+  <version>1.28.6</version>
 
   <name>CreativeManager</name>
 
@@ -42,8 +42,8 @@
               <shadedPattern>fr.k0bus.creativemanager_libs.bstats</shadedPattern>
             </relocation>
             <relocation>
-              <pattern>de.tr7zw</pattern>
-              <shadedPattern>fr.k0bus.creativemanager_libs.tr7zw</shadedPattern>
+              <pattern>de.tr7zw.changeme</pattern>
+              <shadedPattern>fr.k0bus.creativemanager_libs.tr7zw.lib</shadedPattern>
             </relocation>
           </relocations>
           <artifactSet>
