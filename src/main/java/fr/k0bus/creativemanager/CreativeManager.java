@@ -20,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 
@@ -92,7 +93,6 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new PlayerInteractEntity(), this);
         pm.registerEvents(new PlayerInteractAtEntity(), this);
         pm.registerEvents(new PlayerDrop(), this);
-        pm.registerEvents(new InventoryMove(), this);
         pm.registerEvents(new PlayerGamemodeChange(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerLogin(this), this);
@@ -105,6 +105,13 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new PlayerDeath(), this);
         pm.registerEvents(new CreativeCopy(this), this);
         /*  Add event checked for old version */
+        try {
+            ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
+            pm.registerEvents(new InventoryMove(), this);
+        } catch (NoSuchMethodException | SecurityException e) {
+            getLog().log("NBT Protection disabled on your Minecraft version");
+            pm.registerEvents(new InventoryMove(false), this);
+        }
         try {
             ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
             pm.registerEvents(new PlayerHitEvent(true), this);

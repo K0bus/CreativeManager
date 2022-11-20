@@ -27,11 +27,16 @@ import java.util.*;
  */
 public class InventoryMove implements Listener {
 
+	boolean nbt_enabled = true;
+
 	/**
 	 * Instantiates a new Inventory move.
 	 *
 	 */
 	public InventoryMove() {}
+	public InventoryMove(boolean nbt_enabled) {
+		this.nbt_enabled = nbt_enabled;
+	}
 
 	/**
 	 * On inventory click.
@@ -63,23 +68,23 @@ public class InventoryMove implements Listener {
 		}
 	}
 
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
 	public void checkNBT(final InventoryClickEvent e)
 	{
+		if(!nbt_enabled) return;
 		Player p = (Player) e.getWhoClicked();
-		if(!CreativeManager.getSettings().getProtection(Protections.CUSTOM_NBT)) return;
-		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
-		if(p.hasPermission("creativemanager.bypass.custom_nbt")) return;
+		if (!CreativeManager.getSettings().getProtection(Protections.CUSTOM_NBT)) return;
+		if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
+		if (p.hasPermission("creativemanager.bypass.custom_nbt")) return;
 
 		List<ItemStack> itemStackList = new ArrayList<>();
-		if(e.getCursor() != null) itemStackList.add(e.getCursor());
-		if(e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
-		for (ItemStack item:itemStackList) {
+		if (e.getCursor() != null) itemStackList.add(e.getCursor());
+		if (e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
+		for (ItemStack item : itemStackList) {
 			ItemMeta itemMeta = item.getItemMeta();
-			if(itemMeta != null)
-				if(!itemMeta.getPersistentDataContainer().isEmpty())
-				{
-					for (NamespacedKey key:itemMeta.getPersistentDataContainer().getKeys()) {
+			if (itemMeta != null)
+				if (!itemMeta.getPersistentDataContainer().isEmpty()) {
+					for (NamespacedKey key : itemMeta.getPersistentDataContainer().getKeys()) {
 						itemMeta.getPersistentDataContainer().remove(key);
 					}
 					item.setItemMeta(itemMeta);
@@ -144,7 +149,8 @@ public class InventoryMove implements Listener {
 		if(e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
 		for (ItemStack item:itemStackList) {
 			String itemName = item.getType().name().toLowerCase();
-			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return;
+			if(p.hasPermission("creativemanager.bypass.blacklist.get." + itemName)) return;
+			if(p.hasPermission("creativemanager.bypass.blacklist.get" + itemName)) return; //TODO: To remove
 			if(SearchUtils.inList(blacklist, item.getType().name()))
 			{
 				HashMap<String, String> replaceMap = new HashMap<>();
