@@ -55,7 +55,7 @@ public class MonsterSpawnEvent implements Listener {
             // Check arms
             blockList.add(baseBlock.getRelative(1, 1, 0));
             blockList.add(baseBlock.getRelative(-1, 1, 0));
-        } else if (e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BUILD_SNOWMAN)) {
+        } else if (e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BUILD_WITHER)) {
             // Check body
             blockList.add(baseBlock);
             blockList.add(baseBlock.getRelative(0, 1, 0));
