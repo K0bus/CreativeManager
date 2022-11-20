@@ -1,12 +1,12 @@
 package fr.k0bus.creativemanager.commands;
 
 import fr.k0bus.creativemanager.CreativeManager;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public abstract class SubCommands implements CommandExecutor {
     protected void run(CommandSender sender, String[] args){}
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if(subCmd(sender, args)) return true;
         if(cantUse(sender)) return true;
         run(sender, args);
