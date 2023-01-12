@@ -47,7 +47,10 @@ public class PlayerLogin implements Listener {
         if (forceGamemode) {
             if (!e.getPlayer().hasPermission("creativemanager.bypass.inventory")) {
                 InventoryManager im = new InventoryManager(e.getPlayer(), plugin);
-                im.loadInventory(plugin.getServer().getDefaultGameMode());
+                if(im.hasContent())
+                    im.loadInventory(plugin.getServer().getDefaultGameMode());
+                else
+                    im.saveInventory(e.getPlayer().getGameMode());
             }
         }
     }
