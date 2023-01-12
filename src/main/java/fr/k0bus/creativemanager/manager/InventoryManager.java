@@ -63,6 +63,11 @@ public class InventoryManager {
         }
     }
 
+    public boolean hasContent()
+    {
+        return cm.getKeys(false).size() != 0;
+    }
+
     /**
      * Load inventory.
      *
