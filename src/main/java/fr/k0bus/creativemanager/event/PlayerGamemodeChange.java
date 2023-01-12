@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,7 +41,8 @@ public class PlayerGamemodeChange implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onGMChange(PlayerGameModeChangeEvent e) {
 		if(e.isCancelled()) return;
-		e.getPlayer().closeInventory();
+		if(!e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING))
+			e.getPlayer().closeInventory();
 		if(e.getNewGameMode().equals(e.getPlayer().getGameMode())) return;
 		if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
 		Player p = e.getPlayer();
