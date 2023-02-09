@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public class DataManager {
@@ -74,10 +76,10 @@ public class DataManager {
     public void saveSync()
     {
         int n = 0;
-        HashMap<Location, BlockLog> cloned = new HashMap<>(blockLogHashMap);
-        for (BlockLog log: cloned.values()) {
-            if(log.isSaved()) continue;
-            save(log);
+        ConcurrentHashMap<Location, BlockLog> cloned = new ConcurrentHashMap<>(blockLogHashMap);
+        for (Map.Entry<Location, BlockLog> val: cloned.entrySet()) {
+            if(val.getValue().isSaved()) continue;
+            save(val.getValue());
             n++;
         }
         if(n>0)
