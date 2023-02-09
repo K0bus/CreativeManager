@@ -74,7 +74,6 @@ public class PlayerBreak implements Listener {
 	{
 		if(e.isCancelled()) return;
 		Player p = e.getPlayer();
-		if(p == null) return;
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) {
 			if (p.hasPermission("creativemanager.bypass.log")) return;
 			if (!CreativeManager.getSettings().getProtection(Protections.LOOT)) return;
