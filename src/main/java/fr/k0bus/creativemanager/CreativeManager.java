@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommandTab;
 import fr.k0bus.creativemanager.event.*;
 import fr.k0bus.creativemanager.event.plugin.ChestShop;
+import fr.k0bus.creativemanager.event.plugin.ItemsAdderListener;
 import fr.k0bus.creativemanager.event.plugin.SlimeFun;
 import fr.k0bus.creativemanager.log.DataManager;
 import fr.k0bus.creativemanager.settings.Settings;
@@ -130,6 +131,8 @@ public class CreativeManager extends K0busCore {
             pm.registerEvents(new SlimeFun(this), this);
         if(getServer().getPluginManager().isPluginEnabled("ChestShop"))
             pm.registerEvents(new ChestShop(this), this);
+        if(getServer().getPluginManager().isPluginEnabled("ItemsAdder"))
+            pm.registerEvents(new ItemsAdderListener(), this);
     }
 
     private void registerCommand() {
@@ -144,15 +147,37 @@ public class CreativeManager extends K0busCore {
         PluginManager pm = getServer().getPluginManager();
         int n = 0;
         for (EntityType entityType : EntityType.values()) {
-            Permission perm = new Permission("creativemanager.bypass.entity." + entityType.name());
-
-            if (!pm.getPermissions().contains(perm)) {
-                pm.addPermission(perm);
-                n++;
-            }
+            registerPerm("creativemanager.bypass.entity." + entityType.name(), pm);
+            n++;
         }
-        pm.addPermission(new Permission("creativemanager.bypass.deathdrop"));
+        registerPerm("creativemanager.bypass.deathdrop", pm);
         getLog().log("&2Entities permissions registered ! &7[" + n + "]");
+
+        /* Add plugin permissions */
+        if(getServer().getPluginManager().isPluginEnabled("ChestShop")) {
+            registerPerm("creativemanager.bypass.chestshop", pm);
+            getLog().log("&2ChestShop permissions registered !");
+        }
+        if(getServer().getPluginManager().isPluginEnabled("ItemsAdder")) {
+            registerPerm("creativemanager.bypass.itemsadder.furnituresplace", pm);
+            registerPerm("creativemanager.bypass.itemsadder.blockplace", pm);
+            registerPerm("creativemanager.bypass.itemsadder.blockbreak", pm);
+            registerPerm("creativemanager.bypass.itemsadder.blockinteract", pm);
+            registerPerm("creativemanager.bypass.itemsadder.furnituresinteract", pm);
+            registerPerm("creativemanager.bypass.itemsadder.killentity", pm);
+            getLog().log("&2ItemsAdder permissions registered !");
+        }
+        if(getServer().getPluginManager().isPluginEnabled("Slimefun")) {
+            registerPerm("creativemanager.bypass.slimefun", pm);
+            getLog().log("&2Slimefun permissions registered !");
+        }
+    }
+
+    private void registerPerm(String permission, PluginManager pm)
+    {
+        if (!pm.getPermissions().contains(new Permission(permission))) {
+            pm.addPermission(new Permission(permission));
+        }
     }
 
     private void loadLog() {
