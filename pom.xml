@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.28.8</version>
+  <version>1.29.2-BETA</version>
 
   <name>CreativeManager</name>
 
@@ -108,7 +108,7 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.19.2-R0.1-SNAPSHOT</version>
+      <version>1.19.3-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -161,7 +161,7 @@
     <dependency>
       <groupId>fr.k0bus</groupId>
       <artifactId>K0busCore</artifactId>
-      <version>0.11.2-BETA</version>
+      <version>0.11.6-BETA</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -170,6 +170,14 @@
       <version>2.0.30-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.LoneDev6/itemsadder-api -->
+    <dependency>
+      <groupId>com.github.LoneDev6</groupId>
+      <artifactId>itemsadder-api</artifactId>
+      <version>3.2.5</version>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
 </project>
