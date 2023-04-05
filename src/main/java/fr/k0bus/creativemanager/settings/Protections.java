@@ -36,7 +36,8 @@ public enum Protections {
     GUI("gui", Material.ENDER_CHEST, "Deny player to open any GUI (Including vanilla container)", "GUI"),
     PL_CITIZENS("plugins.citizens", Material.NAME_TAG, "Deny player to interact with Citizens", "Plugins - Citizens"),
     CUSTOM_NBT("custom-nbt", Material.NAME_TAG, "Deny player to get items with custom NBT", "Custom NBT"),
-    ARMOR("armor", Material.CHAINMAIL_HELMET, "Set a defined player armor set", "Creative Armor");
+    ARMOR("armor", Material.CHAINMAIL_HELMET, "Set a defined player armor set", "Creative Armor"),
+    PL_ITEMSADDER("itemsadder", Material.REDSTONE_BLOCK, "Deny player to use itemsadder features", "ItemsAdder");
 
     private final String name;
     private final Material icon;
