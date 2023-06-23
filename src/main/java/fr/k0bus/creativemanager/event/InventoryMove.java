@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.SearchUtils;
@@ -81,7 +82,17 @@ public class InventoryMove implements Listener {
 		if (e.getCursor() != null) itemStackList.add(e.getCursor());
 		if (e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
 		for (ItemStack item : itemStackList) {
+			if(item.getType().equals(Material.AIR)) continue;
+
+			NBTItem tmp = new NBTItem(item);
 			ItemMeta itemMeta = item.getItemMeta();
+
+			if(tmp.hasNBTData() || tmp.hasCustomNbtData())
+				for (String k:tmp.getKeys()) {
+					tmp.removeKey(k);
+					tmp.applyNBT(item);
+				}
+
 			if (itemMeta != null)
 				if (!itemMeta.getPersistentDataContainer().isEmpty()) {
 					for (NamespacedKey key : itemMeta.getPersistentDataContainer().getKeys()) {
