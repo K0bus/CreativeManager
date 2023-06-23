@@ -20,13 +20,6 @@ public class ChestShop implements Listener {
     public ChestShop(CreativeManager plugin)
     {
         this.plugin = plugin;
-        PluginManager pm = plugin.getServer().getPluginManager();
-        Set<Permission> permissions = pm.getPermissions();
-        Permission perm = new Permission("creativemanager.bypass.chestshop");
-        if (!permissions.contains(perm)) {
-            pm.addPermission(perm);
-        }
-        CreativeManager.getLog().log("&2ChestShop permissions registered ! &7[1]");
     }
 
     @EventHandler

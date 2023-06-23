@@ -115,6 +115,7 @@ public class CreativeManager extends K0busCore {
         }
         try {
             ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
+            ProjectileHitEvent.class.getMethod("setCancelled", (Class<?>[]) null);
             pm.registerEvents(new PlayerHitEvent(true), this);
         } catch (NoSuchMethodException | SecurityException e) {
             getLog().log("PvP / PvE Protection can't protect from projectile on this Spigot version !");
@@ -176,7 +177,9 @@ public class CreativeManager extends K0busCore {
     private void registerPerm(String permission, PluginManager pm)
     {
         if (!pm.getPermissions().contains(new Permission(permission))) {
-            pm.addPermission(new Permission(permission));
+            try {
+                pm.addPermission(new Permission(permission));
+            }catch (IllegalArgumentException ignored) {}
         }
     }
 

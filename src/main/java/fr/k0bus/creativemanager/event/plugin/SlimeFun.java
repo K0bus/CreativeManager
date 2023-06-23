@@ -7,6 +7,7 @@ import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -27,13 +28,6 @@ public class SlimeFun implements Listener {
     public SlimeFun(CreativeManager plugin)
     {
         this.plugin = plugin;
-        PluginManager pm = plugin.getServer().getPluginManager();
-        Set<Permission> permissions = pm.getPermissions();
-        Permission perm = new Permission("creativemanager.bypass.slimefun");
-        if (!permissions.contains(perm)) {
-            pm.addPermission(perm);
-        }
-        CreativeManager.getLog().log("&2Slimefun permissions registered ! &7[1]");
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
@@ -94,6 +88,7 @@ public class SlimeFun implements Listener {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_SLIMEFUN)) return;
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
+        if(e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.AIR)) return;
         NBTItem tmp = new NBTItem(e.getPlayer().getInventory().getItemInMainHand());
         if (tmp.hasNBTData() && tmp.hasKey("PublicBukkitValues")
                 && tmp.getCompound("PublicBukkitValues").hasKey("slimefun:slimefun_item"))
