@@ -6,6 +6,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
+import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,6 +44,16 @@ public class PlayerBuild implements Listener {
 				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
 					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
 				e.setCancelled(true);
+			}
+			if (CreativeManager.getSettings().getProtection(Protections.BUILD_CONTAINER)  && !p.hasPermission("creativemanager.bypass.build-container"))
+			{
+				if(e.getBlock() instanceof Container)
+				{
+					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+						CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build-nbt"));
+					Container container = (Container) e.getBlock();
+					container.getInventory().clear();
+				}
 			}
 		}
 	}
