@@ -8,6 +8,7 @@ permission:
   throw: '&cVous n''avez pas la permissions de jeter un projectile'
   general: '&4Vous n''avez pas la permission'
   gui: '&4Vous n''avez pas la permission d''ouvrir une interface en créatif'
+  build-nbt: '&4You don''t have permission to use Custom NBT'
   hit:
     player: '&cVous n''avez pas la permission de frapper les joueurs'
     monster: '&cVous n''avez pas la permission de frapper les monstres'

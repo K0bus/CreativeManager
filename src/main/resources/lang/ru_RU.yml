@@ -8,6 +8,7 @@ permission:
   throw: '&4У вас нет разрешения метать снаряды'
   general: '&4У вас нет разрешения'
   gui: '&4You don''t have permission to open GUI in Creative'
+  build-nbt: '&4You don''t have permission to use Custom NBT'
   hit:
     player: '&cУ вас нет разрешения бить игрока в режиме креатива'
     monster: '&cУ вас нет разрешения бить моба в режиме креатива'

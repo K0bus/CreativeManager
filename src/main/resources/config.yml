@@ -8,14 +8,14 @@ send-player-messages: true
 antispam-tick: 5
 ## Protection module
 protections:
-  container: true #Bypass : creativemanager.container
-  spawn: false #Bypass : creativemanager.spawner
-  drop: true #Bypass : creativemanager.drop
-  pickup: true #Bypass : creativemanager.pickup
-  build: false #Bypass : creativemanager.build
-  entity: true #Bypass : creativemanager.entity
-  pvp: false #Bypass : creativemanager.hit.player
-  pve: false #Bypass : creativemanager.hit.monster
+  container: true #Bypass : creativemanager.bypass.container
+  spawn: false #Bypass : creativemanager.bypass.spawner
+  drop: true #Bypass : creativemanager.bypass.drop
+  pickup: true #Bypass : creativemanager.bypass.pickup
+  build: false #Bypass : creativemanager.bypass.build
+  entity: true #Bypass : creativemanager.bypass.entity
+  pvp: false #Bypass : creativemanager.bypass.hit.player
+  pve: false #Bypass : creativemanager.bypass.hit.monster
   lore: true # Bypass : creativemanager.bypass.lore
   loot: true
   spawn-build: true
@@ -26,6 +26,7 @@ protections:
   gui: false
   custom-nbt: false
   armor: false
+  build-container: true #Bypass : creativemanager.bypass.build-container
   plugins:
     citizens: true
     chestshop: true

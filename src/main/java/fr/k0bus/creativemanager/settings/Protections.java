@@ -37,7 +37,8 @@ public enum Protections {
     PL_CITIZENS("plugins.citizens", Material.NAME_TAG, "Deny player to interact with Citizens", "Plugins - Citizens"),
     CUSTOM_NBT("custom-nbt", Material.NAME_TAG, "Deny player to get items with custom NBT", "Custom NBT"),
     ARMOR("armor", Material.CHAINMAIL_HELMET, "Set a defined player armor set", "Creative Armor"),
-    PL_ITEMSADDER("itemsadder", Material.REDSTONE_BLOCK, "Deny player to use itemsadder features", "ItemsAdder");
+    PL_ITEMSADDER("itemsadder", Material.REDSTONE_BLOCK, "Deny player to use itemsadder features", "ItemsAdder"),
+    BUILD_CONTAINER("build-container", Material.CHEST, "Deny player to place block with items in inventory", "Place container");
 
     private final String name;
     private final Material icon;

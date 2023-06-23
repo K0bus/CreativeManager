@@ -8,6 +8,7 @@ permission:
   throw: '&4您没有权限在创造模式下射击'
   general: '&4您没有权限'
   gui: '&4You don''t have permission to open GUI in Creative'
+  build-nbt: '&4You don''t have permission to use Custom NBT'
   hit:
     player: '&c您没有权限攻击玩家'
     monster: '&c您没有权限攻击怪物'

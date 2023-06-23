@@ -8,6 +8,7 @@ permission:
   throw: '&4Nemate dozvolu za bacanje projektila'
   general: '&4Nemate dozvolu'
   gui: '&4You don''t have permission to open GUI in Creative'
+  build-nbt: '&4You don''t have permission to use Custom NBT'
   hit:
     player: '&cNemate dozvolu da udarite igraca'
     monster: '&cNemate dozvolu da udarite čudoviste'

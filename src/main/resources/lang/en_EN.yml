@@ -8,6 +8,7 @@ permission:
   throw: '&4You don''t have permission to throw projectile'
   general: '&4You don''t have permission'
   gui: '&4You don''t have permission to open GUI in Creative'
+  build-nbt: '&4You don''t have permission to use Custom NBT'
   hit:
     player: '&cYou don''t have permission to hit player'
     monster: '&cYou don''t have permission to hit monster'
