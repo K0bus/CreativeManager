@@ -75,6 +75,16 @@ public class PlayerBreak implements Listener {
 		if(e.isCancelled()) return;
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) {
+			if (!p.hasPermission("creativemanager.bypass.break-creative"))
+			{
+				BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
+				if (blockLog != null) {
+					if (blockLog.isCreative()) {
+						e.setCancelled(true);
+						return;
+					}
+				}
+			}
 			if (p.hasPermission("creativemanager.bypass.log")) return;
 			if (!CreativeManager.getSettings().getProtection(Protections.LOOT)) return;
 			BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());
