@@ -69,7 +69,6 @@ public class PlayerHitEvent implements Listener {
 					if (!attacker.hasPermission("creativemanager.bypass.pvp") && CreativeManager.getSettings().getProtection(Protections.PVP)) {
 						if (CreativeManager.getSettings().getBoolean("send-player-messages"))
 							CreativeManager.sendMessage(attacker, CreativeManager.TAG + CreativeManager.getLang().getString("permission.hit.player"));
-
 						e.setCancelled(true);
 					}
 				} else {
