@@ -7,11 +7,8 @@ import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.permissions.Permission;
-import org.bukkit.plugin.PluginManager;
 
 import java.util.HashMap;
-import java.util.Set;
 
 public class ChestShop implements Listener {
 

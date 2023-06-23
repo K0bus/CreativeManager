@@ -15,11 +15,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.permissions.Permission;
-import org.bukkit.plugin.PluginManager;
 
 import java.util.HashMap;
-import java.util.Set;
 
 public class SlimeFun implements Listener {
 
