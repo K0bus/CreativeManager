@@ -90,3 +90,9 @@ permissions:
    creativemanager.bypass.enchants-and-potions:
       description: "Allow creative player to bypass enchants-and-potions protection"
       default: op
+   creativemanager.bypass.break-creative:
+      description: "Allow survival player to break creative placed block"
+      default: op
+   creativemanager.bypass.build-container:
+      description: "Allow creative player to place block with item in container"
+      default: op
