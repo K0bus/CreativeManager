@@ -133,7 +133,7 @@ public class DataManager {
         File dataFolder = new File(plugin.getDataFolder(), this.dbname + ".db");
         if (!dataFolder.exists())
             try {
-                dataFolder.createNewFile();
+                boolean ignored = dataFolder.createNewFile();
             } catch (IOException e) {
                 Bukkit.getLogger().log(Level.SEVERE, "File write error: " + this.dbname + ".db");
             }

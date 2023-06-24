@@ -91,7 +91,7 @@ public class PlayerBuild implements Listener {
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.logged")) return;
-		if(!e.isCancelled()) plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
+		plugin.getDataManager().addBlock(new BlockLog(e.getBlock(), e.getPlayer()));
 	}
 	/**
 	 * On place.

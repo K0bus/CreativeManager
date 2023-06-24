@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class CustomCommandTab implements TabCompleter {
 
-    SubCommands commands;
+    final SubCommands commands;
 
     public CustomCommandTab(SubCommands commands)
     {
@@ -19,7 +19,7 @@ public class CustomCommandTab implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        List cmdList = new ArrayList();
+        List<String> cmdList = new ArrayList<>();
         if(args.length == 1)
             for (Map.Entry<String, SubCommands> entry:commands.getSubCommands().entrySet()) {
                 if(entry.getValue().canUse(sender, false))

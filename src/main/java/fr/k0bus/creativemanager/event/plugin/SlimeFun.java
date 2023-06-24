@@ -87,8 +87,8 @@ public class SlimeFun implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         if(e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.AIR)) return;
         NBTItem tmp = new NBTItem(e.getPlayer().getInventory().getItemInMainHand());
-        if (tmp.hasNBTData() && tmp.hasKey("PublicBukkitValues")
-                && tmp.getCompound("PublicBukkitValues").hasKey("slimefun:slimefun_item"))
+        if (tmp.hasNBTData() && tmp.hasTag("PublicBukkitValues")
+                && tmp.getCompound("PublicBukkitValues").hasTag("slimefun:slimefun_item"))
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");

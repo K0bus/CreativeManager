@@ -15,7 +15,6 @@ import fr.k0bus.k0buscore.config.Lang;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import me.angeschossen.lands.api.integration.LandsIntegration;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -28,7 +27,6 @@ import org.bukkit.plugin.PluginManager;
 public class CreativeManager extends K0busCore {
 
     public static String TAG = StringUtils.translateColor("&r[&cCreativeManager&r] ");
-    private final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
     private static Settings settings;
     private static Lang lang;
     private DataManager dataManager;
@@ -197,7 +195,7 @@ public class CreativeManager extends K0busCore {
     }
 
     public String getInvTag() {
-        return invTag;
+        return "&l&4CM &r> ";
     }
 
     public DataManager getDataManager() {

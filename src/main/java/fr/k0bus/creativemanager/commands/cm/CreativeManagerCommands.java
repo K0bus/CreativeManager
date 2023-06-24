@@ -1,7 +1,6 @@
 package fr.k0bus.creativemanager.commands.cm;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.creativemanager.commands.CustomCommands;
 import fr.k0bus.creativemanager.commands.SubCommands;
 
 /**

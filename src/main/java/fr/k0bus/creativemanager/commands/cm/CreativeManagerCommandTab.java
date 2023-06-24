@@ -1,6 +1,5 @@
 package fr.k0bus.creativemanager.commands.cm;
 
-import fr.k0bus.creativemanager.commands.CustomCommands;
 import fr.k0bus.creativemanager.commands.SubCommands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,7 @@ import java.util.Map;
 
 public class CreativeManagerCommandTab implements TabCompleter {
 
-    SubCommands commands;
+    final SubCommands commands;
 
     public CreativeManagerCommandTab(SubCommands commands)
     {
@@ -21,7 +20,7 @@ public class CreativeManagerCommandTab implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        List cmdList = new ArrayList();
+        List<String> cmdList = new ArrayList<>();
         if(args.length == 1)
             for (Map.Entry<String, SubCommands> entry:commands.getSubCommands().entrySet()) {
                 if(entry.getValue().canUse(sender, false))

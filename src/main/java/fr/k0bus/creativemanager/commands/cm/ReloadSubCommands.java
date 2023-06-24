@@ -4,7 +4,6 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.commands.SubCommands;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.command.CommandSender;
-import org.bukkit.conversations.Conversable;
 
 public class ReloadSubCommands extends SubCommands {
 

@@ -12,9 +12,9 @@ import java.util.Collection;
 
 public class ProtectionsAPI {
 
-    CreativeManager plugin;
-    LandsIntegration lands;
-    GriefPrevention griefPrevention;
+    final CreativeManager plugin;
+    final LandsIntegration lands;
+    final GriefPrevention griefPrevention;
 
 
     public ProtectionsAPI(CreativeManager plugin)

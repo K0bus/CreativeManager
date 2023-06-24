@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class ItemsAdderListener implements Listener  {
 
-    HashMap<String, String> replaceMap = new HashMap<>();
+    final HashMap<String, String> replaceMap = new HashMap<>();
 
     public ItemsAdderListener()
     {
