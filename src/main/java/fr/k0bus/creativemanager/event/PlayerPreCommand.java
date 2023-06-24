@@ -18,7 +18,7 @@ public class PlayerPreCommand implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerCommand(PlayerCommandPreprocessEvent e)
     {
         if(!CreativeManager.getSettings().getProtection(Protections.COMMANDS)) return;

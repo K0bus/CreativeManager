@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -34,7 +35,7 @@ public class MonsterSpawnEvent implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSpawn(CreatureSpawnEvent e) {
         if (!CreativeManager.getSettings().getProtection(Protections.SPAWN_BUILD)) return;
         Block baseBlock = e.getLocation().getBlock();

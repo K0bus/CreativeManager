@@ -6,6 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -30,7 +31,7 @@ public class PlayerHitEvent implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityHit(EntityDamageByEntityEvent e) {
 		if (e.getDamager() instanceof Player) {
 			Player attacker = (Player) e.getDamager();
@@ -58,7 +59,7 @@ public class PlayerHitEvent implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onProjectileHit(ProjectileHitEvent e) {
 		if(!enableProjectile) return;
 		ProjectileSource source = e.getEntity().getShooter();

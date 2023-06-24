@@ -6,6 +6,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -20,7 +21,7 @@ public class ExplodeEvent implements Listener {
         plugin = cm;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(BlockExplodeEvent e) {
         if (CreativeManager.getSettings().getProtection(Protections.LOOT)) {
             for(Block block: e.blockList())
@@ -35,7 +36,7 @@ public class ExplodeEvent implements Listener {
             }
         }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(EntityExplodeEvent e) {
         if (CreativeManager.getSettings().getProtection(Protections.LOOT)) {
             for(Block block: e.blockList())
@@ -50,7 +51,7 @@ public class ExplodeEvent implements Listener {
             }
         }
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockChange(EntityChangeBlockEvent e)
     {
         BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());

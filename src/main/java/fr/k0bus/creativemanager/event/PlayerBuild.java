@@ -36,7 +36,7 @@ public class PlayerBuild implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void checkBuild(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
 		if (p.getGameMode() == GameMode.CREATIVE) {
@@ -62,10 +62,9 @@ public class PlayerBuild implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void checkBlackList(BlockPlaceEvent e)
 	{
-		if(e.isCancelled()) return;
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		List<String> blacklist = CreativeManager.getSettings().getPlaceBL();
@@ -86,7 +85,7 @@ public class PlayerBuild implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void logBlock(BlockPlaceEvent e)
 	{
 		Player p = e.getPlayer();
@@ -99,7 +98,7 @@ public class PlayerBuild implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void checkLog(BlockPlaceEvent e)
 	{
 		Player p = e.getPlayer();
