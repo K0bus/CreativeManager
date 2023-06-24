@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,7 +20,7 @@ public class CreativeCopy implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockCopy(final InventoryClickEvent e)
     {
         if(!e.getAction().equals(InventoryAction.CLONE_STACK)) return;

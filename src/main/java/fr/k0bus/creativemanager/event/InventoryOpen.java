@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -30,9 +31,8 @@ public class InventoryOpen implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInventoryOpen(InventoryOpenEvent e) {
-        if(e.isCancelled()) return;
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.CONTAINER)) {
@@ -52,9 +52,8 @@ public class InventoryOpen implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onGuiOpen(InventoryOpenEvent e) {
-        if(e.isCancelled()) return;
         if (e.getPlayer() instanceof Player) {
             Player p = (Player) e.getPlayer();
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.GUI)) {

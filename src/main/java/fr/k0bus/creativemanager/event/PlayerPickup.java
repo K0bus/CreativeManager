@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 
@@ -25,7 +26,7 @@ public class PlayerPickup implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPickup(EntityPickupItemEvent e) {
         if (!CreativeManager.getSettings().getProtection(Protections.PICKUP)) return;
         if (!(e.getEntity() instanceof Player)) return;

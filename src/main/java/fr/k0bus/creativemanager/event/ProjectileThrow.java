@@ -5,6 +5,7 @@ import fr.k0bus.creativemanager.settings.Protections;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.projectiles.ProjectileSource;
@@ -26,7 +27,7 @@ public class ProjectileThrow implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onDrop(ProjectileLaunchEvent e) {
 		ProjectileSource source = e.getEntity().getShooter();
 		if (source instanceof Player) {

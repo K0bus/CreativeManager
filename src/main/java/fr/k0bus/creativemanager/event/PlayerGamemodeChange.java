@@ -38,9 +38,8 @@ public class PlayerGamemodeChange implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onGMChange(PlayerGameModeChangeEvent e) {
-		if(e.isCancelled()) return;
 		if(!e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING))
 			e.getPlayer().closeInventory();
 		if(e.getNewGameMode().equals(e.getPlayer().getGameMode())) return;
