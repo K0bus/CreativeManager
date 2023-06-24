@@ -70,7 +70,6 @@ public class PlayerBreak implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void checkLog(BlockBreakEvent e)
 	{
-		if(e.isCancelled()) return;
 		Player p = e.getPlayer();
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) {
 			if (!p.hasPermission("creativemanager.bypass.break-creative"))
