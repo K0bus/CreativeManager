@@ -81,7 +81,7 @@ public class Settings extends Configuration {
      * @return the placed blocks.
      */
     public List<String> getPlaceBL() {
-        return getStringList("blacklist.place");
+        return getStringList("list.place");
     }
 
     /**
@@ -90,7 +90,7 @@ public class Settings extends Configuration {
      * @return the use blacklist.
      */
     public List<String> getUseBL() {
-        return getStringList("blacklist.use");
+        return getStringList("list.use");
     }
 
     /**
@@ -99,7 +99,7 @@ public class Settings extends Configuration {
      * @return the use blacklist.
      */
     public List<String> getUseBlockBL() {
-        return getStringList("blacklist.useblock");
+        return getStringList("list.useblock");
     }
 
     /**
@@ -108,7 +108,7 @@ public class Settings extends Configuration {
      * @return the get blacklist.
      */
     public List<String> getGetBL() {
-        return getStringList("blacklist.get");
+        return getStringList("list.get");
     }
 
     /**
@@ -117,7 +117,7 @@ public class Settings extends Configuration {
      * @return the break blacklist.
      */
     public List<String> getBreakBL() {
-        return getStringList("blacklist.break");
+        return getStringList("list.break");
     }
 
     /**
@@ -126,7 +126,7 @@ public class Settings extends Configuration {
      * @return the command blacklist.
      */
     public List<String> getCommandBL() {
-        return getStringList("blacklist.commands");
+        return getStringList("list.commands");
     }
 
     /**

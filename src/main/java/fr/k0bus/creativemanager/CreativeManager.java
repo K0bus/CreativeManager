@@ -18,11 +18,14 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
+
+import java.util.Set;
 
 public class CreativeManager extends K0busCore {
 
@@ -82,6 +85,15 @@ public class CreativeManager extends K0busCore {
         Settings.updateConfig("lang/fr_FR.yml", this);
         Settings.updateConfig("lang/it_IT.yml", this);
         Settings.updateConfig("lang/ru_RU.yml", this);
+        Settings tempsettings = new Settings(this);
+        ConfigurationSection cs = tempsettings.getConfigurationSection("blacklist");
+        if(cs != null)
+        {
+            tempsettings.set("list", cs);
+            tempsettings.set("blacklist", null);
+            tempsettings.save();
+            getLog().log("&2config.yml > blacklist node moved to list");
+        }
         Settings.updateConfig("config.yml", this);
     }
 

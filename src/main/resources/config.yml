@@ -37,8 +37,15 @@ inventory:
   creative: true #Bypass : cm.bypass.inventory
   spectator: true #Bypass : cm.bypass.inventory
 stop-inventory-save: false #Use it at your own risk, this option fully disable the inventory save system.
-## Black List
-blacklist:
+## List
+list:
+  mode:
+    place: blacklist
+    use: blacklist
+    get: blacklist
+    break: blacklist
+    commands: blacklist
+    useblock: blacklist
   place: #Bypass : creativemanager.bypass.blacklist.place
     - 'tnt'
   use: #Bypass : creativemanager.bypass.blacklist.use

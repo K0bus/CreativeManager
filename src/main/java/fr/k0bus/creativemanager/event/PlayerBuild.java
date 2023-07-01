@@ -72,7 +72,8 @@ public class PlayerBuild implements Listener {
 		if(blacklist.isEmpty()) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place")) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place." + blockName)) return;
-		if(SearchUtils.inList(blacklist, blockName)){
+		if((CreativeManager.getSettings().getString("list.mode.place").equals("whitelist") && !SearchUtils.inList(blacklist, blockName)) ||
+			(!CreativeManager.getSettings().getString("list.mode.place").equals("whitelist") && SearchUtils.inList(blacklist, blockName))){
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))

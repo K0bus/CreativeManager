@@ -9,6 +9,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import java.util.List;
+
 public class PlayerPreCommand implements Listener {
 
     final CreativeManager plugin;
@@ -25,8 +27,9 @@ public class PlayerPreCommand implements Listener {
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.blacklist.commands")) return;
         String cmd = e.getMessage().toLowerCase().substring(1);
-        if(SearchUtils.inList(CreativeManager.getSettings().getCommandBL(), cmd))
-        {
+        List<String> list = CreativeManager.getSettings().getCommandBL();
+        if((CreativeManager.getSettings().getString("list.mode.commands").equals("whitelist") && !SearchUtils.inList(list, cmd)) ||
+                (!CreativeManager.getSettings().getString("list.mode.commands").equals("whitelist") && SearchUtils.inList(list, cmd))){
             e.setCancelled(true);
             if(CreativeManager.getSettings().getBoolean("send-player-messages"))
                 CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.commands"));
