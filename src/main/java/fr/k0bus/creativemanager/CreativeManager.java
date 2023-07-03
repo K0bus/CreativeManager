@@ -25,8 +25,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.Set;
-
 public class CreativeManager extends K0busCore {
 
     public static String TAG = StringUtils.translateColor("&r[&cCreativeManager&r] ");
@@ -125,7 +123,6 @@ public class CreativeManager extends K0busCore {
         }
         try {
             ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
-            ProjectileHitEvent.class.getMethod("setCancelled", (Class<?>[]) null);
             pm.registerEvents(new PlayerHitEvent(true), this);
         } catch (NoSuchMethodException | SecurityException e) {
             getLog().log("PvP / PvE Protection can't protect from projectile on this Spigot version !");
