@@ -1,6 +1,5 @@
 package fr.k0bus.creativemanager.event.plugin;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
@@ -86,9 +85,7 @@ public class SlimeFun implements Listener {
         if(!e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) return;
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         if(e.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.AIR)) return;
-        NBTItem tmp = new NBTItem(e.getPlayer().getInventory().getItemInMainHand());
-        if (tmp.hasNBTData() && tmp.hasTag("PublicBukkitValues")
-                && tmp.getCompound("PublicBukkitValues").hasTag("slimefun:slimefun_item"))
+        if(e.getSlimefunItem().isPresent() || e.getSlimefunBlock().isPresent())
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
