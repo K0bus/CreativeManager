@@ -5,6 +5,8 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,6 +56,26 @@ public class PlayerInteract implements Listener {
             e.setCancelled(true);
         }
     }
+
+    @EventHandler
+    public void checkContainer(PlayerInteractEvent e)
+    {
+        Player p = e.getPlayer();
+        Block block = e.getClickedBlock();
+        if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
+        if(!CreativeManager.getSettings().getProtection(Protections.CONTAINER)) return;
+        if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+        if(block == null) return;
+
+        if(block.getType().equals(Material.CAMPFIRE)) {
+            if (!p.hasPermission("creativemanager.bypass.container")) {
+                if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+                    CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
+                e.setCancelled(true);
+            }
+        }
+    }
+
     @EventHandler
     public void checkBlacklistUseBlock(PlayerInteractEvent e)
     {
