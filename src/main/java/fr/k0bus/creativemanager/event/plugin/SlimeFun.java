@@ -19,13 +19,6 @@ import java.util.HashMap;
 
 public class SlimeFun implements Listener {
 
-    final CreativeManager plugin;
-
-    public SlimeFun(CreativeManager plugin)
-    {
-        this.plugin = plugin;
-    }
-
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onMultiBlockInteract(MultiBlockInteractEvent e)
     {

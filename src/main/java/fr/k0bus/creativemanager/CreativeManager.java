@@ -13,8 +13,6 @@ import fr.k0bus.creativemanager.task.SaveTask;
 import fr.k0bus.k0buscore.K0busCore;
 import fr.k0bus.k0buscore.config.Lang;
 import fr.k0bus.k0buscore.utils.StringUtils;
-import me.angeschossen.lands.api.integration.LandsIntegration;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -28,6 +26,7 @@ import org.bukkit.plugin.PluginManager;
 public class CreativeManager extends K0busCore {
 
     public static String TAG = StringUtils.translateColor("&r[&cCreativeManager&r] ");
+    public static final String TAG_INV = "&l&4CM &r> ";
     private static Settings settings;
     private static Lang lang;
     private DataManager dataManager;
@@ -58,14 +57,6 @@ public class CreativeManager extends K0busCore {
         if(getSettings().getBoolean("stop-inventory-save"))
             getLog().log("&cWarning : &4'stop-inventory-save' set on 'true' then all features about inventory as been disabled !");
         getLog().log("&9=============================================================");
-    }
-
-    public void registerProtectionsAPI()
-    {
-        if(getServer().getPluginManager().isPluginEnabled("Lands"))
-            landsIntegration = new LandsIntegration(this);
-        if(getServer().getPluginManager().isPluginEnabled("GriefPrevention"))
-            griefPrevention = GriefPrevention.instance;
     }
 
     public void loadConfigManager() {
@@ -109,10 +100,10 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new MonsterSpawnEvent(this), this);
         pm.registerEvents(new ProjectileThrow(), this);
         pm.registerEvents(new InventoryOpen(), this);
-        pm.registerEvents(new PlayerPreCommand(this), this);
+        pm.registerEvents(new PlayerPreCommand(), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(), this);
-        pm.registerEvents(new CreativeCopy(this), this);
+        pm.registerEvents(new CreativeCopy(), this);
         /*  Add event checked for old version */
         try {
             ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
@@ -136,9 +127,9 @@ public class CreativeManager extends K0busCore {
         }
         /* Add plugin event */
         if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
-            pm.registerEvents(new SlimeFun(this), this);
+            pm.registerEvents(new SlimeFun(), this);
         if(getServer().getPluginManager().isPluginEnabled("ChestShop"))
-            pm.registerEvents(new ChestShop(this), this);
+            pm.registerEvents(new ChestShop(), this);
         if(getServer().getPluginManager().isPluginEnabled("ItemsAdder"))
             pm.registerEvents(new ItemsAdderListener(), this);
     }
@@ -147,7 +138,7 @@ public class CreativeManager extends K0busCore {
         PluginCommand mainCommand = this.getCommand("cm");
         if (mainCommand != null) {
             mainCommand.setExecutor(new CreativeManagerCommands(this));
-            mainCommand.setTabCompleter(new CreativeManagerCommandTab((SubCommands) mainCommand.getExecutor()));
+            mainCommand.setTabCompleter(new CreativeManagerCommandTab((Commands) mainCommand.getExecutor()));
         }
     }
 
@@ -210,15 +201,6 @@ public class CreativeManager extends K0busCore {
     public DataManager getDataManager() {
         return dataManager;
     }
-
-    public LandsIntegration getLandsIntegration() {
-        return landsIntegration;
-    }
-
-    public GriefPrevention getGriefPrevention() {
-        return griefPrevention;
-    }
-
 
 
     @Override

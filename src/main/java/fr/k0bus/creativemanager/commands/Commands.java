@@ -6,44 +6,33 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
 
-public abstract class SubCommands implements CommandExecutor {
+public abstract class Commands implements CommandExecutor {
 
     public final String permissions;
     public final boolean playerOnly;
     public final CreativeManager plugin;
-    private final HashMap<String, SubCommands> subCommands = new HashMap<>();
+    private final HashMap<String, Commands> subCommands = new HashMap<>();
     private String defaultSubCmd = null;
 
-    public SubCommands(CreativeManager instance)
+    public Commands(CreativeManager instance)
     {
         this.plugin = instance;
         this.permissions = null;
         this.playerOnly = false;
     }
-    public SubCommands(CreativeManager instance, String perms)
-    {
-        this.plugin = instance;
-        this.permissions = perms;
-        this.playerOnly = false;
-    }
-    public SubCommands(CreativeManager instance, boolean playerOnly)
-    {
-        this.plugin = instance;
-        this.permissions = null;
-        this.playerOnly = playerOnly;
-    }
-    public SubCommands(CreativeManager instance, String perms, boolean playerOnly)
+    public Commands(CreativeManager instance, String perms, boolean playerOnly)
     {
         this.plugin = instance;
         this.permissions = perms;
         this.playerOnly = playerOnly;
     }
 
-    public void registerCommands(String cmd, SubCommands commands)
+    public void registerCommands(String cmd, Commands commands)
     {
         if(cmd != null && commands != null)
             subCommands.put(cmd, commands);
@@ -57,7 +46,7 @@ public abstract class SubCommands implements CommandExecutor {
     protected void run(CommandSender sender, String[] args){}
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
         if(subCmd(sender, args)) return true;
         if(cantUse(sender)) return true;
         run(sender, args);
@@ -124,7 +113,7 @@ public abstract class SubCommands implements CommandExecutor {
         return false;
     }
 
-    public HashMap<String, SubCommands> getSubCommands() {
+    public HashMap<String, Commands> getSubCommands() {
         return subCommands;
     }
 

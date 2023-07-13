@@ -12,12 +12,6 @@ import java.util.HashMap;
 
 public class ChestShop implements Listener {
 
-    final CreativeManager plugin;
-
-    public ChestShop(CreativeManager plugin)
-    {
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void onShopCreation(PreShopCreationEvent e)

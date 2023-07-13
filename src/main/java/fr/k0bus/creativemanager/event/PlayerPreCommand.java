@@ -13,13 +13,6 @@ import java.util.List;
 
 public class PlayerPreCommand implements Listener {
 
-    final CreativeManager plugin;
-
-    public PlayerPreCommand(CreativeManager plugin)
-    {
-        this.plugin = plugin;
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerCommand(PlayerCommandPreprocessEvent e)
     {

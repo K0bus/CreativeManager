@@ -84,11 +84,11 @@ public enum Protections {
             lore.add(StringUtils.translateColor(ChatColor.RESET + this.desc));
             lore.add(ChatColor.DARK_GRAY + "------");
             if (value)
-                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : " + ChatColor.GREEN + "Enabled");
+                lore.add(ChatColor.GOLD + String.valueOf(ChatColor.BOLD) + "Status : " + ChatColor.GREEN + "Enabled");
             else
-                lore.add(ChatColor.GOLD + "" + ChatColor.BOLD + "Status : " + ChatColor.RED + "Disabled");
+                lore.add(ChatColor.GOLD + String.valueOf(ChatColor.BOLD) + "Status : " + ChatColor.RED + "Disabled");
             itemMeta.setLore(lore);
-            itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.BOLD + ChatColor.GOLD + this.displayName);
+            itemMeta.setDisplayName(ChatColor.RESET + String.valueOf(ChatColor.BOLD) + ChatColor.GOLD + this.displayName);
             if(value)
                 itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

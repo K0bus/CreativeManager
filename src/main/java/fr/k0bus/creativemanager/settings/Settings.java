@@ -20,15 +20,6 @@ public class Settings extends Configuration {
     }
 
     /**
-     * Is logged boolean.
-     *
-     * @return True if yes, otherwise false.
-     */
-    public boolean isLogged() {
-        return getBoolean("log");
-    }
-
-    /**
      * Gets protection.
      *
      * @param protections the protections.
