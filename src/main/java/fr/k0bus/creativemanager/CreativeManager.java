@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager;
 
-import fr.k0bus.creativemanager.commands.SubCommands;
+import fr.k0bus.creativemanager.commands.Commands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommandTab;
 import fr.k0bus.creativemanager.event.*;
@@ -15,6 +15,8 @@ import fr.k0bus.k0buscore.config.Lang;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
@@ -22,6 +24,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Set;
 
 public class CreativeManager extends K0busCore {
 
@@ -31,8 +37,7 @@ public class CreativeManager extends K0busCore {
     private static Lang lang;
     private DataManager dataManager;
     private int saveTask;
-    private LandsIntegration landsIntegration;
-    private GriefPrevention griefPrevention;
+    private static final HashMap<String, Set<Material>> tagMap = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -53,6 +58,7 @@ public class CreativeManager extends K0busCore {
         getLog().log("&2Commands registered");
         this.registerPermissions();
         this.loadLog();
+        this.loadTags();
         this.saveTask = SaveTask.run(this);
         if(getSettings().getBoolean("stop-inventory-save"))
             getLog().log("&cWarning : &4'stop-inventory-save' set on 'true' then all features about inventory as been disabled !");
@@ -181,6 +187,19 @@ public class CreativeManager extends K0busCore {
         }
     }
 
+    private void loadTags()
+    {
+        Field[] fieldlist = Tag.class.getDeclaredFields();
+        for (Field fld : fieldlist) {
+            try {
+                Set<Material> set = ((Tag<Material>) fld.get(null)).getValues();
+                tagMap.put(fld.getName(), set);
+            }catch (Exception ignored)
+            {}
+        }
+        getLog().log("&2Tag loaded from Spigot ! &7[" + tagMap.size() + "]");
+    }
+
     private void loadLog() {
         dataManager = new DataManager("data", this);
         getLog().log("&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
@@ -194,8 +213,8 @@ public class CreativeManager extends K0busCore {
         return lang;
     }
 
-    public String getInvTag() {
-        return "&l&4CM &r> ";
+    public static HashMap<String, Set<Material>> getTagMap() {
+        return tagMap;
     }
 
     public DataManager getDataManager() {

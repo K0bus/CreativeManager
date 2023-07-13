@@ -48,8 +48,8 @@ public class PlayerInteract implements Listener {
         if(p.hasPermission("creativemanager.bypass.blacklist.use")) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.use." + itemName)) return;
         List<String> blacklist = CreativeManager.getSettings().getUseBL();
-        if((CreativeManager.getSettings().getString("list.mode.use").equals("whitelist") && !SearchUtils.inList(blacklist, itemName)) ||
-                (!CreativeManager.getSettings().getString("list.mode.use").equals("whitelist") && SearchUtils.inList(blacklist, itemName))){
+        if((CreativeManager.getSettings().getString("list.mode.use").equals("whitelist") && !SearchUtils.inList(blacklist, itemStack)) ||
+                (!CreativeManager.getSettings().getString("list.mode.use").equals("whitelist") && SearchUtils.inList(blacklist, itemStack))){
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{ITEM}", StringUtils.proper(itemName));
             CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.use", replaceMap));
@@ -84,11 +84,10 @@ public class PlayerInteract implements Listener {
         if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(e.getClickedBlock() == null) return;
-        String itemName = e.getClickedBlock().getType().name().toLowerCase();
         if(blacklist.isEmpty()) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.useblock")) return;
-        if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, itemName)) ||
-                (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, itemName))){
+        if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock().getType())) ||
+                (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, e.getClickedBlock().getType()))){
             if (CreativeManager.getSettings().getBoolean("send-player-messages"))
                 CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.useblock"));
             e.setCancelled(true);

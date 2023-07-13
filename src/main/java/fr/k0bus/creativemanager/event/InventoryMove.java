@@ -161,8 +161,8 @@ public class InventoryMove implements Listener {
 		for (ItemStack item:itemStackList) {
 			String itemName = item.getType().name().toLowerCase();
 			if(p.hasPermission("creativemanager.bypass.blacklist.get." + itemName)) return;
-			if((CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, itemName)) ||
-					(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, itemName))){
+			if((CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, item)) ||
+					(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
 				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
