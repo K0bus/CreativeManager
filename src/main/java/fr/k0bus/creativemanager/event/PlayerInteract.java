@@ -84,6 +84,8 @@ public class PlayerInteract implements Listener {
         if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(e.getClickedBlock() == null) return;
+        if (e.getPlayer().isSneaking() && e.getItem() != null) return;
+        String itemName = e.getClickedBlock().getType().name().toLowerCase();
         if(blacklist.isEmpty()) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.useblock")) return;
         if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock().getType())) ||
