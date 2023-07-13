@@ -181,7 +181,7 @@
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
       <version>24.0.1</version>
-      <scope>import</scope>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 
