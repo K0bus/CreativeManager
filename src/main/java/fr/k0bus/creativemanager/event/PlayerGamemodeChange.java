@@ -6,7 +6,6 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.k0buscore.utils.ItemsUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +13,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 

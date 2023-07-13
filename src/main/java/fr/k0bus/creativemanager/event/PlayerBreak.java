@@ -57,8 +57,8 @@ public class PlayerBreak implements Listener {
 		if(p.hasPermission("creativemanager.bypass.blacklist.break")) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.break." + blockName)) return;
 		List<String> blacklist = CreativeManager.getSettings().getBreakBL();
-		if(SearchUtils.inList(blacklist, blockName))
-		{
+		if((CreativeManager.getSettings().getString("list.mode.break").equals("whitelist") && !SearchUtils.inList(blacklist, e.getBlock().getType())) ||
+				(!CreativeManager.getSettings().getString("list.mode.break").equals("whitelist") && SearchUtils.inList(blacklist, e.getBlock().getType()))){
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))

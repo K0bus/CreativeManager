@@ -13,13 +13,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class CreativeCopy implements Listener {
 
-    final CreativeManager plugin;
-
-    public CreativeCopy(CreativeManager plugin)
-    {
-        this.plugin = plugin;
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockCopy(final InventoryClickEvent e)
     {

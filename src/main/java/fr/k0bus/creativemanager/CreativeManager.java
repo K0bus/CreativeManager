@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager;
 
-import fr.k0bus.creativemanager.commands.SubCommands;
+import fr.k0bus.creativemanager.commands.Commands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommands;
 import fr.k0bus.creativemanager.commands.cm.CreativeManagerCommandTab;
 import fr.k0bus.creativemanager.event.*;
@@ -13,28 +13,31 @@ import fr.k0bus.creativemanager.task.SaveTask;
 import fr.k0bus.k0buscore.K0busCore;
 import fr.k0bus.k0buscore.config.Lang;
 import fr.k0bus.k0buscore.utils.StringUtils;
-import me.angeschossen.lands.api.integration.LandsIntegration;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.md_5.bungee.api.ChatColor;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Set;
+
 public class CreativeManager extends K0busCore {
 
     public static String TAG = StringUtils.translateColor("&r[&cCreativeManager&r] ");
-    private final String invTag = ChatColor.BOLD + "" + ChatColor.DARK_RED + "CM " + ChatColor.RESET + "> ";
+    public static final String TAG_INV = "&l&4CM &r> ";
     private static Settings settings;
     private static Lang lang;
     private DataManager dataManager;
     private int saveTask;
-    private LandsIntegration landsIntegration;
-    private GriefPrevention griefPrevention;
+    private static final HashMap<String, Set<Material>> tagMap = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -55,18 +58,11 @@ public class CreativeManager extends K0busCore {
         getLog().log("&2Commands registered");
         this.registerPermissions();
         this.loadLog();
+        this.loadTags();
         this.saveTask = SaveTask.run(this);
         if(getSettings().getBoolean("stop-inventory-save"))
             getLog().log("&cWarning : &4'stop-inventory-save' set on 'true' then all features about inventory as been disabled !");
         getLog().log("&9=============================================================");
-    }
-
-    public void registerProtectionsAPI()
-    {
-        if(getServer().getPluginManager().isPluginEnabled("Lands"))
-            landsIntegration = new LandsIntegration(this);
-        if(getServer().getPluginManager().isPluginEnabled("GriefPrevention"))
-            griefPrevention = GriefPrevention.instance;
     }
 
     public void loadConfigManager() {
@@ -84,6 +80,15 @@ public class CreativeManager extends K0busCore {
         Settings.updateConfig("lang/fr_FR.yml", this);
         Settings.updateConfig("lang/it_IT.yml", this);
         Settings.updateConfig("lang/ru_RU.yml", this);
+        Settings tempsettings = new Settings(this);
+        ConfigurationSection cs = tempsettings.getConfigurationSection("blacklist");
+        if(cs != null)
+        {
+            tempsettings.set("list", cs);
+            tempsettings.set("blacklist", null);
+            tempsettings.save();
+            getLog().log("&2config.yml > blacklist node moved to list");
+        }
         Settings.updateConfig("config.yml", this);
     }
 
@@ -101,10 +106,10 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new MonsterSpawnEvent(this), this);
         pm.registerEvents(new ProjectileThrow(), this);
         pm.registerEvents(new InventoryOpen(), this);
-        pm.registerEvents(new PlayerPreCommand(this), this);
+        pm.registerEvents(new PlayerPreCommand(), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(), this);
-        pm.registerEvents(new CreativeCopy(this), this);
+        pm.registerEvents(new CreativeCopy(), this);
         /*  Add event checked for old version */
         try {
             ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
@@ -115,7 +120,6 @@ public class CreativeManager extends K0busCore {
         }
         try {
             ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
-            ProjectileHitEvent.class.getMethod("setCancelled", (Class<?>[]) null);
             pm.registerEvents(new PlayerHitEvent(true), this);
         } catch (NoSuchMethodException | SecurityException e) {
             getLog().log("PvP / PvE Protection can't protect from projectile on this Spigot version !");
@@ -129,9 +133,9 @@ public class CreativeManager extends K0busCore {
         }
         /* Add plugin event */
         if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
-            pm.registerEvents(new SlimeFun(this), this);
+            pm.registerEvents(new SlimeFun(), this);
         if(getServer().getPluginManager().isPluginEnabled("ChestShop"))
-            pm.registerEvents(new ChestShop(this), this);
+            pm.registerEvents(new ChestShop(), this);
         if(getServer().getPluginManager().isPluginEnabled("ItemsAdder"))
             pm.registerEvents(new ItemsAdderListener(), this);
     }
@@ -140,7 +144,7 @@ public class CreativeManager extends K0busCore {
         PluginCommand mainCommand = this.getCommand("cm");
         if (mainCommand != null) {
             mainCommand.setExecutor(new CreativeManagerCommands(this));
-            mainCommand.setTabCompleter(new CreativeManagerCommandTab((SubCommands) mainCommand.getExecutor()));
+            mainCommand.setTabCompleter(new CreativeManagerCommandTab((Commands) mainCommand.getExecutor()));
         }
     }
 
@@ -183,6 +187,19 @@ public class CreativeManager extends K0busCore {
         }
     }
 
+    private void loadTags()
+    {
+        Field[] fieldlist = Tag.class.getDeclaredFields();
+        for (Field fld : fieldlist) {
+            try {
+                Set<Material> set = ((Tag<Material>) fld.get(null)).getValues();
+                tagMap.put(fld.getName(), set);
+            }catch (Exception ignored)
+            {}
+        }
+        getLog().log("&2Tag loaded from Spigot ! &7[" + tagMap.size() + "]");
+    }
+
     private void loadLog() {
         dataManager = new DataManager("data", this);
         getLog().log("&2Log loaded from database ! &7[" + dataManager.getBlockLogHashMap().size() + "]");
@@ -196,22 +213,13 @@ public class CreativeManager extends K0busCore {
         return lang;
     }
 
-    public String getInvTag() {
-        return invTag;
+    public static HashMap<String, Set<Material>> getTagMap() {
+        return tagMap;
     }
 
     public DataManager getDataManager() {
         return dataManager;
     }
-
-    public LandsIntegration getLandsIntegration() {
-        return landsIntegration;
-    }
-
-    public GriefPrevention getGriefPrevention() {
-        return griefPrevention;
-    }
-
 
 
     @Override

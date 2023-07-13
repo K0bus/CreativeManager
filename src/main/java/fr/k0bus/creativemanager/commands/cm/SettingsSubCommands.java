@@ -1,12 +1,12 @@
 package fr.k0bus.creativemanager.commands.cm;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.creativemanager.commands.SubCommands;
+import fr.k0bus.creativemanager.commands.Commands;
 import fr.k0bus.creativemanager.gui.settings.ProtectionSettingGui;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class SettingsSubCommands extends SubCommands {
+public class SettingsSubCommands extends Commands {
 
     public SettingsSubCommands(CreativeManager instance) {
         super(instance, "creativemanager.admin", true);

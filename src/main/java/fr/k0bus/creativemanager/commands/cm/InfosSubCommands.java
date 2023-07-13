@@ -1,12 +1,12 @@
 package fr.k0bus.creativemanager.commands.cm;
 
 import fr.k0bus.creativemanager.CreativeManager;
-import fr.k0bus.creativemanager.commands.SubCommands;
+import fr.k0bus.creativemanager.commands.Commands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.conversations.Conversable;
 
-public class InfosSubCommands extends SubCommands {
+public class InfosSubCommands extends Commands {
 
     public InfosSubCommands(CreativeManager instance) {
         super(instance, "creativemanager.admin", true);

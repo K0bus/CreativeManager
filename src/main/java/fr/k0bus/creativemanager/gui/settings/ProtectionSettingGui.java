@@ -24,7 +24,7 @@ public class ProtectionSettingGui extends PagedMenu {
      * @param plugin the plugin.
      */
     public ProtectionSettingGui(CreativeManager plugin) {
-        super(3, plugin.getInvTag() + "Protection", plugin);
+        super(3, CreativeManager.TAG_INV + "Protection", plugin);
         setSlots(Serializer.readIntArray(Collections.singletonList("0-17")));
         init();
     }
