@@ -80,6 +80,7 @@ public class CreativeManager extends K0busCore {
         Settings.updateConfig("lang/fr_FR.yml", this);
         Settings.updateConfig("lang/it_IT.yml", this);
         Settings.updateConfig("lang/ru_RU.yml", this);
+        Settings.updateConfig("lang/hu_HU.yml", this);
         Settings tempsettings = new Settings(this);
         ConfigurationSection cs = tempsettings.getConfigurationSection("blacklist");
         if(cs != null)

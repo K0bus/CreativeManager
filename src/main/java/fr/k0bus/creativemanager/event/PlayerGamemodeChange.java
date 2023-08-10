@@ -45,33 +45,6 @@ public class PlayerGamemodeChange implements Listener {
 		Player p = e.getPlayer();
 		if (!p.hasPermission("creativemanager.bypass.inventory")) {
 			InventoryManager im = new InventoryManager(p, plugin);
-			if (!CreativeManager.getSettings().adventureInvEnable()) {
-				if (e.getNewGameMode().equals(GameMode.ADVENTURE)) {
-					im.saveInventory(p.getGameMode());
-					return;
-				} else if (p.getGameMode().equals(GameMode.ADVENTURE)) {
-					im.saveInventory(GameMode.SURVIVAL);
-					return;
-				}
-			}
-			if (!CreativeManager.getSettings().creativeInvEnable()) {
-				if (e.getNewGameMode().equals(GameMode.CREATIVE)) {
-					im.saveInventory(p.getGameMode());
-					return;
-				} else if (p.getGameMode().equals(GameMode.CREATIVE)) {
-					im.saveInventory(GameMode.SURVIVAL);
-					return;
-				}
-			}
-			if (!CreativeManager.getSettings().spectatorInvEnable()) {
-				if (e.getNewGameMode().equals(GameMode.SPECTATOR)) {
-					im.saveInventory(p.getGameMode());
-					return;
-				} else if (p.getGameMode().equals(GameMode.SPECTATOR)) {
-					im.saveInventory(GameMode.SURVIVAL);
-					return;
-				}
-			}
 			im.saveInventory(p.getGameMode());
 			im.loadInventory(e.getNewGameMode());
 			if(CreativeManager.getSettings().getProtection(Protections.ARMOR) && !p.hasPermission("creativemanager.bypass.armor"))

@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.settings;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.k0buscore.config.Configuration;
 import fr.k0bus.k0buscore.utils.StringUtils;
+import org.bukkit.GameMode;
 
 import java.util.List;
 
@@ -40,30 +41,73 @@ public class Settings extends Configuration {
     }
 
     /**
-     * Creative inv enable boolean.
+     * Helper function for parse inventory names.
      *
-     * @return True if yes, otherwise false.
+     * @return the name of the inventory.
      */
-    public boolean creativeInvEnable() {
-        return getBoolean("inventory.creative");
+    private String getInvNameOfGamemodeStr(String gm_str) {
+        String value = getString("inventory." + gm_str);
+        if (value.equalsIgnoreCase("false")) {
+            return "SURVIVAL";
+        } else if (value.equalsIgnoreCase("true")) {
+            return gm_str.toUpperCase();
+        } else {
+            return getString("inventory." + gm_str);
+        }
     }
 
     /**
-     * Adventure inv enable boolean.
+     * Creative inv name string.
      *
-     * @return True if yes, otherwise false.
+     * @return the name of the creative inventory.
      */
-    public boolean adventureInvEnable() {
-        return getBoolean("inventory.adventure");
+    public String getCreativeInvName() {
+        return getInvNameOfGamemodeStr("creative");
     }
 
     /**
-     * Spectator inv enable boolean.
+     * Survival inv name string.
      *
-     * @return True if yes, otherwise false.
+     * @return the name of the survival inventory.
      */
-    public boolean spectatorInvEnable() {
-        return getBoolean("inventory.spectator");
+    public String getSurvivalInvName() {
+        return getInvNameOfGamemodeStr("survival");
+    }
+
+    /**
+     * Adventure inv name string.
+     *
+     * @return the name of the adventure inventory.
+     */
+    public String getAdventureInvName() {
+        return getInvNameOfGamemodeStr("adventure");
+    }
+
+    /**
+     * Spectator inv name string.
+     *
+     * @return the name of the spectator inventory.
+     */
+    public String getSpectatorInvName() {
+        return getInvNameOfGamemodeStr("spectator");
+    }
+
+    /**
+     * Inv name string of the gamemode.
+     *
+     * @return the name of the inventory related to the given gamemode.
+     */
+    public String getInvNameOfGamemode(GameMode gm) {
+        switch (gm) {
+            case CREATIVE:
+                return getCreativeInvName();
+            case ADVENTURE:
+                return getAdventureInvName();
+            case SPECTATOR:
+                return getSpectatorInvName();
+            default:
+                return getSurvivalInvName();
+        }
     }
 
     /**
