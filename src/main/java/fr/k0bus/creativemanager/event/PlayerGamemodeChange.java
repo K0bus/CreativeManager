@@ -39,9 +39,8 @@ public class PlayerGamemodeChange implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onGMChange(PlayerGameModeChangeEvent e) {
-		if(!CreativeManager.getSettings().getBoolean("stop-inv-close-on-gmchange"))
-			if(!e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING))
-				e.getPlayer().closeInventory();
+		if(!e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING))
+			e.getPlayer().closeInventory();
 		if(e.getNewGameMode().equals(e.getPlayer().getGameMode())) return;
 		if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
 		Player p = e.getPlayer();
@@ -94,16 +93,6 @@ public class PlayerGamemodeChange implements Listener {
 			replaceMap.put("{GAMEMODE}", StringUtils.proper(e.getNewGameMode().name()));
 			if(CreativeManager.getSettings().getBoolean("send-player-messages"))
 				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
-		}
-	}
-	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onGMChangeRemoveEffects(PlayerGameModeChangeEvent e) {
-		if (!CreativeManager.getSettings().getProtection(Protections.REMOVE_EFFECTS)) return;
-		Player p = e.getPlayer();
-		if (!p.hasPermission("creativemanager.bypass.effects-cleaner")) {
-			for (PotionEffect effect:p.getActivePotionEffects()) {
-				p.removePotionEffect(effect.getType());
-			}
 		}
 	}
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

@@ -95,36 +95,37 @@ public class CreativeManager extends K0busCore {
     private void registerEvent(PluginManager pm) {
         pm.registerEvents(new PlayerBuild(this), this);
         pm.registerEvents(new PlayerBreak(this), this);
-        pm.registerEvents(new PlayerInteract(), this);
-        pm.registerEvents(new PlayerInteractEntity(), this);
-        pm.registerEvents(new PlayerInteractAtEntity(), this);
-        pm.registerEvents(new PlayerDrop(), this);
+        pm.registerEvents(new PlayerInteract(this), this);
+        pm.registerEvents(new PlayerInteractEntity(this), this);
+        pm.registerEvents(new PlayerInteractAtEntity(this), this);
+        pm.registerEvents(new PlayerDrop(this), this);
         pm.registerEvents(new PlayerGamemodeChange(this), this);
         pm.registerEvents(new PlayerQuit(this), this);
         pm.registerEvents(new PlayerLogin(this), this);
         pm.registerEvents(new PistonEvent(this), this);
         pm.registerEvents(new MonsterSpawnEvent(this), this);
-        pm.registerEvents(new ProjectileThrow(), this);
-        pm.registerEvents(new InventoryOpen(), this);
-        pm.registerEvents(new PlayerPreCommand(), this);
+        pm.registerEvents(new ProjectileThrow(this), this);
+        pm.registerEvents(new InventoryOpen(this), this);
+        pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(), this);
         pm.registerEvents(new CreativeCopy(), this);
         pm.registerEvents(new FlowEvent(this), this);
+        pm.registerEvents(new BlockEvent(this), this);
         /*  Add event checked for old version */
         try {
             ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
-            pm.registerEvents(new InventoryMove(), this);
+            pm.registerEvents(new InventoryMove(this), this);
         } catch (NoSuchMethodException | SecurityException e) {
             getLog().log("NBT Protection disabled on your Minecraft version");
-            pm.registerEvents(new InventoryMove(false), this);
+            pm.registerEvents(new InventoryMove(this,false), this);
         }
         try {
             ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
-            pm.registerEvents(new PlayerHitEvent(true), this);
+            pm.registerEvents(new PlayerHitEvent(true, this), this);
         } catch (NoSuchMethodException | SecurityException e) {
             getLog().log("PvP / PvE Protection can't protect from projectile on this Spigot version !");
-            pm.registerEvents(new PlayerHitEvent(false), this);
+            pm.registerEvents(new PlayerHitEvent(false, this), this);
         }
         try {
             Class.forName( "org.bukkit.event.entity.EntityPickupItemEvent" );
@@ -134,11 +135,11 @@ public class CreativeManager extends K0busCore {
         }
         /* Add plugin event */
         if(getServer().getPluginManager().isPluginEnabled("Slimefun"))
-            pm.registerEvents(new SlimeFun(), this);
+            pm.registerEvents(new SlimeFun(this), this);
         if(getServer().getPluginManager().isPluginEnabled("ChestShop"))
-            pm.registerEvents(new ChestShop(), this);
+            pm.registerEvents(new ChestShop(this), this);
         if(getServer().getPluginManager().isPluginEnabled("ItemsAdder"))
-            pm.registerEvents(new ItemsAdderListener(), this);
+            pm.registerEvents(new ItemsAdderListener(this), this);
     }
 
     private void registerCommand() {
