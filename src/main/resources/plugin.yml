@@ -96,9 +96,5 @@ permissions:
    creativemanager.bypass.build-container:
       description: "Allow creative player to place block with item in container"
       default: op
-   creativemanager.bypass.inventory-save:
-      description: "If stop-inventory-save-perm is set to true disable the inventory save for the player"
    creativemanager.bypass.effects-cleaner:
       description: "Allow creative player to bypass the potion effect cleaner"
-   creativemanager.admin.update:
-      description: "Allow to receive CreativeManager update notification on login"
