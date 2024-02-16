@@ -21,7 +21,7 @@ public class ExplodeEvent implements Listener {
         plugin = cm;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockBreak(BlockExplodeEvent e) {
         if (CreativeManager.getSettings().getProtection(Protections.LOOT)) {
             for(Block block: e.blockList())
@@ -36,7 +36,7 @@ public class ExplodeEvent implements Listener {
             }
         }
     }
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockBreak(EntityExplodeEvent e) {
         if (CreativeManager.getSettings().getProtection(Protections.LOOT)) {
             for(Block block: e.blockList())
@@ -51,7 +51,7 @@ public class ExplodeEvent implements Listener {
             }
         }
     }
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockChange(EntityChangeBlockEvent e)
     {
         BlockLog blockLog = plugin.getDataManager().getBlockFrom(e.getBlock().getLocation());

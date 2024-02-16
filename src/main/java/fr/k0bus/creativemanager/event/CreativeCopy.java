@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class CreativeCopy implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockCopy(final InventoryClickEvent e)
     {
         if(!e.getAction().equals(InventoryAction.CLONE_STACK)) return;

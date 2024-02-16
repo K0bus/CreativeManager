@@ -35,7 +35,7 @@ public class MonsterSpawnEvent implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onSpawn(CreatureSpawnEvent e) {
         if (!CreativeManager.getSettings().getProtection(Protections.SPAWN_BUILD)) return;
         Block baseBlock = e.getLocation().getBlock();

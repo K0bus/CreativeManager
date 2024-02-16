@@ -44,7 +44,7 @@ public class InventoryMove implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onInventoryClick(InventoryCreativeEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		if (e.getClick().equals(ClickType.DROP) || e.getClick().equals(ClickType.CONTROL_DROP) ||
@@ -103,7 +103,7 @@ public class InventoryMove implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void checkArmorClick(final InventoryCreativeEvent e) {
 		Player p = (Player) e.getWhoClicked();
 		if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
@@ -118,7 +118,7 @@ public class InventoryMove implements Listener {
 		}
 	}
 
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
 	public void checkEnchantAndPotion(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
@@ -137,9 +137,8 @@ public class InventoryMove implements Listener {
 				}
 			}
 			ItemMeta meta = item.getItemMeta();
-			if(meta instanceof PotionMeta)
+			if(meta instanceof PotionMeta potionMeta)
 			{
-				PotionMeta potionMeta = (PotionMeta) meta;
 				for (PotionEffect effect:potionMeta.getCustomEffects()) {
 					potionMeta.removeCustomEffect(effect.getType());
 				}
@@ -147,7 +146,7 @@ public class InventoryMove implements Listener {
 			}
 		}
 	}
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
 	public void checkBlackList(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
@@ -194,8 +193,7 @@ public class InventoryMove implements Listener {
 
 		if (lore != null) {
 			for (Object obj : lore) {
-				if (obj instanceof String) {
-					String string = (String) obj;
+				if (obj instanceof String string) {
 					string = string.replace("{PLAYER}", p.getName())
 							.replace("{UUID}", p.getUniqueId().toString())
 							.replace("{ITEM}", StringUtils.proper(item.getType().name()));

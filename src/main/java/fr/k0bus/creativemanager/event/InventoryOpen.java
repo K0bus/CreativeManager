@@ -31,10 +31,9 @@ public class InventoryOpen implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onInventoryOpen(InventoryOpenEvent e) {
-        if (e.getPlayer() instanceof Player) {
-            Player p = (Player) e.getPlayer();
+        if (e.getPlayer() instanceof Player p) {
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.CONTAINER)) {
                 if (isProtectedChest(e.getInventory())) {
                     if (!p.hasPermission("creativemanager.bypass.container")) {
@@ -52,10 +51,9 @@ public class InventoryOpen implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onGuiOpen(InventoryOpenEvent e) {
-        if (e.getPlayer() instanceof Player) {
-            Player p = (Player) e.getPlayer();
+        if (e.getPlayer() instanceof Player p) {
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.GUI)) {
                 if (!p.hasPermission("creativemanager.bypass.container")) {
                     if (CreativeManager.getSettings().getBoolean("send-player-messages"))

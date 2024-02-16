@@ -33,8 +33,7 @@ public class PlayerHitEvent implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityHit(EntityDamageByEntityEvent e) {
-		if (e.getDamager() instanceof Player) {
-			Player attacker = (Player) e.getDamager();
+		if (e.getDamager() instanceof Player attacker) {
 			if (attacker.getGameMode().equals(GameMode.CREATIVE)) {
 				if (e.getEntity() instanceof Player) {
 					if (!attacker.hasPermission("creativemanager.bypass.pvp") && CreativeManager.getSettings().getProtection(Protections.PVP)) {
@@ -59,12 +58,11 @@ public class PlayerHitEvent implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onProjectileHit(ProjectileHitEvent e) {
 		if(!enableProjectile) return;
 		ProjectileSource source = e.getEntity().getShooter();
-		if (source instanceof Player) {
-			Player attacker = (Player) source;
+		if (source instanceof Player attacker) {
 			if (attacker.getGameMode().equals(GameMode.CREATIVE)) {
 				if (e.getHitEntity() instanceof Player) {
 					if (!attacker.hasPermission("creativemanager.bypass.pvp") && CreativeManager.getSettings().getProtection(Protections.PVP)) {

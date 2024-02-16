@@ -85,17 +85,16 @@ public class PlayerInteract implements Listener {
         if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(e.getClickedBlock() == null) return;
         if (e.getPlayer().isSneaking() && e.getItem() != null) return;
-        String itemName = e.getClickedBlock().getType().name().toLowerCase();
         if(blacklist.isEmpty()) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.useblock")) return;
-        if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock().getType())) ||
-                (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, e.getClickedBlock().getType()))){
+        if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock())) ||
+                (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, e.getClickedBlock()))){
             if (CreativeManager.getSettings().getBoolean("send-player-messages"))
                 CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.useblock"));
             e.setCancelled(true);
         }
     }
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority=EventPriority.LOWEST)
     public void checkSpawnEgg(PlayerInteractEvent e)
     {
         Player p = e.getPlayer();
