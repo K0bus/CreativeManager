@@ -106,4 +106,14 @@ public class PlayerGamemodeChange implements Listener {
 			}
 		}
 	}
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onGMChangeRemoveEffects(PlayerGameModeChangeEvent e) {
+		if (!CreativeManager.getSettings().getProtection(Protections.REMOVE_EFFECTS)) return;
+		Player p = e.getPlayer();
+		if (!p.hasPermission("creativemanager.bypass.effects-cleaner")) {
+			for (PotionEffect effect:p.getActivePotionEffects()) {
+				p.removePotionEffect(effect.getType());
+			}
+		}
+	}
 }
