@@ -41,6 +41,16 @@ public class PistonEvent implements Listener {
         BlockFace pistonDirection = event.getDirection();
         List<Block> blocks = new ArrayList<>(event.getBlocks());
         this.pistonCheck(pistonDirection, blocks);
+
+        Block pistonHead = event.getBlock().getRelative(event.getDirection());
+        BlockLog pistonLog = plugin.getDataManager().getBlockFrom(event.getBlock().getLocation());
+        if(pistonLog != null && pistonLog.isCreative())
+        {
+            if(pistonHead.getType().equals(Material.PISTON_HEAD))
+            {
+                plugin.getDataManager().addBlock(new BlockLog(pistonHead, pistonLog.getPlayer()));
+            }
+        }
     }
 
     /**
@@ -52,6 +62,15 @@ public class PistonEvent implements Listener {
     public void onRetract(BlockPistonRetractEvent event) {
         BlockFace pistonDirection = event.getDirection();
         List<Block> blocks = new ArrayList<>(event.getBlocks());
+        Block pistonHead = event.getBlock().getRelative(event.getDirection().getOppositeFace());
+        BlockLog pistonLog = plugin.getDataManager().getBlockFrom(event.getBlock().getLocation());
+        if(pistonLog != null && pistonLog.isCreative())
+        {
+            if(!pistonHead.getType().equals(Material.PISTON_HEAD))
+            {
+                plugin.getDataManager().removeBlock(pistonHead.getLocation());
+            }
+        }
         this.pistonCheck(pistonDirection, blocks);
     }
 
