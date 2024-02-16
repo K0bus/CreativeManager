@@ -113,7 +113,6 @@ public class InventoryMove implements Listener {
 			e.setResult(Event.Result.DENY);
 			e.setCursor(new ItemStack(Material.AIR));
 			e.setCurrentItem(e.getCurrentItem());
-			p.updateInventory();
 			e.setCancelled(true);
 		}
 	}
@@ -166,7 +165,6 @@ public class InventoryMove implements Listener {
 				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
 				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
 				e.setCancelled(true);
-				p.updateInventory();
 				return;
 			}
 		}
