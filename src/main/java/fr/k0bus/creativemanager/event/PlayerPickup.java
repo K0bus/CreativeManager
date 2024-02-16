@@ -26,11 +26,10 @@ public class PlayerPickup implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPickup(EntityPickupItemEvent e) {
         if (!CreativeManager.getSettings().getProtection(Protections.PICKUP)) return;
-        if (!(e.getEntity() instanceof Player)) return;
-        Player p = (Player) e.getEntity();
+        if (!(e.getEntity() instanceof Player p)) return;
         if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if (!p.hasPermission("creativemanager.bypass.pickup")) {
             e.setCancelled(true);

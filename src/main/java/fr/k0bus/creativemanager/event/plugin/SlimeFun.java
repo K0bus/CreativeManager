@@ -19,6 +19,12 @@ import java.util.HashMap;
 
 public class SlimeFun implements Listener {
 
+    CreativeManager plugin;
+    public SlimeFun(CreativeManager plugin)
+    {
+        this.plugin = plugin;
+    }
+
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onMultiBlockInteract(MultiBlockInteractEvent e)
     {
@@ -27,7 +33,7 @@ public class SlimeFun implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
-        CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
 
@@ -40,7 +46,7 @@ public class SlimeFun implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
-        CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
 
@@ -55,7 +61,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            CreativeManager.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+            plugin.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
             e.setCancelled(true);
             e.setCurrentItem(null);
             p.setItemOnCursor(null);
@@ -66,7 +72,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            CreativeManager.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+            plugin.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
             e.getWhoClicked().setItemOnCursor(null);
             e.setCancelled(true);
         }
@@ -82,7 +88,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+            plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
             e.setUseBlock(Event.Result.DENY);
             e.setUseItem(Event.Result.DENY);
             e.cancel();

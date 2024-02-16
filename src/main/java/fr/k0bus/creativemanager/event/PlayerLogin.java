@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -31,7 +32,7 @@ public class PlayerLogin implements Listener {
      *
      * @param e the event.
      */
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onLogin(PlayerJoinEvent e) {
         boolean forceGamemode = false;
 

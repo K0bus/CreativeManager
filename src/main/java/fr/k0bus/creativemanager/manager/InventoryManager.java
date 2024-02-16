@@ -65,7 +65,7 @@ public class InventoryManager {
 
     public boolean hasContent()
     {
-        return cm.getKeys(false).size() != 0;
+        return !cm.getKeys(false).isEmpty();
     }
 
     /**
@@ -75,6 +75,8 @@ public class InventoryManager {
      */
     public void loadInventory(GameMode gm) {
         if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
+        if(CreativeManager.getSettings().getBoolean("stop-inventory-save-perm"))
+            if(p.hasPermission("creativemanager.bypass.inventory-save")) return;
         String gm_name = gm.name();
         if (cm.contains(gm_name + ".content") && cm.isString(gm_name + ".content") && cm.contains(gm_name + ".armor") && cm.isString(gm_name + ".armor")) {
             try {
@@ -100,6 +102,8 @@ public class InventoryManager {
      */
     public void saveInventory(GameMode gm) {
         if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
+        if(CreativeManager.getSettings().getBoolean("stop-inventory-save-perm"))
+            if(p.hasPermission("creativemanager.bypass.inventory-save")) return;
         String gm_name = gm.name();
         String[] encoded = this.playerInventoryToBase64(p.getInventory());
         cm.set(gm_name + ".content", encoded[0]);

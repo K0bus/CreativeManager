@@ -17,7 +17,9 @@ public class PlayerDrop implements Listener {
 	 * Instantiates a new Player drop.
 	 *
 	 */
-	public PlayerDrop() {
+	CreativeManager plugin;
+	public PlayerDrop(CreativeManager plugin) {
+		this.plugin = plugin;
 	}
 
 	/**
@@ -31,7 +33,7 @@ public class PlayerDrop implements Listener {
 		if (CreativeManager.getSettings().getProtection(Protections.DROP) && p.getGameMode().equals(GameMode.CREATIVE)) {
 			if (!p.hasPermission("creativemanager.bypass.drop")) {
 				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
+					plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
 				e.setCancelled(true);
 			}
 		}

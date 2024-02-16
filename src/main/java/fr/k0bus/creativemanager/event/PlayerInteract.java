@@ -28,7 +28,9 @@ public class PlayerInteract implements Listener {
      * Instantiates a new Player interact.
      *
      */
-    public PlayerInteract() {
+    CreativeManager plugin;
+    public PlayerInteract(CreativeManager plugin) {
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -52,7 +54,7 @@ public class PlayerInteract implements Listener {
                 (!CreativeManager.getSettings().getString("list.mode.use").equals("whitelist") && SearchUtils.inList(blacklist, itemStack))){
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{ITEM}", StringUtils.proper(itemName));
-            CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.use", replaceMap));
+            plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.use", replaceMap));
             e.setCancelled(true);
         }
     }
@@ -70,7 +72,7 @@ public class PlayerInteract implements Listener {
         if(block.getType().equals(Material.CAMPFIRE)) {
             if (!p.hasPermission("creativemanager.bypass.container")) {
                 if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
+                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
                 e.setCancelled(true);
             }
         }
@@ -85,17 +87,16 @@ public class PlayerInteract implements Listener {
         if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(e.getClickedBlock() == null) return;
         if (e.getPlayer().isSneaking() && e.getItem() != null) return;
-        String itemName = e.getClickedBlock().getType().name().toLowerCase();
         if(blacklist.isEmpty()) return;
         if(p.hasPermission("creativemanager.bypass.blacklist.useblock")) return;
-        if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock().getType())) ||
-                (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, e.getClickedBlock().getType()))){
+        if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock())) ||
+                (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, e.getClickedBlock()))){
             if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.useblock"));
+                plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.useblock"));
             e.setCancelled(true);
         }
     }
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority=EventPriority.LOWEST)
     public void checkSpawnEgg(PlayerInteractEvent e)
     {
         Player p = e.getPlayer();
@@ -108,7 +109,7 @@ public class PlayerInteract implements Listener {
             Class.forName( "org.bukkit.inventory.meta.SpawnEggMeta" );
             if (itemStack.getItemMeta() instanceof SpawnEggMeta) {
                 if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.spawn"));
+                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.spawn"));
                 e.setCancelled(true);
             }
         }catch (ClassNotFoundException ignored){}

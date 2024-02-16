@@ -34,9 +34,13 @@ public class InventoryMove implements Listener {
 	 * Instantiates a new Inventory move.
 	 *
 	 */
-	public InventoryMove() {}
-	public InventoryMove(boolean nbt_enabled) {
+	CreativeManager plugin;
+	public InventoryMove(CreativeManager plugin) {
+		this.plugin = plugin;
+	}
+	public InventoryMove(CreativeManager plugin, boolean nbt_enabled) {
 		this.nbt_enabled = nbt_enabled;
+		this.plugin = plugin;
 	}
 
 	/**
@@ -44,7 +48,7 @@ public class InventoryMove implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onInventoryClick(InventoryCreativeEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		if (e.getClick().equals(ClickType.DROP) || e.getClick().equals(ClickType.CONTROL_DROP) ||
@@ -52,7 +56,7 @@ public class InventoryMove implements Listener {
 				e.getClick().equals(ClickType.UNKNOWN)) {
 			if (CreativeManager.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop")) {
 				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-					CreativeManager.sendMessage(player, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
+					plugin.sendMessage(player, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
 				e.setCancelled(true);
 			}
 			return;
@@ -103,7 +107,7 @@ public class InventoryMove implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void checkArmorClick(final InventoryCreativeEvent e) {
 		Player p = (Player) e.getWhoClicked();
 		if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
@@ -113,12 +117,11 @@ public class InventoryMove implements Listener {
 			e.setResult(Event.Result.DENY);
 			e.setCursor(new ItemStack(Material.AIR));
 			e.setCurrentItem(e.getCurrentItem());
-			p.updateInventory();
 			e.setCancelled(true);
 		}
 	}
 
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
 	public void checkEnchantAndPotion(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
@@ -137,9 +140,8 @@ public class InventoryMove implements Listener {
 				}
 			}
 			ItemMeta meta = item.getItemMeta();
-			if(meta instanceof PotionMeta)
+			if(meta instanceof PotionMeta potionMeta)
 			{
-				PotionMeta potionMeta = (PotionMeta) meta;
 				for (PotionEffect effect:potionMeta.getCustomEffects()) {
 					potionMeta.removeCustomEffect(effect.getType());
 				}
@@ -147,7 +149,7 @@ public class InventoryMove implements Listener {
 			}
 		}
 	}
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
 	public void checkBlackList(final InventoryClickEvent e)
 	{
 		Player p = (Player) e.getWhoClicked();
@@ -165,9 +167,8 @@ public class InventoryMove implements Listener {
 					(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
-				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
+				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
 				e.setCancelled(true);
-				p.updateInventory();
 				return;
 			}
 		}
@@ -194,8 +195,7 @@ public class InventoryMove implements Listener {
 
 		if (lore != null) {
 			for (Object obj : lore) {
-				if (obj instanceof String) {
-					String string = (String) obj;
+				if (obj instanceof String string) {
 					string = string.replace("{PLAYER}", p.getName())
 							.replace("{UUID}", p.getUniqueId().toString())
 							.replace("{ITEM}", StringUtils.proper(item.getType().name()));

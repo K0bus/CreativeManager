@@ -1,7 +1,9 @@
 package fr.k0bus.creativemanager.utils;
 
 import fr.k0bus.creativemanager.CreativeManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -14,7 +16,7 @@ public class SearchUtils {
         for (String s:stringList) {
             s = s.toLowerCase();
             if(s.equals("*")) return true;
-            if(s.equals("")) continue;
+            if(s.isEmpty()) continue;
             if(s.startsWith("*") && s.endsWith("*"))
             {
                 if(string.contains(s.substring(1, s.length()-1))){
@@ -54,7 +56,8 @@ public class SearchUtils {
                     }
                     else
                     {
-                        CreativeManager.getLog().log("Unable to find " + s.substring(1) + " tags");
+                        ((CreativeManager) Bukkit.getServer().getPluginManager().getPlugin("CreativeManager"))
+                                .getLog().log("Unable to find " + s.substring(1) + " tags");
                     }
                 }
             }
@@ -64,5 +67,9 @@ public class SearchUtils {
     public static boolean inList(List<String> stringList, ItemStack itemStack)
     {
         return inList(stringList, itemStack.getType());
+    }
+    public static boolean inList(List<String> stringList, Block block)
+    {
+        return inList(stringList, block.getType());
     }
 }

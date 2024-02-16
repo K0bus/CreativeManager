@@ -19,7 +19,9 @@ public class ProjectileThrow implements Listener {
 	 * Instantiates a new Projectile throw.
 	 *
 	 */
-	public ProjectileThrow() {
+	CreativeManager plugin;
+	public ProjectileThrow(CreativeManager plugin) {
+		this.plugin = plugin;
 	}
 
 	/**
@@ -27,15 +29,14 @@ public class ProjectileThrow implements Listener {
 	 *
 	 * @param e the event.
 	 */
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onDrop(ProjectileLaunchEvent e) {
 		ProjectileSource source = e.getEntity().getShooter();
-		if (source instanceof Player) {
-			Player p = (Player) source;
+		if (source instanceof Player p) {
 			if (CreativeManager.getSettings().getProtection(Protections.THROW) && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.throw")) {
 					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-						CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.throw"));
+						plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.throw"));
 					e.setCancelled(true);
 				}
 			}

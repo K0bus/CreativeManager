@@ -13,6 +13,12 @@ import java.util.List;
 
 public class PlayerPreCommand implements Listener {
 
+    CreativeManager plugin;
+    public PlayerPreCommand(CreativeManager plugin)
+    {
+        this.plugin = plugin;
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerCommand(PlayerCommandPreprocessEvent e)
     {
@@ -25,7 +31,7 @@ public class PlayerPreCommand implements Listener {
                 (!CreativeManager.getSettings().getString("list.mode.commands").equals("whitelist") && SearchUtils.inList(list, cmd))){
             e.setCancelled(true);
             if(CreativeManager.getSettings().getBoolean("send-player-messages"))
-                CreativeManager.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.commands"));
+                plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.commands"));
         }
     }
 }

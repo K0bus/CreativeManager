@@ -13,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.HashMap;
 
@@ -91,7 +92,17 @@ public class PlayerGamemodeChange implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{GAMEMODE}", StringUtils.proper(e.getNewGameMode().name()));
 			if(CreativeManager.getSettings().getBoolean("send-player-messages"))
-				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
+				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
+		}
+	}
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+	public void onGMChangeRemoveEffects(PlayerGameModeChangeEvent e) {
+		if (!CreativeManager.getSettings().getProtection(Protections.REMOVE_EFFECTS)) return;
+		Player p = e.getPlayer();
+		if (!p.hasPermission("creativemanager.bypass.effects-cleaner")) {
+			for (PotionEffect effect:p.getActivePotionEffects()) {
+				p.removePotionEffect(effect.getType());
+			}
 		}
 	}
 }
