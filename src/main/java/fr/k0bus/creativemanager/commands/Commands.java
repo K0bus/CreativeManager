@@ -94,7 +94,7 @@ public abstract class Commands implements CommandExecutor {
     }
     private boolean subCmd(CommandSender sender, String[] args)
     {
-        if(subCommands.size() == 0) return false;
+        if(subCommands.isEmpty()) return false;
         if(args.length > 0) {
             if (subCommands.containsKey(args[0]))
             {
