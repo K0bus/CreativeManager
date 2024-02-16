@@ -102,6 +102,8 @@ public class InventoryManager {
      */
     public void saveInventory(GameMode gm) {
         if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
+        if(CreativeManager.getSettings().getBoolean("stop-inventory-save-perm"))
+            if(p.hasPermission("creativemanager.bypass.inventory-save")) return;
         String gm_name = gm.name();
         String[] encoded = this.playerInventoryToBase64(p.getInventory());
         cm.set(gm_name + ".content", encoded[0]);
