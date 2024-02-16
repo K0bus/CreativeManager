@@ -110,6 +110,7 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(), this);
         pm.registerEvents(new CreativeCopy(), this);
+        pm.registerEvents(new FlowEvent(this), this);
         /*  Add event checked for old version */
         try {
             ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
@@ -189,15 +190,22 @@ public class CreativeManager extends K0busCore {
 
     private void loadTags()
     {
-        Field[] fieldlist = Tag.class.getDeclaredFields();
-        for (Field fld : fieldlist) {
-            try {
-                Set<Material> set = ((Tag<Material>) fld.get(null)).getValues();
-                tagMap.put(fld.getName(), set);
-            }catch (Exception ignored)
-            {}
+        try
+        {
+            Field[] fieldlist = Tag.class.getDeclaredFields();
+            for (Field fld : fieldlist) {
+                try {
+                    Set<Material> set = ((Tag<Material>) fld.get(null)).getValues();
+                    tagMap.put(fld.getName(), set);
+                }catch (Exception ignored)
+                {}
+            }
+            getLog().log("&2Tag loaded from Spigot ! &7[" + tagMap.size() + "]");
         }
-        getLog().log("&2Tag loaded from Spigot ! &7[" + tagMap.size() + "]");
+        catch (Exception e)
+        {
+            getLog().log("&cThis minecraft version could not use the TAG system.");
+        }
     }
 
     private void loadLog() {
