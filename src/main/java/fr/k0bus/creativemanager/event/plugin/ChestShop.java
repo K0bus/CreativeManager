@@ -12,6 +12,12 @@ import java.util.HashMap;
 
 public class ChestShop implements Listener {
 
+    CreativeManager plugin;
+    public ChestShop(CreativeManager plugin)
+    {
+        this.plugin = plugin;
+    }
+
 
     @EventHandler
     public void onShopCreation(PreShopCreationEvent e)
@@ -21,7 +27,7 @@ public class ChestShop implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
-        CreativeManager.sendMessage(e.getPlayer(),CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
+        plugin.sendMessage(e.getPlayer(),CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
         e.setCancelled(true);
     }
     @EventHandler
@@ -32,7 +38,7 @@ public class ChestShop implements Listener {
         if(e.getClient().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
-        CreativeManager.sendMessage(e.getClient(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
+        plugin.sendMessage(e.getClient(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
         e.setCancelled(true);
     }
 }

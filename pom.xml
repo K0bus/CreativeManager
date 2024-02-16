@@ -168,7 +168,7 @@
     <dependency>
       <groupId>fr.k0bus</groupId>
       <artifactId>K0busCore</artifactId>
-      <version>0.11.6-BETA</version>
+      <version>1.0.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

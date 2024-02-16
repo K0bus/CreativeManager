@@ -46,7 +46,7 @@ public class PlayerBreak implements Listener {
 		if(p.hasPermission("creativemanager.bypass.build")) return;
 		if (p.getGameMode() == GameMode.CREATIVE) {
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
+				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
 			e.setCancelled(true);
 		}
 	}
@@ -64,7 +64,7 @@ public class PlayerBreak implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
+				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
 			e.setCancelled(true);
 		}
 	}

@@ -19,7 +19,9 @@ public class ProjectileThrow implements Listener {
 	 * Instantiates a new Projectile throw.
 	 *
 	 */
-	public ProjectileThrow() {
+	CreativeManager plugin;
+	public ProjectileThrow(CreativeManager plugin) {
+		this.plugin = plugin;
 	}
 
 	/**
@@ -34,7 +36,7 @@ public class ProjectileThrow implements Listener {
 			if (CreativeManager.getSettings().getProtection(Protections.THROW) && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.throw")) {
 					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-						CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.throw"));
+						plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.throw"));
 					e.setCancelled(true);
 				}
 			}

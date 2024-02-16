@@ -34,9 +34,13 @@ public class InventoryMove implements Listener {
 	 * Instantiates a new Inventory move.
 	 *
 	 */
-	public InventoryMove() {}
-	public InventoryMove(boolean nbt_enabled) {
+	CreativeManager plugin;
+	public InventoryMove(CreativeManager plugin) {
+		this.plugin = plugin;
+	}
+	public InventoryMove(CreativeManager plugin, boolean nbt_enabled) {
 		this.nbt_enabled = nbt_enabled;
+		this.plugin = plugin;
 	}
 
 	/**
@@ -52,7 +56,7 @@ public class InventoryMove implements Listener {
 				e.getClick().equals(ClickType.UNKNOWN)) {
 			if (CreativeManager.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop")) {
 				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-					CreativeManager.sendMessage(player, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
+					plugin.sendMessage(player, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
 				e.setCancelled(true);
 			}
 			return;
@@ -163,7 +167,7 @@ public class InventoryMove implements Listener {
 					(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
-				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
+				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
 				e.setCancelled(true);
 				return;
 			}

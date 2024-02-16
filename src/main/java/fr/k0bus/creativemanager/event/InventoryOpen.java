@@ -23,7 +23,9 @@ public class InventoryOpen implements Listener {
      * Instantiates a new Inventory open.
      *
      */
-    public InventoryOpen() {
+    CreativeManager plugin;
+    public InventoryOpen(CreativeManager plugin) {
+        this.plugin = plugin;
     }
 
     /**
@@ -38,7 +40,7 @@ public class InventoryOpen implements Listener {
                 if (isProtectedChest(e.getInventory())) {
                     if (!p.hasPermission("creativemanager.bypass.container")) {
                         if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                            CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
+                            plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
                         e.setCancelled(true);
                     }
                 }
@@ -57,7 +59,7 @@ public class InventoryOpen implements Listener {
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.GUI)) {
                 if (!p.hasPermission("creativemanager.bypass.container")) {
                     if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.gui"));
+                        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.gui"));
                     e.setCancelled(true);
                 }
             }

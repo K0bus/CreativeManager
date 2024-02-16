@@ -70,7 +70,7 @@ public class DataManager {
             }
             if(CreativeManager.getSettings().getBoolean("save-log"))
                 if(n>0)
-                    CreativeManager.getLog().log("&2Log saved to database ! &7[" + n + "]");
+                    plugin.getLog().log("&2Log saved to database ! &7[" + n + "]");
         });
     }
     public void saveSync()
@@ -83,7 +83,7 @@ public class DataManager {
             n++;
         }
         if(n>0)
-            CreativeManager.getLog().log("&2Log saved to database ! &7[" + n + "]");
+            plugin.getLog().log("&2Log saved to database ! &7[" + n + "]");
     }
 
     public void delete(BlockLog log)

@@ -92,7 +92,7 @@ public class PlayerGamemodeChange implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{GAMEMODE}", StringUtils.proper(e.getNewGameMode().name()));
 			if(CreativeManager.getSettings().getBoolean("send-player-messages"))
-				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
+				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
 		}
 	}
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

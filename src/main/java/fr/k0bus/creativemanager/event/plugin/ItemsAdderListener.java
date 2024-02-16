@@ -13,10 +13,11 @@ import java.util.HashMap;
 public class ItemsAdderListener implements Listener  {
 
     final HashMap<String, String> replaceMap = new HashMap<>();
-
-    public ItemsAdderListener()
+    CreativeManager plugin;
+    public ItemsAdderListener(CreativeManager plugin)
     {
         replaceMap.put("{PLUGIN}", "SlimeFun");
+        this.plugin = plugin;
     }
 
     @EventHandler
@@ -26,7 +27,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.furnituresplace")) return;
-        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
 
     }
@@ -37,7 +38,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.blockplace")) return;
-        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
     @EventHandler
@@ -47,7 +48,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.blockbreak")) return;
-        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
     @EventHandler
@@ -57,7 +58,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.blockinteract")) return;
-        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
     @EventHandler
@@ -67,7 +68,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.furnituresinteract")) return;
-        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         e.setCancelled(true);
     }
     @EventHandler
@@ -78,7 +79,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.killentity")) return;
-        CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
         p.setLastDamage(0);
     }
 }

@@ -21,7 +21,9 @@ public class PlayerInteractEntity implements Listener {
      * Instantiates a new Player interact entity.
      *
      */
-    public PlayerInteractEntity() {
+    CreativeManager plugin;
+    public PlayerInteractEntity(CreativeManager plugin) {
+    this.plugin=plugin;
     }
 
     /**
@@ -40,7 +42,7 @@ public class PlayerInteractEntity implements Listener {
                 {
                     HashMap<String, String> replaceMap = new HashMap<>();
                     replaceMap.put("{PLUGIN}", "Citizens");
-                    CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
+                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
                     e.setCancelled(true);
                 }
                 return;
@@ -48,7 +50,7 @@ public class PlayerInteractEntity implements Listener {
         if (CreativeManager.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity")) {
             if (!p.hasPermission("creativemanager.bypass.entity") && !p.hasPermission("creativemanager.bypass.entity." + e.getRightClicked().getType().name().toLowerCase())) {
                 if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.entity"));
+                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.entity"));
                 e.setCancelled(true);
             }
         }

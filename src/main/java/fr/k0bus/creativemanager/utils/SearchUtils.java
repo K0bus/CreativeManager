@@ -1,6 +1,7 @@
 package fr.k0bus.creativemanager.utils;
 
 import fr.k0bus.creativemanager.CreativeManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -55,7 +56,8 @@ public class SearchUtils {
                     }
                     else
                     {
-                        CreativeManager.getLog().log("Unable to find " + s.substring(1) + " tags");
+                        ((CreativeManager) Bukkit.getServer().getPluginManager().getPlugin("CreativeManager"))
+                                .getLog().log("Unable to find " + s.substring(1) + " tags");
                     }
                 }
             }
