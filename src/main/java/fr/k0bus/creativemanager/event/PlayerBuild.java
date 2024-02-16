@@ -44,7 +44,7 @@ public class PlayerBuild implements Listener {
 		if (p.getGameMode() == GameMode.CREATIVE) {
 			if (CreativeManager.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build")) {
 				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-					plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
+					CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
 				e.setCancelled(true);
 			}
 			if (CreativeManager.getSettings().getProtection(Protections.BUILD_CONTAINER)  && !p.hasPermission("creativemanager.bypass.build-container"))
@@ -52,7 +52,7 @@ public class PlayerBuild implements Listener {
 				if(e.getBlock() instanceof Container container)
 				{
 					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-						plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build-nbt"));
+						CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build-nbt"));
 					container.getInventory().clear();
 				}
 			}
@@ -78,7 +78,7 @@ public class PlayerBuild implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
 			e.setCancelled(true);
 		}
 	}

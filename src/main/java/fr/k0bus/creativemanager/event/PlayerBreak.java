@@ -6,14 +6,17 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.BlockUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.material.Attachable;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +49,7 @@ public class PlayerBreak implements Listener {
 		if(p.hasPermission("creativemanager.bypass.build")) return;
 		if (p.getGameMode() == GameMode.CREATIVE) {
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
 			e.setCancelled(true);
 		}
 	}
@@ -64,7 +67,7 @@ public class PlayerBreak implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
+				CreativeManager.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
 			e.setCancelled(true);
 		}
 	}
@@ -78,6 +81,7 @@ public class PlayerBreak implements Listener {
 			if(!p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.break-creative"))
 				{
+					CreativeManager cm = (CreativeManager) Bukkit.getPluginManager().getPlugin("CreativeManager");
 					BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
 					if (blockLog != null) {
 						if (blockLog.isCreative()) {
