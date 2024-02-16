@@ -25,7 +25,7 @@ public class ItemsSubCommands extends Commands {
         {
             if(entry.getValue().contains(itemStack.getType()))
             {
-                if(!tags.toString().equals("")) tags.append(", ");
+                if(!tags.toString().isEmpty()) tags.append(", ");
                 tags.append("§r#").append(entry.getKey()).append("§6");
             }
         }
