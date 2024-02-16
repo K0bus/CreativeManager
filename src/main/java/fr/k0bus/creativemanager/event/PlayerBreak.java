@@ -6,7 +6,6 @@ import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.BlockUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -79,7 +78,6 @@ public class PlayerBreak implements Listener {
 			if(!p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.break-creative"))
 				{
-					CreativeManager cm = (CreativeManager) Bukkit.getPluginManager().getPlugin("CreativeManager");
 					BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
 					if (blockLog != null) {
 						if (blockLog.isCreative()) {
