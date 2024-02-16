@@ -74,8 +74,7 @@ public class ItemsAdderListener implements Listener  {
     public void onEntityDie(CustomEntityDeathEvent e)
     {
         if(e.getKiller() == null) return;
-        if(!(e.getKiller() instanceof Player)) return;
-        Player p = (Player) e.getKiller();
+        if(!(e.getKiller() instanceof Player p)) return;
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.killentity")) return;
