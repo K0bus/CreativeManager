@@ -8,12 +8,14 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
 public class BlockEvent implements Listener {
@@ -27,6 +29,11 @@ public class BlockEvent implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     void onBlockPhysicsEvent(BlockPhysicsEvent event){
+        try {
+            BlockData.class.getMethod("isSupported", (Class<?>[]) null);
+        }catch (NoSuchMethodException e) {
+            return;
+        }
         Block block = event.getBlock();
         if(block.getType().equals(Material.AIR)) return;
         if(block.getBlockData().isSupported(block)) return;
