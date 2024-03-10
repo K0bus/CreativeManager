@@ -2,6 +2,11 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -38,9 +43,28 @@ public class PlayerLogin implements Listener {
         {
             if(CreativeManager.getSettings().getBoolean("send-admin-update-message"))
             {
-                if(CreativeManager.getUpdateChecker().isUpToDate())
+                if(!CreativeManager.getUpdateChecker().isUpToDate())
                 {
-                    plugin.sendMessage(e.getPlayer(), "CreativeManager updated on Spigot v" + CreativeManager.getUpdateChecker().getVersion());
+                    BaseComponent[] tag = TextComponent.fromLegacyText(CreativeManager.TAG + " ");
+                    TextComponent message = new TextComponent("CreativeManager updated on Spigot ");
+                    TextComponent version = new TextComponent("v" + CreativeManager.getUpdateChecker().getVersion() + " ");
+                    BaseComponent[] button = TextComponent.fromLegacyText("§7§l>> §r§5Click here to go on Spigot Page");
+
+                    message.setColor(ChatColor.GOLD);
+                    version.setColor(ChatColor.GREEN);
+                    for(BaseComponent buttonComponent: button)
+                    {
+                        buttonComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/75097"));
+                    }
+                    BaseComponent[] component = new ComponentBuilder()
+                            .append(tag)
+                            .append(message)
+                            .append(version)
+                            .create();
+                    e.getPlayer().spigot().sendMessage(component);
+                    e.getPlayer().spigot().sendMessage(new ComponentBuilder()
+                            .append(button)
+                            .create());
                 }
             }
         }
