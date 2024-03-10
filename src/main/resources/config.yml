@@ -6,6 +6,8 @@ save-interval: 300
 save-log: true
 send-player-messages: true
 antispam-tick: 5
+stop-inv-close-on-gmchange: false
+send-admin-update-message: true
 ## Protection module
 protections:
   container: true #Bypass : creativemanager.bypass.container
