@@ -34,6 +34,17 @@ public class PlayerLogin implements Listener {
      */
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     public void onLogin(PlayerJoinEvent e) {
+        if(e.getPlayer().hasPermission("creativemanager.admin.update"))
+        {
+            if(CreativeManager.getSettings().getBoolean("send-admin-update-message"))
+            {
+                if(CreativeManager.getUpdateChecker().isUpToDate())
+                {
+                    plugin.sendMessage(e.getPlayer(), "CreativeManager updated on Spigot v" + CreativeManager.getUpdateChecker().getVersion());
+                }
+            }
+        }
+
         boolean forceGamemode = false;
 
         try {
