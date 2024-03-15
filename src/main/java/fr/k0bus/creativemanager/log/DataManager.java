@@ -88,14 +88,15 @@ public class DataManager {
 
     public void delete(BlockLog log)
     {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE FROM block_log WHERE uuid=?");
-            ps.setString(1, log.getUuid().toString());
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException ex) {
-            Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
-        }
+        if(log != null)
+            try {
+                PreparedStatement ps = conn.prepareStatement("DELETE FROM block_log WHERE uuid=?");
+                ps.setString(1, log.getUuid().toString());
+                ps.executeUpdate();
+                ps.close();
+            } catch (SQLException ex) {
+                Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
+            }
     }
     public void save(BlockLog log)
     {
