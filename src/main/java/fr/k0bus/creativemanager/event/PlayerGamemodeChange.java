@@ -46,35 +46,16 @@ public class PlayerGamemodeChange implements Listener {
 		Player p = e.getPlayer();
 		if (!p.hasPermission("creativemanager.bypass.inventory")) {
 			InventoryManager im = new InventoryManager(p, plugin);
-			if (!CreativeManager.getSettings().adventureInvEnable()) {
-				if (e.getNewGameMode().equals(GameMode.ADVENTURE)) {
-					im.saveInventory(p.getGameMode());
-					return;
-				} else if (p.getGameMode().equals(GameMode.ADVENTURE)) {
-					im.saveInventory(GameMode.SURVIVAL);
-					return;
-				}
+
+			GameMode gmFrom = getGamemodeFromSetting(p.getGameMode());
+			GameMode gmTo = getGamemodeFromSetting(e.getNewGameMode());
+
+			if(!gmFrom.equals(gmTo))
+			{
+				im.saveInventory(gmFrom);
+				im.loadInventory(gmTo);
 			}
-			if (!CreativeManager.getSettings().creativeInvEnable()) {
-				if (e.getNewGameMode().equals(GameMode.CREATIVE)) {
-					im.saveInventory(p.getGameMode());
-					return;
-				} else if (p.getGameMode().equals(GameMode.CREATIVE)) {
-					im.saveInventory(GameMode.SURVIVAL);
-					return;
-				}
-			}
-			if (!CreativeManager.getSettings().spectatorInvEnable()) {
-				if (e.getNewGameMode().equals(GameMode.SPECTATOR)) {
-					im.saveInventory(p.getGameMode());
-					return;
-				} else if (p.getGameMode().equals(GameMode.SPECTATOR)) {
-					im.saveInventory(GameMode.SURVIVAL);
-					return;
-				}
-			}
-			im.saveInventory(p.getGameMode());
-			im.loadInventory(e.getNewGameMode());
+
 			if(CreativeManager.getSettings().getProtection(Protections.ARMOR) && !p.hasPermission("creativemanager.bypass.armor"))
 			{
 				if(e.getNewGameMode().equals(GameMode.CREATIVE))
@@ -95,6 +76,33 @@ public class PlayerGamemodeChange implements Listener {
 				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
 		}
 	}
+
+	private GameMode getGamemodeFromSetting(GameMode gameMode)
+	{
+		switch (gameMode)
+		{
+			case CREATIVE -> {
+				if(!CreativeManager.getSettings().creativeInvEnable())
+				{
+					gameMode = GameMode.SURVIVAL;
+				}
+			}
+			case ADVENTURE -> {
+				if(!CreativeManager.getSettings().adventureInvEnable())
+				{
+					gameMode = GameMode.SURVIVAL;
+				}
+			}
+			case SPECTATOR -> {
+				if(CreativeManager.getSettings().spectatorInvEnable())
+				{
+					gameMode = GameMode.SURVIVAL;
+				}
+			}
+		}
+		return gameMode;
+	}
+
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onGMChangeRemoveEffects(PlayerGameModeChangeEvent e) {
 		if (!CreativeManager.getSettings().getProtection(Protections.REMOVE_EFFECTS)) return;
