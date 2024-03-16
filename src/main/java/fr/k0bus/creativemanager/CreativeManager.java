@@ -12,6 +12,7 @@ import fr.k0bus.creativemanager.settings.Settings;
 import fr.k0bus.creativemanager.task.SaveTask;
 import fr.k0bus.k0buscore.K0busCore;
 import fr.k0bus.k0buscore.config.Lang;
+import fr.k0bus.k0buscore.updater.UpdateChecker;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -38,12 +39,19 @@ public class CreativeManager extends K0busCore {
     private DataManager dataManager;
     private int saveTask;
     private static final HashMap<String, Set<Material>> tagMap = new HashMap<>();
+    private static UpdateChecker updateChecker;
 
     @Override
     public void onEnable() {
         super.onEnable();
         getLog().log("&9=============================================================");
-        checkUpdate(75097);
+        updateChecker = new UpdateChecker(this, 75097);
+        if (updateChecker.isUpToDate()) {
+            getLog().log("&2" + this.getDescription().getName() + " &av" + this.getDescription().getVersion());
+        } else {
+            getLog().log("&2" + this.getDescription().getName() + " &cv" + this.getDescription().getVersion() +
+                    " (Update " + updateChecker.getVersion() + " available on SpigotMC)");
+        }
         new Metrics(this, 11481);
         getLog().log("&9=============================================================");
         getLog().log("&2Created by K0bus for AkuraGaming");
@@ -230,6 +238,9 @@ public class CreativeManager extends K0busCore {
         return dataManager;
     }
 
+    public static UpdateChecker getUpdateChecker() {
+        return updateChecker;
+    }
 
     @Override
     public void onDisable() {
