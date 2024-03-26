@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
@@ -54,7 +55,7 @@ public class PlayerInteract implements Listener {
                 (!CreativeManager.getSettings().getString("list.mode.use").equals("whitelist") && SearchUtils.inList(blacklist, itemStack))){
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{ITEM}", StringUtils.proper(itemName));
-            plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.use", replaceMap));
+            CMUtils.sendMessage(p, "blacklist.use", replaceMap);
             e.setCancelled(true);
         }
     }
@@ -72,7 +73,7 @@ public class PlayerInteract implements Listener {
         if(block.getType().equals(Material.CAMPFIRE)) {
             if (!p.hasPermission("creativemanager.bypass.container")) {
                 if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
+                    CMUtils.sendMessage(p, "permission.container");
                 e.setCancelled(true);
             }
         }
@@ -92,7 +93,7 @@ public class PlayerInteract implements Listener {
         if((CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && !SearchUtils.inList(blacklist, e.getClickedBlock())) ||
                 (!CreativeManager.getSettings().getString("list.mode.useblock").equals("whitelist") && SearchUtils.inList(blacklist, e.getClickedBlock()))){
             if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.useblock"));
+                CMUtils.sendMessage(p, "blacklist.useblock");
             e.setCancelled(true);
         }
     }
@@ -109,7 +110,7 @@ public class PlayerInteract implements Listener {
             Class.forName( "org.bukkit.inventory.meta.SpawnEggMeta" );
             if (itemStack.getItemMeta() instanceof SpawnEggMeta) {
                 if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.spawn"));
+                    CMUtils.sendMessage(p, "permission.spawn");
                 e.setCancelled(true);
             }
         }catch (ClassNotFoundException ignored){}

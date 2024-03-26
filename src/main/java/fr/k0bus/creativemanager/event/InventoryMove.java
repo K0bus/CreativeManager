@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.event;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.ChatColor;
@@ -56,7 +57,7 @@ public class InventoryMove implements Listener {
 				e.getClick().equals(ClickType.UNKNOWN)) {
 			if (CreativeManager.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop")) {
 				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-					plugin.sendMessage(player, CreativeManager.TAG + CreativeManager.getLang().getString("permission.drop"));
+					CMUtils.sendMessage(player, "permission.drop");
 				e.setCancelled(true);
 			}
 			return;
@@ -167,7 +168,7 @@ public class InventoryMove implements Listener {
 					(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
 				HashMap<String, String> replaceMap = new HashMap<>();
 				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.get", replaceMap));
+				CMUtils.sendMessage(p, "blacklist.get", replaceMap);
 				e.setCancelled(true);
 				return;
 			}

@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.event;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.manager.InventoryManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import fr.k0bus.k0buscore.utils.ItemsUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
@@ -73,7 +74,7 @@ public class PlayerGamemodeChange implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{GAMEMODE}", StringUtils.proper(e.getNewGameMode().name()));
 			if(CreativeManager.getSettings().getBoolean("send-player-messages"))
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("inventory.change", replaceMap));
+				CMUtils.sendMessage(p, "inventory.change", replaceMap);
 		}
 	}
 

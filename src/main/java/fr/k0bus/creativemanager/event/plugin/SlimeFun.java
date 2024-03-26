@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event.plugin;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import io.github.thebusybiscuit.slimefun4.api.events.MultiBlockInteractEvent;
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
@@ -33,7 +34,7 @@ public class SlimeFun implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
-        plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
 
@@ -46,7 +47,7 @@ public class SlimeFun implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.slimefun")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "SlimeFun");
-        plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
 
@@ -61,7 +62,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            plugin.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+            CMUtils.sendMessage(e.getWhoClicked(), "permission.plugins", replaceMap);
             e.setCancelled(true);
             e.setCurrentItem(null);
             p.setItemOnCursor(null);
@@ -72,7 +73,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            plugin.sendMessage(e.getWhoClicked(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+            CMUtils.sendMessage(e.getWhoClicked(), "permission.plugins", replaceMap);
             e.getWhoClicked().setItemOnCursor(null);
             e.setCancelled(true);
         }
@@ -88,7 +89,7 @@ public class SlimeFun implements Listener {
         {
             HashMap<String, String> replaceMap = new HashMap<>();
             replaceMap.put("{PLUGIN}", "SlimeFun");
-            plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+            CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
             e.setUseBlock(Event.Result.DENY);
             e.setUseItem(Event.Result.DENY);
             e.cancel();

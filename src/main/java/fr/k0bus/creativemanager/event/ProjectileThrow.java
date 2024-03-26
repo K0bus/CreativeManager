@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +37,7 @@ public class ProjectileThrow implements Listener {
 			if (CreativeManager.getSettings().getProtection(Protections.THROW) && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.throw")) {
 					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-						plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.throw"));
+						CMUtils.sendMessage(p, "permission.throw");
 					e.setCancelled(true);
 				}
 			}

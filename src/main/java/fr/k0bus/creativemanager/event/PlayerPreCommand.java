@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class PlayerPreCommand implements Listener {
                 (!CreativeManager.getSettings().getString("list.mode.commands").equals("whitelist") && SearchUtils.inList(list, cmd))){
             e.setCancelled(true);
             if(CreativeManager.getSettings().getBoolean("send-player-messages"))
-                plugin.sendMessage(e.getPlayer(), CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.commands"));
+                CMUtils.sendMessage(e.getPlayer(), "blacklist.commands");
         }
     }
 }

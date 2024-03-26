@@ -4,6 +4,7 @@ import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.log.BlockLog;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.BlockUtils;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import org.bukkit.GameMode;
@@ -46,7 +47,7 @@ public class PlayerBreak implements Listener {
 		if(p.hasPermission("creativemanager.bypass.build")) return;
 		if (p.getGameMode() == GameMode.CREATIVE) {
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.build"));
+				CMUtils.sendMessage(p, "permission.build");
 			e.setCancelled(true);
 		}
 	}
@@ -64,7 +65,7 @@ public class PlayerBreak implements Listener {
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
 			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-				plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("blacklist.place", replaceMap));
+				CMUtils.sendMessage(p, "blacklist.place", replaceMap);
 			e.setCancelled(true);
 		}
 	}

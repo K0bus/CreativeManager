@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +41,7 @@ public class InventoryOpen implements Listener {
                 if (isProtectedChest(e.getInventory())) {
                     if (!p.hasPermission("creativemanager.bypass.container")) {
                         if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                            plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.container"));
+                            CMUtils.sendMessage(p, "permission.container");
                         e.setCancelled(true);
                     }
                 }
@@ -59,7 +60,7 @@ public class InventoryOpen implements Listener {
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.GUI)) {
                 if (!p.hasPermission("creativemanager.bypass.container")) {
                     if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.gui"));
+                        CMUtils.sendMessage(p, "permission.gui");
                     e.setCancelled(true);
                 }
             }

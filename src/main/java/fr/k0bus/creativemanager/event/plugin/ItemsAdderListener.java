@@ -3,6 +3,7 @@ package fr.k0bus.creativemanager.event.plugin;
 import dev.lone.itemsadder.api.Events.*;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.furnituresplace")) return;
-        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
 
     }
@@ -38,8 +39,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.blockplace")) return;
-        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
-        e.setCancelled(true);
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);        e.setCancelled(true);
     }
     @EventHandler
     public void onBlockBreak(CustomBlockBreakEvent e)
@@ -48,7 +48,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.blockbreak")) return;
-        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
     @EventHandler
@@ -58,7 +58,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.blockinteract")) return;
-        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
     @EventHandler
@@ -68,7 +68,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.furnituresinteract")) return;
-        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
     @EventHandler
@@ -79,7 +79,7 @@ public class ItemsAdderListener implements Listener  {
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.killentity")) return;
-        plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugin", replaceMap));
+        CMUtils.sendMessage(p, "permission.plugins", replaceMap);
         p.setLastDamage(0);
     }
 }

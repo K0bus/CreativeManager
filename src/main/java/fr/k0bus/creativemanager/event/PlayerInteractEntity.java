@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class PlayerInteractEntity implements Listener {
                 {
                     HashMap<String, String> replaceMap = new HashMap<>();
                     replaceMap.put("{PLUGIN}", "Citizens");
-                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
+                    CMUtils.sendMessage(p, "permission.plugins", replaceMap);
                     e.setCancelled(true);
                 }
                 return;
@@ -50,7 +51,7 @@ public class PlayerInteractEntity implements Listener {
         if (CreativeManager.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity")) {
             if (!p.hasPermission("creativemanager.bypass.entity") && !p.hasPermission("creativemanager.bypass.entity." + e.getRightClicked().getType().name().toLowerCase())) {
                 if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    plugin.sendMessage(p, CreativeManager.TAG + CreativeManager.getLang().getString("permission.entity"));
+                    CMUtils.sendMessage(p, "permission.entity");
                 e.setCancelled(true);
             }
         }

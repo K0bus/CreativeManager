@@ -4,6 +4,7 @@ import com.Acrobot.ChestShop.Events.PreShopCreationEvent;
 import com.Acrobot.ChestShop.Events.PreTransactionEvent;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class ChestShop implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
-        plugin.sendMessage(e.getPlayer(),CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
+        CMUtils.sendMessage(e.getPlayer(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
     @EventHandler
@@ -38,7 +39,7 @@ public class ChestShop implements Listener {
         if(e.getClient().hasPermission("creativemanager.bypass.chestshop")) return;
         HashMap<String, String> replaceMap = new HashMap<>();
         replaceMap.put("{PLUGIN}", "ChestShop");
-        plugin.sendMessage(e.getClient(), CreativeManager.TAG + CreativeManager.getLang().getString("permission.plugins", replaceMap));
+        CMUtils.sendMessage(e.getClient(), "permission.plugins", replaceMap);
         e.setCancelled(true);
     }
 }

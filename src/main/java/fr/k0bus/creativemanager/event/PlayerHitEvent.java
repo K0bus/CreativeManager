@@ -2,6 +2,7 @@ package fr.k0bus.creativemanager.event;
 
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
+import fr.k0bus.creativemanager.utils.CMUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -40,14 +41,14 @@ public class PlayerHitEvent implements Listener {
 				if (e.getEntity() instanceof Player) {
 					if (!attacker.hasPermission("creativemanager.bypass.pvp") && CreativeManager.getSettings().getProtection(Protections.PVP)) {
 						if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-							plugin.sendMessage(attacker, CreativeManager.TAG + CreativeManager.getLang().getString("permission.hit.player"));
+							CMUtils.sendMessage(attacker, "permission.hit.player");
 						e.setCancelled(true);
 					}
 				} else {
 					if(e.getEntity().getType().equals(EntityType.ARMOR_STAND)) return;
 					if (!attacker.hasPermission("creativemanager.bypass.pve") && CreativeManager.getSettings().getProtection(Protections.PVE)) {
 						if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-							plugin.sendMessage(attacker, CreativeManager.TAG + CreativeManager.getLang().getString("permission.hit.monster"));
+							CMUtils.sendMessage(attacker, "permission.hit.monster");
 						e.setCancelled(true);
 					}
 				}
@@ -69,14 +70,14 @@ public class PlayerHitEvent implements Listener {
 				if (e.getHitEntity() instanceof Player) {
 					if (!attacker.hasPermission("creativemanager.bypass.pvp") && CreativeManager.getSettings().getProtection(Protections.PVP)) {
 						if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-							plugin.sendMessage(attacker, CreativeManager.TAG + CreativeManager.getLang().getString("permission.hit.player"));
+							CMUtils.sendMessage(attacker, "permission.hit.player");
 						e.setCancelled(true);
 					}
 				} else {
 					if (!attacker.hasPermission("creativemanager.bypass.pve") && CreativeManager.getSettings().getProtection(Protections.PVE)) {
 						if(e.getHitEntity() == null) return;
 						if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-							plugin.sendMessage(attacker, CreativeManager.TAG + CreativeManager.getLang().getString("permission.hit.monster"));
+							CMUtils.sendMessage(attacker, "permission.hit.monster");
 						e.setCancelled(true);
 					}
 				}
