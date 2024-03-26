@@ -15,12 +15,8 @@ public class CMUtils {
     }
     public static void sendMessage(CommandSender messageTo, String text, HashMap<String, String> replaceMap)
     {
-        for(Map.Entry<String, String> entry: replaceMap.entrySet())
-        {
-            text = text.replace(entry.getKey(), entry.getValue());
-        }
         if(!CreativeManager.getLang().getString(text).isEmpty())
-            messageTo.sendMessage(parse(StringUtils.parse(CreativeManager.getLang().getString(text))));
+            messageTo.sendMessage(parse(StringUtils.parse(CreativeManager.getLang().getString(text)), replaceMap));
     }
     public static void sendRawMessage(CommandSender messageTo, String text)
     {
@@ -31,5 +27,14 @@ public class CMUtils {
     public static String parse(String string)
     {
         return string.replace("{TAG}", CreativeManager.TAG);
+    }
+    public static String parse(String string, HashMap<String, String> replaceMap)
+    {
+        string = parse(string);
+        for(Map.Entry<String, String> entry: replaceMap.entrySet())
+        {
+            string = string.replace(entry.getKey(), entry.getValue());
+        }
+        return string;
     }
 }
