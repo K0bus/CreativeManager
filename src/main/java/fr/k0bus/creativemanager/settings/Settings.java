@@ -121,6 +121,15 @@ public class Settings extends Configuration {
     }
 
     /**
+     * Gets command bl.
+     *
+     * @return the command blacklist.
+     */
+    public List<String> getNBTWhitelist() {
+        return getStringList("list.nbt-whitelist");
+    }
+
+    /**
      * Gets lore.
      *
      * @return the lore.

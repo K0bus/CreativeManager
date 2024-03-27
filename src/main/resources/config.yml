@@ -64,6 +64,13 @@ list:
     -  'somecommandtoblacklist optionnaly with some argument'
   useblock:
     - 'CRAFTING_TABLE'
+  nbt-whitelist:
+    - 'down'
+    - 'east'
+    - 'north'
+    - 'south'
+    - 'up'
+    - 'west'
 creative_armor:
   helmet:
     name: '&6Creative Helmet'

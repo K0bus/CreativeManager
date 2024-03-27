@@ -1,5 +1,6 @@
 package fr.k0bus.creativemanager.commands.cm;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.commands.Commands;
 import org.bukkit.Material;
@@ -29,10 +30,20 @@ public class ItemsSubCommands extends Commands {
                 tags.append("§r#").append(entry.getKey()).append("§6");
             }
         }
+        NBTItem tmp = new NBTItem(itemStack);
+        StringBuilder nbtKey = new StringBuilder();
+        for(String k: tmp.getKeys())
+        {
+            if(!nbtKey.toString().isEmpty()) nbtKey.append(", ");
+            nbtKey.append(k).append("§6");
+        }
+
+
         sender.sendMessage(CreativeManager.TAG + "§r");
         sender.sendMessage(CreativeManager.TAG + "§6You've requested items informations below");
         sender.sendMessage(CreativeManager.TAG + "§r");
         sender.sendMessage(CreativeManager.TAG + "§l§7Name §8>> §r§6" + itemStack.getType().name());
         sender.sendMessage(CreativeManager.TAG + "§l§7Tags §8>> §r§6[" + tags + "]");
+        sender.sendMessage(CreativeManager.TAG + "§l§7NBT Keys §8>> §r§6[" + nbtKey + "]");
     }
 }

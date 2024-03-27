@@ -94,8 +94,11 @@ public class InventoryMove implements Listener {
 
 			if(tmp.hasNBTData() || tmp.hasCustomNbtData())
 				for (String k:tmp.getKeys()) {
-					tmp.removeKey(k);
-					tmp.applyNBT(item);
+					if(!SearchUtils.inList(CreativeManager.getSettings().getNBTWhitelist(), k))
+					{
+						tmp.removeKey(k);
+						tmp.applyNBT(item);
+					}
 				}
 
 			if (itemMeta != null)
