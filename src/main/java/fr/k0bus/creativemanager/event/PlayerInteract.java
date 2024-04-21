@@ -69,12 +69,16 @@ public class PlayerInteract implements Listener {
         if(!CreativeManager.getSettings().getProtection(Protections.CONTAINER)) return;
         if(!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
         if(block == null) return;
+        if(p.isSneaking() && p.getInventory().getItemInMainHand().getType().isBlock()) return;
 
-        if(block.getType().equals(Material.CAMPFIRE)) {
-            if (!p.hasPermission("creativemanager.bypass.container")) {
-                if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                    CMUtils.sendMessage(p, "permission.container");
-                e.setCancelled(true);
+        if(block.getType().equals(Material.CAMPFIRE) || block.getType().equals(Material.SOUL_CAMPFIRE)) {
+            if(!p.getInventory().getItemInMainHand().getType().name().contains("SHOVEL"))
+            {
+                if (!p.hasPermission("creativemanager.bypass.container")) {
+                    if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+                        CMUtils.sendMessage(p, "permission.container");
+                    e.setCancelled(true);
+                }
             }
         }
     }
