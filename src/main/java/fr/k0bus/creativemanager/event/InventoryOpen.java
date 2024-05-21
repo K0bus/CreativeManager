@@ -58,7 +58,7 @@ public class InventoryOpen implements Listener {
     public void onGuiOpen(InventoryOpenEvent e) {
         if (e.getPlayer() instanceof Player p) {
             if (p.getGameMode().equals(GameMode.CREATIVE) && CreativeManager.getSettings().getProtection(Protections.GUI)) {
-                if (!p.hasPermission("creativemanager.bypass.container")) {
+                if (!p.hasPermission("creativemanager.bypass.gui")) {
                     if (CreativeManager.getSettings().getBoolean("send-player-messages"))
                         CMUtils.sendMessage(p, "permission.gui");
                     e.setCancelled(true);
