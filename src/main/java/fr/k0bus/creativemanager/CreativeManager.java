@@ -211,7 +211,7 @@ public class CreativeManager extends K0busCore {
             }
             getLog().log("&2Tag loaded from Spigot ! &7[" + tagMap.size() + "]");
         }
-        catch (Exception e)
+        catch (NoClassDefFoundError e)
         {
             getLog().log("&cThis minecraft version could not use the TAG system.");
         }

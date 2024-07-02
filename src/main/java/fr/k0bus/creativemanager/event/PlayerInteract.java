@@ -71,16 +71,18 @@ public class PlayerInteract implements Listener {
         if(block == null) return;
         if(p.isSneaking() && p.getInventory().getItemInMainHand().getType().isBlock()) return;
 
-        if(block.getType().equals(Material.CAMPFIRE) || block.getType().equals(Material.SOUL_CAMPFIRE)) {
-            if(!p.getInventory().getItemInMainHand().getType().name().contains("SHOVEL"))
-            {
-                if (!p.hasPermission("creativemanager.bypass.container")) {
-                    if (CreativeManager.getSettings().getBoolean("send-player-messages"))
-                        CMUtils.sendMessage(p, "permission.container");
-                    e.setCancelled(true);
+        try {
+            if(block.getType().equals(Material.CAMPFIRE) || block.getType().equals(Material.SOUL_CAMPFIRE)) {
+                if(!p.getInventory().getItemInMainHand().getType().name().contains("SHOVEL"))
+                {
+                    if (!p.hasPermission("creativemanager.bypass.container")) {
+                        if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+                            CMUtils.sendMessage(p, "permission.container");
+                        e.setCancelled(true);
+                    }
                 }
             }
-        }
+        } catch (NoSuchFieldError ignored) {}
     }
 
     @EventHandler

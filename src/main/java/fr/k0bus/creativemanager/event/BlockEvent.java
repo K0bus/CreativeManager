@@ -27,15 +27,17 @@ public class BlockEvent implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     void onBlockPhysicsEvent(BlockPhysicsEvent event){
-        Block block = event.getBlock();
-        if(block.getType().equals(Material.AIR)) return;
-        if(block.getBlockData().isSupported(block)) return;
-        BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
-        if(blockLog != null && blockLog.isCreative())
-        {
-            event.setCancelled(true);
-            block.setType(Material.AIR);
-        }
+        try {
+            Block block = event.getBlock();
+            if(block.getType().equals(Material.AIR)) return;
+            if(block.getBlockData().isSupported(block)) return;
+            BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
+            if(blockLog != null && blockLog.isCreative())
+            {
+                event.setCancelled(true);
+                block.setType(Material.AIR);
+            }
+        } catch (NoSuchMethodError ignored) {}
     }
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     void onBlockGrow(BlockGrowEvent event)
