@@ -20,6 +20,8 @@ import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.*;
@@ -29,19 +31,23 @@ import java.util.*;
  */
 public class InventoryMove implements Listener {
 
-	boolean nbt_enabled = true;
+	boolean nbt_enabled;
 
 	/**
 	 * Instantiates a new Inventory move.
 	 *
 	 */
 	CreativeManager plugin;
-	public InventoryMove(CreativeManager plugin) {
-		this.plugin = plugin;
-	}
+	private final NamespacedKey protectedKey;
+
 	public InventoryMove(CreativeManager plugin, boolean nbt_enabled) {
 		this.nbt_enabled = nbt_enabled;
 		this.plugin = plugin;
+		if (nbt_enabled) {
+			this.protectedKey = NamespacedKey.fromString("protected", plugin);
+		} else {
+			this.protectedKey = null;
+		}
 	}
 
 	/**
@@ -68,8 +74,8 @@ public class InventoryMove implements Listener {
 				changeLore = !CreativeManager.getSettings().getProtection(Protections.ARMOR) || player.hasPermission("creativemanager.bypass.armor");
 			if(changeLore)
 			{
-				e.setCurrentItem(addLore(e.getCurrentItem(), player));
-				e.setCursor(addLore(e.getCursor(), player));
+				e.setCurrentItem(addLore(e.getCurrentItem(), player, false));
+				e.setCursor(addLore(e.getCursor(), player, false));
 			}
 		}
 	}
@@ -161,22 +167,35 @@ public class InventoryMove implements Listener {
 		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
 		List<String> blacklist = CreativeManager.getSettings().getGetBL();
 
-		List<ItemStack> itemStackList = new ArrayList<>();
-		if(e.getCursor() != null) itemStackList.add(e.getCursor());
-		if(e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
-		for (ItemStack item:itemStackList) {
-			String itemName = item.getType().name().toLowerCase();
-			if(p.hasPermission("creativemanager.bypass.blacklist.get." + itemName)) return;
-			if(item.getType().equals(Material.AIR)) return;
-			if((CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, item)) ||
-					(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
-				HashMap<String, String> replaceMap = new HashMap<>();
-				replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
-				CMUtils.sendMessage(p, "blacklist.get", replaceMap);
-				e.setCancelled(true);
-				return;
-			}
+		if (isBlackListed(e.getCursor(), p, blacklist)) {
+			e.setCancelled(true);
+			return;
+		} else {
+			e.setCursor(addLore(e.getCursor(), p, true));
 		}
+
+		if (isBlackListed(e.getCurrentItem(), p, blacklist)) {
+			e.setCancelled(true);
+		} else {
+			e.setCurrentItem(addLore(e.getCurrentItem(), p, true));
+		}
+	}
+
+	private boolean isBlackListed(ItemStack item, Player player, List<String> blacklist) {
+		if (item == null) {
+			return false;
+		}
+		String itemName = item.getType().name().toLowerCase();
+		if(player.hasPermission("creativemanager.bypass.blacklist.get." + itemName)) return false;
+		if(item.getType().equals(Material.AIR)) return false;
+		if((CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, item)) ||
+				(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
+			HashMap<String, String> replaceMap = new HashMap<>();
+			replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
+			CMUtils.sendMessage(player, "blacklist.get", replaceMap);
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -186,7 +205,7 @@ public class InventoryMove implements Listener {
 	 * @param p    the player.
 	 * @return the item stack.
 	 */
-	private ItemStack addLore(ItemStack item, Player p) {
+	private ItemStack addLore(ItemStack item, Player p, boolean checkNbt) {
 		if (item == null)
 			return null;
 		if (p == null)
@@ -195,20 +214,28 @@ public class InventoryMove implements Listener {
 		if (meta == null) {
 			return item;
 		}
-		List<?> lore = CreativeManager.getSettings().getLore();
+		if (checkNbt && nbt_enabled) {
+			final PersistentDataContainer container = meta.getPersistentDataContainer();
+			if (container.has(protectedKey)) {
+				return item;
+			}
+		}
+		List<String> lore = CreativeManager.getSettings().getLore();
 		List<String> lore_t = new ArrayList<>();
 
 		if (lore != null) {
-			for (Object obj : lore) {
-				if (obj instanceof String string) {
-					string = string.replace("{PLAYER}", p.getName())
-							.replace("{UUID}", p.getUniqueId().toString())
-							.replace("{ITEM}", StringUtils.proper(item.getType().name()));
-					lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
-				}
+			for (String string : lore) {
+				string = string.replace("{PLAYER}", p.getName())
+						.replace("{UUID}", p.getUniqueId().toString())
+						.replace("{ITEM}", StringUtils.proper(item.getType().name()));
+				lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
 			}
 		}
 		meta.setLore(lore_t);
+		if (nbt_enabled) {
+			final PersistentDataContainer container = meta.getPersistentDataContainer();
+			container.set(protectedKey, PersistentDataType.BOOLEAN, true);
+		}
 		item.setItemMeta(meta);
 		return item;
 	}

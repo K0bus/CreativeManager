@@ -123,7 +123,7 @@ public class CreativeManager extends K0busCore {
         /*  Add event checked for old version */
         try {
             ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
-            pm.registerEvents(new InventoryMove(this), this);
+            pm.registerEvents(new InventoryMove(this, true), this);
         } catch (NoSuchMethodException | SecurityException e) {
             getLog().log("NBT Protection disabled on your Minecraft version");
             pm.registerEvents(new InventoryMove(this,false), this);
