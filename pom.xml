@@ -108,8 +108,9 @@
       <layout>default</layout>
     </repository>
     <repository>
-      <id>k0bus</id>
-      <url>https://maven.k0bus.fr/repo/</url>
+      <id>k0bus-repository</id>
+      <name>K0bus Repository</name>
+      <url>https://maven.k0bus.fr/spigot</url>
     </repository>
     <repository>
       <id>citizens-repo</id>
