@@ -55,6 +55,8 @@ public class PlayerBuild implements Listener {
 					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
 						CMUtils.sendMessage(p, "permission.build-nbt");
 					container.getInventory().clear();
+					if(!container.getInventory().isEmpty())
+						e.getBlock().setType(e.getBlock().getType());
 				}
 			}
 		}
