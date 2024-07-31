@@ -70,7 +70,7 @@ public class PlayerBreak implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void checkLog(BlockBreakEvent e)
 	{
 		List<Block> blocks = BlockUtils.getBlockStructure(e.getBlock());
