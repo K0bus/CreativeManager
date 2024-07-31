@@ -25,7 +25,7 @@ public class BlockEvent implements Listener {
         plugin = cm;
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    /*@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     void onBlockPhysicsEvent(BlockPhysicsEvent event){
         try {
             Block block = event.getBlock();
@@ -38,7 +38,7 @@ public class BlockEvent implements Listener {
                 block.setType(Material.AIR);
             }
         } catch (NoSuchMethodError ignored) {}
-    }
+    }*/
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     void onBlockGrow(BlockGrowEvent event)
     {
