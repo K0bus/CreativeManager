@@ -117,7 +117,6 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new PlayerPreCommand(this), this);
         pm.registerEvents(new ExplodeEvent(this), this);
         pm.registerEvents(new PlayerDeath(), this);
-        pm.registerEvents(new CreativeCopy(), this);
         pm.registerEvents(new FlowEvent(this), this);
         pm.registerEvents(new BlockEvent(this), this);
         /*  Add event checked for old version */
