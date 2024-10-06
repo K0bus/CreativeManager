@@ -57,7 +57,7 @@ public class PlayerBuild implements Listener {
 					container.getInventory().clear();
 					container.update();
 					if(!container.getInventory().isEmpty())
-						e.getBlock().setType(e.getBlock().getType());
+						e.setCancelled(true);
 				}
 			}
 		}
