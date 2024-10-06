@@ -234,7 +234,7 @@ public class InventoryMove implements Listener {
 		meta.setLore(lore_t);
 		if (nbt_enabled) {
 			final PersistentDataContainer container = meta.getPersistentDataContainer();
-			container.set(protectedKey, PersistentDataType.BOOLEAN, true);
+			container.set(protectedKey, PersistentDataType.INTEGER, 1);
 		}
 		item.setItemMeta(meta);
 		return item;
