@@ -119,6 +119,7 @@ public class CreativeManager extends K0busCore {
         pm.registerEvents(new PlayerDeath(), this);
         pm.registerEvents(new FlowEvent(this), this);
         pm.registerEvents(new BlockEvent(this), this);
+        pm.registerEvents(new WorldEvent(this), this);
         /*  Add event checked for old version */
         try {
             ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);

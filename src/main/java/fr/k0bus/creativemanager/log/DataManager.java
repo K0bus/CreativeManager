@@ -4,6 +4,7 @@ import fr.k0bus.creativemanager.CreativeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
 
 import java.io.File;
 import java.io.IOException;
@@ -166,6 +167,31 @@ public class DataManager {
     {
         try {
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM block_log");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("player")));
+                Location location = new Location(Bukkit.getWorld(rs.getString("world")),
+                        rs.getInt("x"),
+                        rs.getInt("y"),
+                        rs.getInt("z"));
+                UUID uuid = UUID.fromString(rs.getString("uuid"));
+                BlockLog loaded = new BlockLog(location, player, uuid);
+                loaded.setSaved(true);
+                blockLogHashMap.put(location, loaded);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
+        }
+    }
+
+    public void load(World world)
+    {
+        try {
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT * FROM block_log WHERE world= '" + world.getName() + "'"
+            );
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("player")));
