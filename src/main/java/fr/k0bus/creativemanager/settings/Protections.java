@@ -31,7 +31,6 @@ public enum Protections {
     BLOCK_USE("blockuse", Material.FURNACE, "Deny using blacklisted blocks", "Use block"),
     PL_SLIMEFUN("plugins.slimefun", Material.SLIME_BALL, "Deny using SlimeFun", "Plugins - SlimeFun"),
     PL_CHESTSHOP("plugins.chestshop", Material.GOLD_NUGGET, "Deny using ChestShop", "Plugins - ChestShop"),
-    COPY("blockcopy", Material.SHEARS, "Deny copy block in Creative", "Block Copy"),
     ENCHANT_AND_POTION("enchant-and-potion", Material.SHEARS, "Deny player to get Enchanted items / Potions with effects", "Enchant / Potion"),
     GUI("gui", Material.ENDER_CHEST, "Deny player to open any GUI (Including vanilla container)", "GUI"),
     PL_CITIZENS("plugins.citizens", Material.NAME_TAG, "Deny player to interact with Citizens", "Plugins - Citizens"),
