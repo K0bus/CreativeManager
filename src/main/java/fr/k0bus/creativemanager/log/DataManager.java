@@ -62,16 +62,15 @@ public class DataManager {
     public void save()
     {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            int n = 0;
-            HashMap<Location, BlockLog> cloned = (HashMap<Location, BlockLog>) blockLogHashMap.clone();
-            for (BlockLog log: cloned.values()) {
-                if(log.isSaved()) continue;
-                save(log);
-                n++;
-            }
+            final int[] n = {0};
+            blockLogHashMap.forEach((key, value) -> {
+                if(value.isSaved()) return;
+                save(value);
+                n[0]++;
+            });
             if(CreativeManager.getSettings().getBoolean("save-log"))
-                if(n>0)
-                    plugin.getLog().log("&2Log saved to database ! &7[" + n + "]");
+                if(n[0] >0)
+                    plugin.getLog().log("&2Log saved to database ! &7[" + n[0] + "]");
         });
     }
     public void saveSync()
