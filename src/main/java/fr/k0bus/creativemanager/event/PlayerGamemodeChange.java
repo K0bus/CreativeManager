@@ -40,8 +40,12 @@ public class PlayerGamemodeChange implements Listener {
 	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onGMChange(PlayerGameModeChangeEvent e) {
-		if(!e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING))
+		try{
+			if(!e.getPlayer().getOpenInventory().getType().equals(InventoryType.CRAFTING))
+				e.getPlayer().closeInventory();
+		}catch (Error ignored) {
 			e.getPlayer().closeInventory();
+		}
 		if(e.getNewGameMode().equals(e.getPlayer().getGameMode())) return;
 		if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
 		Player p = e.getPlayer();
