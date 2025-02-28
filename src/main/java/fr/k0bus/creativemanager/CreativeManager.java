@@ -20,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
