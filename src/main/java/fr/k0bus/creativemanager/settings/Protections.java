@@ -90,7 +90,7 @@ public enum Protections {
             itemMeta.setLore(lore);
             itemMeta.setDisplayName(ChatColor.RESET + String.valueOf(ChatColor.BOLD) + ChatColor.GOLD + this.displayName);
             if(value)
-                itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+                itemMeta.addEnchant(Enchantment.MENDING, 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(itemMeta);
         }
