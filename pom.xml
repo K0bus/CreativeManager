@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.35.13</version>
+  <version>1.35.15</version>
 
   <name>CreativeManager</name>
 
@@ -62,6 +62,38 @@
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- SpotBugs Plugin (Static Code Analysis) -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.9.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Plugin Checkstyle -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation> <!-- Le fichier de configuration Checkstyle -->
+          <consoleOutput>true</consoleOutput> <!-- Affiche le résultat dans la console -->
+          <failOnViolation>true</failOnViolation> <!-- Fait échouer la build en cas de violation -->
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal> <!-- Exécuter Checkstyle lors de la phase 'validate' -->
             </goals>
           </execution>
         </executions>
