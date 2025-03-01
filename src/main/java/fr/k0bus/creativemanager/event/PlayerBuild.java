@@ -44,7 +44,7 @@ public class PlayerBuild implements Listener {
 		Player p = e.getPlayer();
 		if (p.getGameMode() == GameMode.CREATIVE) {
 			if (CreativeManager.getSettings().getProtection(Protections.BUILD) && !p.hasPermission("creativemanager.bypass.build")) {
-				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+				if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 					CMUtils.sendMessage(p, "permission.build");
 				e.setCancelled(true);
 			}
@@ -52,7 +52,6 @@ public class PlayerBuild implements Listener {
 			{
 				if(e.getBlock() instanceof Container container)
 				{
-					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
 						CMUtils.sendMessage(p, "permission.build-nbt");
 					container.getInventory().clear();
 					container.update();
@@ -77,11 +76,11 @@ public class PlayerBuild implements Listener {
 		if(blacklist.isEmpty()) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place")) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.place." + blockName)) return;
-		if((CreativeManager.getSettings().getString("list.mode.place").equals("whitelist") && !SearchUtils.inList(blacklist, e.getBlock())) ||
-			(!CreativeManager.getSettings().getString("list.mode.place").equals("whitelist") && SearchUtils.inList(blacklist, e.getBlock()))){
+		if((CreativeManager.getSettings().getConfiguration().getString("list.mode.place").equals("whitelist") && !SearchUtils.inList(blacklist, e.getBlock())) ||
+			(!CreativeManager.getSettings().getConfiguration().getString("list.mode.place").equals("whitelist") && SearchUtils.inList(blacklist, e.getBlock()))){
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{BLOCK}", StringUtils.proper(e.getBlock().getType().name()));
-			if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+			if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 				CMUtils.sendMessage(p, "blacklist.place", replaceMap);
 			e.setCancelled(true);
 		}

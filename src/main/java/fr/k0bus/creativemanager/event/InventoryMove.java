@@ -62,7 +62,7 @@ public class InventoryMove implements Listener {
 				e.getClick().equals(ClickType.WINDOW_BORDER_LEFT) || e.getClick().equals(ClickType.WINDOW_BORDER_RIGHT) ||
 				e.getClick().equals(ClickType.UNKNOWN)) {
 			if (CreativeManager.getSettings().getProtection(Protections.DROP) && !player.hasPermission("creativemanager.bypass.drop")) {
-				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+				if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 					CMUtils.sendMessage(player, "permission.drop");
 				e.setCancelled(true);
 			}
@@ -188,8 +188,8 @@ public class InventoryMove implements Listener {
 		String itemName = item.getType().name().toLowerCase();
 		if(player.hasPermission("creativemanager.bypass.blacklist.get." + itemName)) return false;
 		if(item.getType().equals(Material.AIR)) return false;
-		if((CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, item)) ||
-				(!CreativeManager.getSettings().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
+		if((CreativeManager.getSettings().getConfiguration().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, item)) ||
+				(!CreativeManager.getSettings().getConfiguration().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
 			CMUtils.sendMessage(player, "blacklist.get", replaceMap);

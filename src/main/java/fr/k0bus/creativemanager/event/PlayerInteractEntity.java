@@ -50,7 +50,7 @@ public class PlayerInteractEntity implements Listener {
             }
         if (CreativeManager.getSettings().getProtection(Protections.ENTITY) && p.getGameMode().equals(GameMode.CREATIVE) && !p.hasPermission("creativemanager.bypass.entity")) {
             if (!p.hasPermission("creativemanager.bypass.entity") && !p.hasPermission("creativemanager.bypass.entity." + e.getRightClicked().getType().name().toLowerCase())) {
-                if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+                if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
                     CMUtils.sendMessage(p, "permission.entity");
                 e.setCancelled(true);
             }

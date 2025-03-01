@@ -28,10 +28,10 @@ public class PlayerPreCommand implements Listener {
         if(e.getPlayer().hasPermission("creativemanager.bypass.blacklist.commands")) return;
         String cmd = e.getMessage().toLowerCase().substring(1);
         List<String> list = CreativeManager.getSettings().getCommandBL();
-        if((CreativeManager.getSettings().getString("list.mode.commands").equals("whitelist") && !SearchUtils.inList(list, cmd)) ||
-                (!CreativeManager.getSettings().getString("list.mode.commands").equals("whitelist") && SearchUtils.inList(list, cmd))){
+        if((CreativeManager.getSettings().getConfiguration().getString("list.mode.commands").equals("whitelist") && !SearchUtils.inList(list, cmd)) ||
+                (!CreativeManager.getSettings().getConfiguration().getString("list.mode.commands").equals("whitelist") && SearchUtils.inList(list, cmd))){
             e.setCancelled(true);
-            if(CreativeManager.getSettings().getBoolean("send-player-messages"))
+            if(CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
                 CMUtils.sendMessage(e.getPlayer(), "blacklist.commands");
         }
     }

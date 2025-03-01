@@ -68,7 +68,7 @@ public class DataManager {
                 save(value);
                 n[0]++;
             });
-            if(CreativeManager.getSettings().getBoolean("save-log"))
+            if(CreativeManager.getSettings().getConfiguration().getBoolean("save-log"))
                 if(n[0] >0)
                     plugin.getLog().log("&2Log saved to database ! &7[" + n[0] + "]");
         });

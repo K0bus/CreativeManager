@@ -20,7 +20,6 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -69,7 +68,7 @@ public class CreativeManager extends K0busCore {
         this.loadLog();
         this.loadTags();
         this.saveTask = SaveTask.run(this);
-        if(getSettings().getBoolean("stop-inventory-save"))
+        if(getSettings().getConfiguration().getBoolean("stop-inventory-save"))
             getLog().log("&cWarning : &4'stop-inventory-save' set on 'true' then all features about inventory as been disabled !");
         getLog().log("&9=============================================================");
     }
@@ -80,7 +79,7 @@ public class CreativeManager extends K0busCore {
         lang = new Lang(settings.getLang(), this);
         getLog().log("&2Language loaded &7[" + settings.getLang() + "]");
         TAG = settings.getTag();
-        antiSpamTick = settings.getInt("antispam-tick");
+        antiSpamTick = settings.getConfiguration().getInt("antispam-tick");
     }
 
     public void updateConfig() {
@@ -90,11 +89,11 @@ public class CreativeManager extends K0busCore {
         Settings.updateConfig("lang/it_IT.yml", this);
         Settings.updateConfig("lang/ru_RU.yml", this);
         Settings tempsettings = new Settings(this);
-        ConfigurationSection cs = tempsettings.getConfigurationSection("blacklist");
+        ConfigurationSection cs = tempsettings.getConfiguration().getConfigurationSection("blacklist");
         if(cs != null)
         {
-            tempsettings.set("list", cs);
-            tempsettings.set("blacklist", null);
+            tempsettings.getConfiguration().set("list", cs);
+            tempsettings.getConfiguration().set("blacklist", null);
             tempsettings.save();
             getLog().log("&2config.yml > blacklist node moved to list");
         }

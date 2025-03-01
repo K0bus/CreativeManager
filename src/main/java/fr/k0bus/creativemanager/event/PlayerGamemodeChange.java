@@ -47,7 +47,7 @@ public class PlayerGamemodeChange implements Listener {
 			e.getPlayer().closeInventory();
 		}
 		if(e.getNewGameMode().equals(e.getPlayer().getGameMode())) return;
-		if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
+		if(CreativeManager.getSettings().getConfiguration().getBoolean("stop-inventory-save")) return;
 		Player p = e.getPlayer();
 		if (!p.hasPermission("creativemanager.bypass.inventory")) {
 			InventoryManager im = new InventoryManager(p, plugin);
@@ -65,7 +65,7 @@ public class PlayerGamemodeChange implements Listener {
 			{
 				if(e.getNewGameMode().equals(GameMode.CREATIVE))
 				{
-					ConfigurationSection cs = CreativeManager.getSettings().getConfigurationSection("creative_armor");
+					ConfigurationSection cs = CreativeManager.getSettings().getConfiguration().getConfigurationSection("creative_armor");
 					if(cs != null)
 					{
 						p.getInventory().setHelmet(ItemsUtils.fromConfiguration(cs.getConfigurationSection("helmet"), e.getPlayer()));
@@ -77,7 +77,7 @@ public class PlayerGamemodeChange implements Listener {
 			}
 			HashMap<String, String> replaceMap = new HashMap<>();
 			replaceMap.put("{GAMEMODE}", StringUtils.proper(e.getNewGameMode().name()));
-			if(CreativeManager.getSettings().getBoolean("send-player-messages"))
+			if(CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 				CMUtils.sendMessage(p, "inventory.change", replaceMap);
 		}
 	}

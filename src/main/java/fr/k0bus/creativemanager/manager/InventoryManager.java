@@ -65,7 +65,7 @@ public class InventoryManager {
 
     public boolean hasContent()
     {
-        return !cm.getKeys(false).isEmpty();
+        return !cm.getConfiguration().getKeys(false).isEmpty();
     }
 
     /**
@@ -74,14 +74,14 @@ public class InventoryManager {
      * @param gm the game mode.
      */
     public void loadInventory(GameMode gm) {
-        if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
-        if(CreativeManager.getSettings().getBoolean("stop-inventory-save-perm"))
+        if(CreativeManager.getSettings().getConfiguration().getBoolean("stop-inventory-save")) return;
+        if(CreativeManager.getSettings().getConfiguration().getBoolean("stop-inventory-save-perm"))
             if(p.hasPermission("creativemanager.bypass.inventory-save")) return;
         String gm_name = gm.name();
-        if (cm.contains(gm_name + ".content") && cm.isString(gm_name + ".content") && cm.contains(gm_name + ".armor") && cm.isString(gm_name + ".armor")) {
+        if (cm.getConfiguration().contains(gm_name + ".content") && cm.getConfiguration().isString(gm_name + ".content") && cm.getConfiguration().contains(gm_name + ".armor") && cm.getConfiguration().isString(gm_name + ".armor")) {
             try {
-                p.getInventory().setContents(this.itemStackArrayFromBase64(cm.getString(gm_name + ".content")));
-                p.getInventory().setArmorContents(this.itemStackArrayFromBase64(cm.getString(gm_name + ".armor")));
+                p.getInventory().setContents(this.itemStackArrayFromBase64(cm.getConfiguration().getString(gm_name + ".content")));
+                p.getInventory().setArmorContents(this.itemStackArrayFromBase64(cm.getConfiguration().getString(gm_name + ".armor")));
             } catch (IOException e) {
                 plugin.getLogger().severe(e.getMessage());
             }
@@ -101,14 +101,14 @@ public class InventoryManager {
      * @param gm the game mode.
      */
     public void saveInventory(GameMode gm) {
-        if(CreativeManager.getSettings().getBoolean("stop-inventory-save")) return;
-        if(CreativeManager.getSettings().getBoolean("stop-inventory-save-perm"))
+        if(CreativeManager.getSettings().getConfiguration().getBoolean("stop-inventory-save")) return;
+        if(CreativeManager.getSettings().getConfiguration().getBoolean("stop-inventory-save-perm"))
             if(p.hasPermission("creativemanager.bypass.inventory-save")) return;
         String gm_name = gm.name();
         String[] encoded = this.playerInventoryToBase64(p.getInventory());
-        cm.set(gm_name + ".content", encoded[0]);
-        cm.set(gm_name + ".armor", encoded[1]);
-        if (cm.contains(gm_name + ".content") && cm.isString(gm_name + ".content") && cm.contains(gm_name + ".armor") && cm.isString(gm_name + ".armor")) {
+        cm.getConfiguration().set(gm_name + ".content", encoded[0]);
+        cm.getConfiguration().set(gm_name + ".armor", encoded[1]);
+        if (cm.getConfiguration().contains(gm_name + ".content") && cm.getConfiguration().isString(gm_name + ".content") && cm.getConfiguration().contains(gm_name + ".armor") && cm.getConfiguration().isString(gm_name + ".armor")) {
             cm.save();
             if (plugin.getConfig().getBoolean("log"))
                 this.plugin.getLogger().info("Save inventory of user " + p.getName() + " in file " + p.getUniqueId() + ".yml for gamemode " + gm_name);

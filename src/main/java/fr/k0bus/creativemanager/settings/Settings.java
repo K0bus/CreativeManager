@@ -26,7 +26,7 @@ public class Settings extends Configuration {
      * @return the protection.
      */
     public boolean getProtection(Protections protections) {
-        return getBoolean("protections." + protections.getName());
+        return getConfiguration().getBoolean("protections." + protections.getName());
     }
 
     /**
@@ -36,7 +36,7 @@ public class Settings extends Configuration {
      * @param value the protections.
      */
     public void setProtection(Protections protections, boolean value) {
-        set("protections." + protections.getName(), value);
+        getConfiguration().set("protections." + protections.getName(), value);
     }
 
     /**
@@ -45,7 +45,7 @@ public class Settings extends Configuration {
      * @return True if yes, otherwise false.
      */
     public boolean creativeInvEnable() {
-        return getBoolean("inventory.creative");
+        return getConfiguration().getBoolean("inventory.creative");
     }
 
     /**
@@ -54,7 +54,7 @@ public class Settings extends Configuration {
      * @return True if yes, otherwise false.
      */
     public boolean adventureInvEnable() {
-        return getBoolean("inventory.adventure");
+        return getConfiguration().getBoolean("inventory.adventure");
     }
 
     /**
@@ -63,7 +63,7 @@ public class Settings extends Configuration {
      * @return True if yes, otherwise false.
      */
     public boolean spectatorInvEnable() {
-        return getBoolean("inventory.spectator");
+        return getConfiguration().getBoolean("inventory.spectator");
     }
 
     /**
@@ -72,7 +72,7 @@ public class Settings extends Configuration {
      * @return the placed blocks.
      */
     public List<String> getPlaceBL() {
-        return getStringList("list.place");
+        return getConfiguration().getStringList("list.place");
     }
 
     /**
@@ -81,7 +81,7 @@ public class Settings extends Configuration {
      * @return the use blacklist.
      */
     public List<String> getUseBL() {
-        return getStringList("list.use");
+        return getConfiguration().getStringList("list.use");
     }
 
     /**
@@ -90,7 +90,7 @@ public class Settings extends Configuration {
      * @return the use blacklist.
      */
     public List<String> getUseBlockBL() {
-        return getStringList("list.useblock");
+        return getConfiguration().getStringList("list.useblock");
     }
 
     /**
@@ -99,7 +99,7 @@ public class Settings extends Configuration {
      * @return the get blacklist.
      */
     public List<String> getGetBL() {
-        return getStringList("list.get");
+        return getConfiguration().getStringList("list.get");
     }
 
     /**
@@ -108,7 +108,7 @@ public class Settings extends Configuration {
      * @return the break blacklist.
      */
     public List<String> getBreakBL() {
-        return getStringList("list.break");
+        return getConfiguration().getStringList("list.break");
     }
 
     /**
@@ -117,7 +117,7 @@ public class Settings extends Configuration {
      * @return the command blacklist.
      */
     public List<String> getCommandBL() {
-        return getStringList("list.commands");
+        return getConfiguration().getStringList("list.commands");
     }
 
     /**
@@ -126,7 +126,7 @@ public class Settings extends Configuration {
      * @return the command blacklist.
      */
     public List<String> getNBTWhitelist() {
-        return getStringList("list.nbt-whitelist");
+        return getConfiguration().getStringList("list.nbt-whitelist");
     }
 
     /**
@@ -135,14 +135,14 @@ public class Settings extends Configuration {
      * @return the lore.
      */
     public List<String> getLore() {
-        return getStringList("creative-lore");
+        return getConfiguration().getStringList("creative-lore");
     }
 
     public String getLang() {
-        return getString("lang");
+        return getConfiguration().getString("lang");
     }
     public String getTag()
     {
-        return StringUtils.translateColor(getString("tag"));
+        return StringUtils.translateColor(getConfiguration().getString("tag"));
     }
 }

@@ -36,7 +36,7 @@ public class ProjectileThrow implements Listener {
 		if (source instanceof Player p) {
 			if (CreativeManager.getSettings().getProtection(Protections.THROW) && p.getGameMode().equals(GameMode.CREATIVE)) {
 				if (!p.hasPermission("creativemanager.bypass.throw")) {
-					if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+					if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 						CMUtils.sendMessage(p, "permission.throw");
 					e.setCancelled(true);
 				}

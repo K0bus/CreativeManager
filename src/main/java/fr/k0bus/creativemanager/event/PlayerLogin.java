@@ -41,7 +41,7 @@ public class PlayerLogin implements Listener {
     public void onLogin(PlayerJoinEvent e) {
         if(e.getPlayer().hasPermission("creativemanager.admin.update"))
         {
-            if(CreativeManager.getSettings().getBoolean("send-admin-update-message"))
+            if(CreativeManager.getSettings().getConfiguration().getBoolean("send-admin-update-message"))
             {
                 if(!CreativeManager.getUpdateChecker().isUpToDate())
                 {

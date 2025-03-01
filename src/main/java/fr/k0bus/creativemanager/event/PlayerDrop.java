@@ -33,7 +33,7 @@ public class PlayerDrop implements Listener {
 		Player p = e.getPlayer();
 		if (CreativeManager.getSettings().getProtection(Protections.DROP) && p.getGameMode().equals(GameMode.CREATIVE)) {
 			if (!p.hasPermission("creativemanager.bypass.drop")) {
-				if (CreativeManager.getSettings().getBoolean("send-player-messages"))
+				if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 					CMUtils.sendMessage(p, "permission.drop");
 				e.setCancelled(true);
 			}
