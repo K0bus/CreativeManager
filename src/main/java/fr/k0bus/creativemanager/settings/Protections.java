@@ -3,7 +3,7 @@ package fr.k0bus.creativemanager.settings;
 import fr.k0bus.k0buscore.utils.StringUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.Registry;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -90,7 +90,7 @@ public enum Protections {
             itemMeta.setLore(lore);
             itemMeta.setDisplayName(ChatColor.RESET + String.valueOf(ChatColor.BOLD) + ChatColor.GOLD + this.displayName);
             if(value)
-                itemMeta.addEnchant(Enchantment.MENDING, 1, true);
+                itemMeta.addEnchant(Registry.ENCHANTMENT.iterator().next(), 1, true);
             itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(itemMeta);
         }
