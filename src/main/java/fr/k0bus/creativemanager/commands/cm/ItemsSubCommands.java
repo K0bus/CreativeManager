@@ -1,6 +1,8 @@
 package fr.k0bus.creativemanager.commands.cm;
 
+import de.tr7zw.changeme.nbtapi.NBT;
 import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.commands.Commands;
 import org.bukkit.Material;
@@ -30,7 +32,7 @@ public class ItemsSubCommands extends Commands {
                 tags.append("§r#").append(entry.getKey()).append("§6");
             }
         }
-        NBTItem tmp = new NBTItem(itemStack);
+        ReadWriteNBT tmp = NBT.itemStackToNBT(itemStack);
         StringBuilder nbtKey = new StringBuilder();
         for(String k: tmp.getKeys())
         {

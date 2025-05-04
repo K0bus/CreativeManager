@@ -1,6 +1,6 @@
 package fr.k0bus.creativemanager.event;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.changeme.nbtapi.NBT;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.CMUtils;
@@ -95,18 +95,16 @@ public class InventoryMove implements Listener {
 		for (ItemStack item : itemStackList) {
 			if(item.getType().equals(Material.AIR)) continue;
 
-			NBTItem tmp = new NBTItem(item);
-			ItemMeta itemMeta = item.getItemMeta();
-
-			if(tmp.hasNBTData() || tmp.hasCustomNbtData())
+			NBT.modify(item, (tmp) -> {
 				for (String k:tmp.getKeys()) {
 					if(!SearchUtils.inList(CreativeManager.getSettings().getNBTWhitelist(), k))
 					{
 						tmp.removeKey(k);
-						tmp.applyNBT(item);
 					}
 				}
+			});
 
+			ItemMeta itemMeta = item.getItemMeta();
 			if (itemMeta != null)
 				if (!itemMeta.getPersistentDataContainer().isEmpty()) {
 					for (NamespacedKey key : itemMeta.getPersistentDataContainer().getKeys()) {
@@ -166,14 +164,6 @@ public class InventoryMove implements Listener {
 		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
 		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
 		List<String> blacklist = CreativeManager.getSettings().getGetBL();
-
-		if (isBlackListed(e.getCursor(), p, blacklist)) {
-			e.setCancelled(true);
-			return;
-		} else {
-			e.setCursor(addLore(e.getCursor(), p, true));
-		}
-
 		if (isBlackListed(e.getCurrentItem(), p, blacklist)) {
 			e.setCancelled(true);
 		} else {
