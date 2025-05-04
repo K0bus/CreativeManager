@@ -38,7 +38,6 @@ public class ItemsSubCommands extends Commands {
             nbtKey.append(k).append("§6");
         }
 
-
         sender.sendMessage(CreativeManager.TAG + "§r");
         sender.sendMessage(CreativeManager.TAG + "§6You've requested items informations below");
         sender.sendMessage(CreativeManager.TAG + "§r");
