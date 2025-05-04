@@ -216,7 +216,7 @@ public class InventoryMove implements Listener {
 		}
 		if (checkNbt && nbt_enabled) {
 			final PersistentDataContainer container = meta.getPersistentDataContainer();
-			if (container.has(protectedKey)) {
+			if (container.has(protectedKey, PersistentDataType.INTEGER)) {
 				return item;
 			}
 		}
