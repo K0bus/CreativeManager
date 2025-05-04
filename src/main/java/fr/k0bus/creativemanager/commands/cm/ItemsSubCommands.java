@@ -1,7 +1,6 @@
 package fr.k0bus.creativemanager.commands.cm;
 
 import de.tr7zw.changeme.nbtapi.NBT;
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.iface.ReadWriteNBT;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.commands.Commands;
