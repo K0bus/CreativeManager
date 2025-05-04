@@ -148,7 +148,7 @@ public class DataManager {
             // Update table if exist
             s.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            plugin.getLogger().log(Level.SEVERE, "SQL ERROR", e);
         }
     }
 
