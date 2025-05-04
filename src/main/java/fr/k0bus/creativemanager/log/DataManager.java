@@ -59,27 +59,17 @@ public class DataManager {
         blockLogHashMap.put(log.getLocation(), log);
     }
 
-    public void save()
+    public void saveAsync()
     {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            final int[] n = {0};
-            blockLogHashMap.forEach((key, value) -> {
-                if(value.isSaved()) return;
-                save(value);
-                n[0]++;
-            });
-            if(CreativeManager.getSettings().getConfiguration().getBoolean("save-log"))
-                if(n[0] >0)
-                    plugin.getLog().log("&2Log saved to database ! &7[" + n[0] + "]");
-        });
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, this::save);
     }
-    public void saveSync()
+    public void save()
     {
         int n = 0;
         ConcurrentHashMap<Location, BlockLog> cloned = new ConcurrentHashMap<>(blockLogHashMap);
         for (Map.Entry<Location, BlockLog> val: cloned.entrySet()) {
             if(val.getValue().isSaved()) continue;
-            save(val.getValue());
+            saveAsync(val.getValue());
             n++;
         }
         if(n>0)
@@ -98,7 +88,7 @@ public class DataManager {
                 Bukkit.getLogger().log(Level.SEVERE, "Unable to retrieve connection", ex);
             }
     }
-    public void save(BlockLog log)
+    public void saveAsync(BlockLog log)
     {
         if(log.getLocation().getWorld() == null){
             delete(log);

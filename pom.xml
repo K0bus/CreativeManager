@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.35.18-${build.number}</version>
+  <version>1.35.19-${build.number}</version>
 
   <name>CreativeManager</name>
 

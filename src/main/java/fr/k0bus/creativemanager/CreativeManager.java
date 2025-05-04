@@ -247,6 +247,6 @@ public class CreativeManager extends K0busCore {
         if (Bukkit.getScheduler().isCurrentlyRunning(saveTask) || Bukkit.getScheduler().isQueued(saveTask))
             Bukkit.getScheduler().cancelTask(saveTask);
         if(dataManager != null)
-            dataManager.saveSync();
+            dataManager.save();
     }
 }

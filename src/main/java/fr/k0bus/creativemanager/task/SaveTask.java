@@ -17,7 +17,7 @@ public class SaveTask {
         int interval = plugin.getConfig().getInt("save-interval");
         if (interval > 0) {
             return Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () ->
-                            plugin.getDataManager().save(),
+                            plugin.getDataManager().saveAsync(),
                     0L, interval * 20L);
         }
         return 0;
