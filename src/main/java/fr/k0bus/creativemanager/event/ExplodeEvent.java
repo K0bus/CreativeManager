@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
@@ -77,18 +78,14 @@ public class ExplodeEvent implements Listener {
     }
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onFallBlockStop(EntityChangeBlockEvent event) {
-        BlockLog blockLog = plugin.getDataManager().getBlockFrom(event.getBlock().getLocation());
-        if (blockLog != null) {
-            if(event.getEntity() instanceof FallingBlock fallingBlock)
+        if(event.getEntity() instanceof FallingBlock fallingBlock && !event.getTo().equals(Material.AIR)) {
+            UUID uuid = findPlayer(fallingBlock);
+            if(uuid == null) return;
+            if(!event.getTo().equals(Material.AIR))
             {
-                UUID uuid = findPlayer(fallingBlock);
-                if(uuid == null) return;
-                if(!event.getTo().equals(Material.AIR))
-                {
-                    plugin.getDataManager().addBlock(
-                            new BlockLog(event.getBlock(), Bukkit.getOfflinePlayer(uuid))
-                    );
-                }
+                plugin.getDataManager().addBlock(
+                        new BlockLog(event.getBlock(), Bukkit.getPlayer(uuid))
+                );
             }
         }
     }
