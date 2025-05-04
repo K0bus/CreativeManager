@@ -14,7 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.persistence.PersistentDataType;
 
 import javax.annotation.Nullable;
@@ -99,13 +98,6 @@ public class ExplodeEvent implements Listener {
         entity.getPersistentDataContainer()
                 .set(namespacedKeyDate, PersistentDataType.LONG, System.currentTimeMillis());
     }
-    public static void unregister(Entity entity)
-    {
-        NamespacedKey namespacedKeyUuid = new NamespacedKey(CreativeManager.getInstance(), UUID_ID);
-        entity.getPersistentDataContainer().remove(namespacedKeyUuid);
-        NamespacedKey namespacedKeyDate = new NamespacedKey(CreativeManager.getInstance(), DATE_ID);
-        entity.getPersistentDataContainer().remove(namespacedKeyDate);
-    }
     @Nullable
     public static UUID findPlayer(Entity entity)
     {
@@ -115,12 +107,4 @@ public class ExplodeEvent implements Listener {
             return null;
         return UUID.fromString(UUIDText);
     }
-    public static long findDate(Entity entity)
-    {
-        if(entity == null) return 0;
-        NamespacedKey namespacedKeyDate = new NamespacedKey(CreativeManager.getInstance(), DATE_ID);
-        return entity.getPersistentDataContainer().get(namespacedKeyDate, PersistentDataType.LONG);
-        //TODO: Check warning
-    }
-
 }
