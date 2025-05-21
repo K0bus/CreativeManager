@@ -17,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -157,17 +158,23 @@ public class InventoryMove implements Listener {
 			}
 		}
 	}
+
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-	public void checkBlackList(final InventoryClickEvent e)
-	{
-		Player p = (Player) e.getWhoClicked();
-		if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
-		if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
-		List<String> blacklist = CreativeManager.getSettings().getGetBL();
-		if (isBlackListed(e.getCurrentItem(), p, blacklist)) {
-			e.setCancelled(true);
-		} else {
-			e.setCurrentItem(addLore(e.getCurrentItem(), p, true));
+	public void checkBlackListInteract(final  InventoryInteractEvent e) {
+		if(e.getInventory().getHolder() instanceof Player)
+		{
+			Inventory inventory = e.getInventory();
+			Player p = (Player) e.getWhoClicked();
+			if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+			if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
+			List<String> blacklist = CreativeManager.getSettings().getGetBL();
+			for (ItemStack itemStack: inventory.getContents()) {
+				if (isBlackListed(itemStack, p, blacklist)) {
+					itemStack.setAmount(0);
+				} else {
+					addLore(itemStack, p, true);
+				}
+			}
 		}
 	}
 
