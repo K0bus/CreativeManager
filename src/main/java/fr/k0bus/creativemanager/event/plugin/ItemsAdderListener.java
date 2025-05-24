@@ -22,7 +22,7 @@ public class ItemsAdderListener implements Listener  {
     }
 
     @EventHandler
-    public void onPlaceFurniture(FurniturePlaceEvent e)
+    public void onPlaceFurniture(FurniturePrePlaceEvent e)
     {
         Player p = e.getPlayer();
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
@@ -75,7 +75,7 @@ public class ItemsAdderListener implements Listener  {
     public void onEntityDie(CustomEntityDeathEvent e)
     {
         if(e.getKiller() == null) return;
-        if(!(e.getKiller() instanceof Player p)) return;
+        Player p = e.getKiller();
         if(!CreativeManager.getSettings().getProtection(Protections.PL_ITEMSADDER)) return;
         if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
         if(p.hasPermission("creativemanager.bypass.itemsadder.killentity")) return;
