@@ -17,7 +17,7 @@ public class ItemsAdderListener implements Listener  {
     CreativeManager plugin;
     public ItemsAdderListener(CreativeManager plugin)
     {
-        replaceMap.put("{PLUGIN}", "SlimeFun");
+        replaceMap.put("{PLUGIN}", "ItemsAdder");
         this.plugin = plugin;
     }
 

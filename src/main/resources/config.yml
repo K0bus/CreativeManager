@@ -29,6 +29,7 @@ protections:
   armor: false
   build-container: true #Bypass : creativemanager.bypass.build-container
   remove-effects: false
+  itemsadder: true
   plugins:
     citizens: true
     chestshop: true

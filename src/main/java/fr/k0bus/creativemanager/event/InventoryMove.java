@@ -2,6 +2,8 @@ package fr.k0bus.creativemanager.event;
 
 import de.tr7zw.changeme.nbtapi.NBT;
 import fr.k0bus.creativemanager.CreativeManager;
+import fr.k0bus.creativemanager.services.ItemBlacklist;
+import fr.k0bus.creativemanager.services.ItemLore;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.CMUtils;
 import fr.k0bus.creativemanager.utils.SearchUtils;
@@ -51,6 +53,17 @@ public class InventoryMove implements Listener {
 		}
 	}
 
+	@EventHandler(ignoreCancelled = false)
+	void onInventoryInteract(InventoryInteractEvent event) {
+		if(event.getInventory().getHolder() instanceof Player p)
+		{
+			if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
+			ItemBlacklist.asyncCheck(p);
+			ItemLore.asyncCheck(p);
+		}
+	}
+
+
 	/**
 	 * On inventory click.
 	 *
@@ -66,17 +79,6 @@ public class InventoryMove implements Listener {
 				if (CreativeManager.getSettings().getConfiguration().getBoolean("send-player-messages"))
 					CMUtils.sendMessage(player, "permission.drop");
 				e.setCancelled(true);
-			}
-			return;
-		}
-		if (!player.hasPermission("creativemanager.bypass.lore") && CreativeManager.getSettings().getProtection(Protections.LORE)) {
-			boolean changeLore = !e.getSlotType().equals(InventoryType.SlotType.ARMOR);
-			if(!changeLore)
-				changeLore = !CreativeManager.getSettings().getProtection(Protections.ARMOR) || player.hasPermission("creativemanager.bypass.armor");
-			if(changeLore)
-			{
-				e.setCurrentItem(addLore(e.getCurrentItem(), player, false));
-				e.setCursor(addLore(e.getCursor(), player, false));
 			}
 		}
 	}
@@ -157,83 +159,5 @@ public class InventoryMove implements Listener {
 				item.setItemMeta(potionMeta);
 			}
 		}
-	}
-
-	@EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
-	public void checkBlackListInteract(final  InventoryInteractEvent e) {
-		if(e.getInventory().getHolder() instanceof Player)
-		{
-			Inventory inventory = e.getInventory();
-			Player p = (Player) e.getWhoClicked();
-			if(!p.getGameMode().equals(GameMode.CREATIVE)) return;
-			if(p.hasPermission("creativemanager.bypass.blacklist.get")) return;
-			List<String> blacklist = CreativeManager.getSettings().getGetBL();
-			for (ItemStack itemStack: inventory.getContents()) {
-				if (isBlackListed(itemStack, p, blacklist)) {
-					itemStack.setAmount(0);
-				} else {
-					addLore(itemStack, p, true);
-				}
-			}
-		}
-	}
-
-	private boolean isBlackListed(ItemStack item, Player player, List<String> blacklist) {
-		if (item == null) {
-			return false;
-		}
-		String itemName = item.getType().name().toLowerCase();
-		if(player.hasPermission("creativemanager.bypass.blacklist.get." + itemName)) return false;
-		if(item.getType().equals(Material.AIR)) return false;
-		if((CreativeManager.getSettings().getConfiguration().getString("list.mode.get").equals("whitelist") && !SearchUtils.inList(blacklist, item)) ||
-				(!CreativeManager.getSettings().getConfiguration().getString("list.mode.get").equals("whitelist") && SearchUtils.inList(blacklist, item))){
-			HashMap<String, String> replaceMap = new HashMap<>();
-			replaceMap.put("{ITEM}", StringUtils.proper(item.getType().name()));
-			CMUtils.sendMessage(player, "blacklist.get", replaceMap);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Add lore item stack.
-	 *
-	 * @param item the item.
-	 * @param p    the player.
-	 * @return the item stack.
-	 */
-	private ItemStack addLore(ItemStack item, Player p, boolean checkNbt) {
-		if (item == null)
-			return null;
-		if (p == null)
-			return null;
-		ItemMeta meta = item.getItemMeta();
-		if (meta == null) {
-			return item;
-		}
-		if (checkNbt && nbt_enabled) {
-			final PersistentDataContainer container = meta.getPersistentDataContainer();
-			if (container.has(protectedKey, PersistentDataType.INTEGER)) {
-				return item;
-			}
-		}
-		List<String> lore = CreativeManager.getSettings().getLore();
-		List<String> lore_t = new ArrayList<>();
-
-		if (lore != null) {
-			for (String string : lore) {
-				string = string.replace("{PLAYER}", p.getName())
-						.replace("{UUID}", p.getUniqueId().toString())
-						.replace("{ITEM}", StringUtils.proper(item.getType().name()));
-				lore_t.add(ChatColor.translateAlternateColorCodes('&',string));
-			}
-		}
-		meta.setLore(lore_t);
-		if (nbt_enabled) {
-			final PersistentDataContainer container = meta.getPersistentDataContainer();
-			container.set(protectedKey, PersistentDataType.INTEGER, 1);
-		}
-		item.setItemMeta(meta);
-		return item;
 	}
 }
