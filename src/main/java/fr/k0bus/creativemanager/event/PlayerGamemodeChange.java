@@ -99,7 +99,7 @@ public class PlayerGamemodeChange implements Listener {
 				}
 			}
 			case SPECTATOR -> {
-				if(CreativeManager.getSettings().spectatorInvEnable())
+				if(!CreativeManager.getSettings().spectatorInvEnable())
 				{
 					gameMode = GameMode.SURVIVAL;
 				}
