@@ -29,6 +29,7 @@ protections:
   armor: false
   build-container: true #Bypass : creativemanager.bypass.build-container
   remove-effects: false
+  break: true # Deny survival players from breaking blocks placed in creative mode. Bypass: creativemanager.bypass.break-creative
   itemsadder: true
   plugins:
     citizens: true

@@ -85,6 +85,7 @@ public class PlayerBreak implements Listener {
           BlockLog blockLog = plugin.getDataManager().getBlockFrom(block.getLocation());
           if (blockLog != null) {
             if (blockLog.isCreative()) {
+              if (!CreativeManager.getSettings().getProtection(Protections.BREAK)) continue;
               e.setCancelled(true);
               return;
             }
