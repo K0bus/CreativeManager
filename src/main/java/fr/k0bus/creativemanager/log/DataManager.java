@@ -4,7 +4,6 @@ import fr.k0bus.creativemanager.CreativeManager;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,11 +17,11 @@ public class DataManager {
 
   Connection conn;
   final String dbname;
-  final HashMap<Location, BlockLog> blockLogHashMap;
+  final ConcurrentHashMap<Location, BlockLog> blockLogHashMap;
   final CreativeManager plugin;
 
   public DataManager(String dbname, CreativeManager plugin) {
-    this.blockLogHashMap = new HashMap<>();
+    this.blockLogHashMap = new ConcurrentHashMap<>();
     this.dbname = dbname;
     this.plugin = plugin;
     this.conn = startConnection();
@@ -83,6 +82,9 @@ public class DataManager {
   public void saveAsync(BlockLog log) {
     if (log.getLocation().getWorld() == null) {
       delete(log);
+      return;
+    }
+    if (log.getPlayer() == null) {
       return;
     }
     PreparedStatement ps = null;
@@ -203,7 +205,7 @@ public class DataManager {
     }
   }
 
-  public HashMap<Location, BlockLog> getBlockLogHashMap() {
+  public ConcurrentHashMap<Location, BlockLog> getBlockLogHashMap() {
     return blockLogHashMap;
   }
 }

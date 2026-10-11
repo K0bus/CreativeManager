@@ -62,7 +62,12 @@ public enum Protections {
       "remove-effects",
       Material.POTION,
       "Remove all potion effect when player switch gamemode",
-      "Remove effects");
+      "Remove effects"),
+  BREAK(
+      "break",
+      Material.BARRIER,
+      "Deny survival player to break creative placed blocks",
+      "Break Creative Block");
 
   private final String name;
   private final Material icon;

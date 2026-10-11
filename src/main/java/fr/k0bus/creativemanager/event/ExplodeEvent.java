@@ -60,6 +60,7 @@ public class ExplodeEvent implements Listener {
   public void onFallBlock(EntityChangeBlockEvent event) {
     BlockLog blockLog = plugin.getDataManager().getBlockFrom(event.getBlock().getLocation());
     if (blockLog != null) {
+      if (blockLog.getPlayer() == null) return;
       UUID uuid = blockLog.getPlayer().getUniqueId();
       if (event.getEntity() instanceof FallingBlock fallingBlock) {
         register(fallingBlock, uuid);
