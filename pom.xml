@@ -3,7 +3,7 @@
 
   <groupId>fr.k0bus.creativemanager</groupId>
   <artifactId>CreativeManager</artifactId>
-  <version>1.35.23-${revision}</version>
+  <version>1.35.24-${revision}</version>
 
   <name>CreativeManager</name>
 
@@ -46,10 +46,6 @@
             <relocation>
               <pattern>org.bstats</pattern>
               <shadedPattern>fr.k0bus.creativemanager_libs.bstats</shadedPattern>
-            </relocation>
-            <relocation>
-              <pattern>de.tr7zw.changeme</pattern>
-              <shadedPattern>fr.k0bus.creativemanager_libs.tr7zw.lib</shadedPattern>
             </relocation>
           </relocations>
           <artifactSet>
@@ -198,8 +194,9 @@
     </dependency>
     <dependency>
       <groupId>de.tr7zw</groupId>
-      <artifactId>item-nbt-api</artifactId>
+      <artifactId>item-nbt-api-plugin</artifactId>
       <version>2.15.7</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.github.Slimefun</groupId>

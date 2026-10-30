@@ -1,16 +1,13 @@
 package fr.k0bus.creativemanager.event;
 
-import de.tr7zw.changeme.nbtapi.NBT;
 import fr.k0bus.creativemanager.CreativeManager;
 import fr.k0bus.creativemanager.services.ItemBlacklist;
 import fr.k0bus.creativemanager.services.ItemLore;
 import fr.k0bus.creativemanager.settings.Protections;
 import fr.k0bus.creativemanager.utils.CMUtils;
-import fr.k0bus.creativemanager.utils.SearchUtils;
 import java.util.*;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -30,14 +27,16 @@ import org.bukkit.potion.PotionEffect;
 /** Inventory move listener. */
 public class InventoryMove implements Listener {
 
-  boolean nbt_enabled;
-
   /** Instantiates a new Inventory move. */
   CreativeManager plugin;
 
-  public InventoryMove(CreativeManager plugin, boolean nbt_enabled) {
-    this.nbt_enabled = nbt_enabled;
+  public InventoryMove(CreativeManager plugin) {
     this.plugin = plugin;
+  }
+
+  @Deprecated
+  public InventoryMove(CreativeManager plugin, boolean nbt_enabled) {
+    this(plugin);
   }
 
   @EventHandler(ignoreCancelled = false)
@@ -71,40 +70,6 @@ public class InventoryMove implements Listener {
     }
   }
 
-  @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-  public void checkNBT(final InventoryClickEvent e) {
-    if (!nbt_enabled) return;
-    Player p = (Player) e.getWhoClicked();
-    if (!CreativeManager.getSettings().getProtection(Protections.CUSTOM_NBT)) return;
-    if (!p.getGameMode().equals(GameMode.CREATIVE)) return;
-    if (p.hasPermission("creativemanager.bypass.custom_nbt")) return;
-
-    List<ItemStack> itemStackList = new ArrayList<>();
-    if (e.getCursor() != null) itemStackList.add(e.getCursor());
-    if (e.getCurrentItem() != null) itemStackList.add(e.getCurrentItem());
-    for (ItemStack item : itemStackList) {
-      if (item.getType().equals(Material.AIR)) continue;
-
-      NBT.modify(
-          item,
-          (tmp) -> {
-            for (String k : tmp.getKeys()) {
-              if (!SearchUtils.inList(CreativeManager.getSettings().getNBTWhitelist(), k)) {
-                tmp.removeKey(k);
-              }
-            }
-          });
-
-      ItemMeta itemMeta = item.getItemMeta();
-      if (itemMeta != null)
-        if (!itemMeta.getPersistentDataContainer().isEmpty()) {
-          for (NamespacedKey key : itemMeta.getPersistentDataContainer().getKeys()) {
-            itemMeta.getPersistentDataContainer().remove(key);
-          }
-          item.setItemMeta(itemMeta);
-        }
-    }
-  }
 
   @EventHandler(priority = EventPriority.LOWEST)
   public void checkArmorClick(final InventoryCreativeEvent e) {

@@ -133,13 +133,17 @@ public class CreativeManager extends K0busCore {
     pm.registerEvents(new FlowEvent(this), this);
     pm.registerEvents(new BlockEvent(this), this);
     pm.registerEvents(new WorldEvent(this), this);
+    pm.registerEvents(new InventoryMove(this), this);
     /*  Add event checked for old version */
-    try {
-      ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
-      pm.registerEvents(new InventoryMove(this, true), this);
-    } catch (NoSuchMethodException | SecurityException e) {
-      getLog().log("NBT Protection disabled on your Minecraft version");
-      pm.registerEvents(new InventoryMove(this, false), this);
+    if (getServer().getPluginManager().isPluginEnabled("NBTAPI")) {
+      try {
+        ItemMeta.class.getMethod("getPersistentDataContainer", (Class<?>[]) null);
+        pm.registerEvents(new InventoryMoveNBT(this), this);
+      } catch (NoSuchMethodException | SecurityException e) {
+        getLog().log("NBT Protection disabled on your Minecraft version");
+      }
+    } else {
+      getLog().log("NBT Protection disabled (NBTAPI plugin not installed)");
     }
     try {
       ProjectileHitEvent.class.getMethod("getHitEntity", (Class<?>[]) null);
